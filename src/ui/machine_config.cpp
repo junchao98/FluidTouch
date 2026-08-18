@@ -1,5 +1,6 @@
 #include "ui/machine_config.h"
 #include "config.h"
+#include "generated/hardware_defaults.h"
 #include <Preferences.h>
 #include <Arduino.h>
 
@@ -199,4 +200,55 @@ bool MachineConfigManager::hasConfiguredMachines() {
         }
     }
     return false;
+}
+
+MachineConfig MachineConfigManager::buildDefaults() {
+    MachineConfig config;
+#if FLUIDTOUCH_BUILD_DEFAULTS_VALID
+    strlcpy(config.name, FLUIDTOUCH_DEFAULT_MACHINE_NAME, sizeof(config.name));
+    strlcpy(config.ssid, FLUIDTOUCH_DEFAULT_WIFI_SSID, sizeof(config.ssid));
+    strlcpy(config.password, FLUIDTOUCH_DEFAULT_WIFI_PASSWORD, sizeof(config.password));
+    strlcpy(config.fluidnc_url, FLUIDTOUCH_DEFAULT_FLUIDNC_URL, sizeof(config.fluidnc_url));
+    config.websocket_port = FLUIDTOUCH_DEFAULT_WS_PORT;
+    config.connection_type = CONN_WIRELESS;
+    config.is_configured = true;
+#endif
+    return config;
+}
+
+bool MachineConfigManager::applyBuildDefaults() {
+#if FLUIDTOUCH_BUILD_DEFAULTS_VALID
+    // Only seed a completely fresh install: never overwrite configured
+    // machines, and apply only once so deleting machines later does not
+    // resurrect the factory defaults (the flag is wiped by Clear All
+    // Settings, restoring true factory behavior after a full wipe).
+    if (hasConfiguredMachines()) {
+        return false;
+    }
+
+    Preferences prefs;
+    prefs.begin(PREFS_NAMESPACE, true);  // Read-only
+    bool already_applied = prefs.getBool("def_applied", false);
+    prefs.end();
+    if (already_applied) {
+        return false;
+    }
+
+    MachineConfig machines[MAX_MACHINES];
+    loadMachines(machines);
+    machines[0] = buildDefaults();
+    saveMachines(machines);
+
+    prefs.begin(PREFS_NAMESPACE, false);  // Read-write
+    prefs.putBool("def_applied", true);
+    prefs.end();
+
+    Serial.printf("MachineConfigManager: Seeded machine slot 0 from build-time defaults "
+                  "(name=%s, ssid=%s, url=%s:%u)\n",
+                  machines[0].name, machines[0].ssid, machines[0].fluidnc_url,
+                  machines[0].websocket_port);
+    return true;
+#else
+    return false;  // firmware built without usable defaults
+#endif
 }

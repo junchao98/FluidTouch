@@ -4,6 +4,7 @@
 
 ## Table of Contents
 
+- [Build-Time Factory Defaults](#build-time-factory-defaults)
 - [WiFi Configuration](#wifi-configuration)
 - [Machine Configuration](#machine-configuration)
 - [Jog Settings](#jog-settings)
@@ -11,6 +12,41 @@
 - [Preferences Storage](#preferences-storage)
 
 ---
+
+## Build-Time Factory Defaults
+
+`hardware_defaults.ini` (project root) lets you bake a default machine into the
+firmware at compile time - useful when flashing many devices or setting up a new
+Tab5, so the first boot already knows your WiFi and FluidNC address.
+
+```ini
+[machine]
+name = My CNC
+ssid = MyWiFi
+password = MyPassword
+url = 192.168.1.100
+port = 81
+```
+
+How it works:
+
+1. `scripts/generate_defaults.py` (a PlatformIO pre-build step) reads the file
+   and generates `include/generated/hardware_defaults.h` (git-ignored).
+2. On first boot - only when **no machine is configured** - the firmware creates
+   machine slot 0 from these values, so the machine-selection screen shows it
+   immediately; tap it to connect.
+3. The **Add Machine** dialog is also pre-filled from these defaults.
+
+Notes:
+
+- A default machine is created only when **both `ssid` and `url`** are non-empty;
+  otherwise the feature is disabled and behavior is unchanged.
+- `url` accepts an IP address (`192.168.1.100`) or mDNS hostname (`fluidnc.local`).
+- Defaults are applied once per install (tracked by an NVS flag). Deleting all
+  machines does not resurrect them; **Clear All Settings** wipes the flag, so a
+  full wipe restores true factory state.
+- A settings auto-import file on the SD card takes priority over these defaults.
+- Length limits: `name` 31, `ssid` 32, `password` 63, `url` 127 characters.
 
 ## Machine Configuration
 

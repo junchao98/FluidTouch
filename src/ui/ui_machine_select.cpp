@@ -610,6 +610,10 @@ void UIMachineSelect::showConfigDialog(int index) {
     editing_index = index;
     bool is_new = !machines[index].is_configured;
     
+    // Build-time factory defaults (hardware_defaults.ini) prefill the fields
+    // of a new machine when the firmware was built with them.
+    MachineConfig defaults = MachineConfigManager::buildDefaults();
+    
     // Create modal background
     config_dialog = lv_obj_create(lv_scr_act());
     lv_obj_set_size(config_dialog, LV_PCT(100), LV_PCT(100));
@@ -669,6 +673,7 @@ void UIMachineSelect::showConfigDialog(int index) {
     lv_textarea_set_max_length(ta_name, 31);
     lv_obj_set_style_text_font(ta_name, ui_font_18, 0);
     if (!is_new) lv_textarea_set_text(ta_name, machines[index].name);
+    else if (defaults.is_configured) lv_textarea_set_text(ta_name, defaults.name);
     lv_obj_add_event_cb(ta_name, onTextareaFocused, LV_EVENT_FOCUSED, nullptr);
     
     // WiFi SSID field
@@ -683,6 +688,7 @@ void UIMachineSelect::showConfigDialog(int index) {
     lv_textarea_set_max_length(ta_ssid, 32);
     lv_obj_set_style_text_font(ta_ssid, ui_font_18, 0);
     if (!is_new) lv_textarea_set_text(ta_ssid, machines[index].ssid);
+    else if (defaults.is_configured) lv_textarea_set_text(ta_ssid, defaults.ssid);
     lv_obj_add_event_cb(ta_ssid, onTextareaFocused, LV_EVENT_FOCUSED, nullptr);
     
     // FluidNC URL field
@@ -698,6 +704,8 @@ void UIMachineSelect::showConfigDialog(int index) {
     lv_obj_set_style_text_font(ta_url, ui_font_18, 0);
     if (!is_new) {
         lv_textarea_set_text(ta_url, machines[index].fluidnc_url);
+    } else if (defaults.is_configured) {
+        lv_textarea_set_text(ta_url, defaults.fluidnc_url);
     } else {
         lv_textarea_set_text(ta_url, "fluidnc.local");
     }
@@ -740,6 +748,7 @@ void UIMachineSelect::showConfigDialog(int index) {
     lv_textarea_set_password_mode(ta_password, true);
     lv_obj_set_style_text_font(ta_password, ui_font_18, 0);
     if (!is_new) lv_textarea_set_text(ta_password, machines[index].password);
+    else if (defaults.is_configured) lv_textarea_set_text(ta_password, defaults.password);
     lv_obj_add_event_cb(ta_password, onTextareaFocused, LV_EVENT_FOCUSED, nullptr);
     
     // Port field
@@ -757,6 +766,10 @@ void UIMachineSelect::showConfigDialog(int index) {
     if (!is_new) {
         char port_str[6];
         snprintf(port_str, sizeof(port_str), "%d", machines[index].websocket_port);
+        lv_textarea_set_text(ta_port, port_str);
+    } else if (defaults.is_configured) {
+        char port_str[6];
+        snprintf(port_str, sizeof(port_str), "%d", defaults.websocket_port);
         lv_textarea_set_text(ta_port, port_str);
     } else {
         lv_textarea_set_text(ta_port, "81");

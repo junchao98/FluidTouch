@@ -116,6 +116,9 @@ secrets.h
 credentials.h
 wifi_config.h
 
+# Generated build-time factory defaults (from hardware_defaults.ini)
+include/generated/
+
 # Test coverage
 htmlcov/
 .coverage

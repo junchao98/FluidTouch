@@ -5,6 +5,12 @@ All notable changes to FluidTouch will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Build-Time Factory Defaults** - New optional `hardware_defaults.ini` lets you compile WiFi credentials and the FluidNC address into the firmware as first-boot defaults: on a fresh install machine slot 0 is created automatically from these values, and the "Add Machine" dialog is pre-filled with them. Requires both `ssid` and `url` in the `[machine]` section; leave them empty to keep the previous behavior. Applied only once per install (re-applied after Clear All Settings), and SD-card settings auto-import still takes priority.
+
 ## [1.0.5] - 2026-04-24
 
 ### Added

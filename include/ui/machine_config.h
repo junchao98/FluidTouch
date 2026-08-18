@@ -92,6 +92,19 @@ public:
     // Check if machines are configured
     static bool hasConfiguredMachines();
     
+    // Build-time factory defaults (from hardware_defaults.ini, baked in by
+    // scripts/generate_defaults.py). Returns a MachineConfig populated with
+    // the compiled-in values. is_configured is true only when the build
+    // supplied a usable default machine (non-empty WiFi SSID + FluidNC URL);
+    // otherwise the returned config is unconfigured with generic defaults.
+    static MachineConfig buildDefaults();
+    
+    // Seed machine slot 0 with the build-time defaults on a fresh install.
+    // Does nothing when any machine is already configured, when the defaults
+    // were already applied once ("def_applied" flag), or when the firmware
+    // was built without defaults. Returns true when a machine was created.
+    static bool applyBuildDefaults();
+    
 private:
     static MachineConfig cached_machines[MAX_MACHINES];
     static bool cache_valid;

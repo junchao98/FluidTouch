@@ -104,6 +104,10 @@ void setup()
         ESP.restart();
     }
 
+    // Seed a fresh install with build-time factory defaults
+    // (from hardware_defaults.ini, baked in at compile time)
+    MachineConfigManager::applyBuildDefaults();
+
     // Show splash screen
     Serial.println("Showing splash screen...");
     UISplash::show(displayDriver.getDisplay());
