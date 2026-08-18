@@ -23,9 +23,10 @@ static void textarea_focused_event_handler(lv_event_t *e) {
 void UITabSettingsWCS::showKeyboard(lv_obj_t *ta) {
     if (!keyboard) {
         keyboard = lv_keyboard_create(lv_scr_act());
-        lv_obj_set_size(keyboard, SCREEN_WIDTH, 220);
+        lv_obj_set_size(keyboard, SCREEN_WIDTH, UI_SCALE_Y(220));
+        lv_obj_set_style_text_font(keyboard, UI_KBD_FONT, 0);
         lv_obj_align(keyboard, LV_ALIGN_BOTTOM_MID, 0, 0);
-        lv_obj_set_style_text_font(keyboard, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(keyboard, ui_font_20, 0);
         lv_keyboard_set_mode(keyboard, LV_KEYBOARD_MODE_TEXT_LOWER);
         lv_obj_add_event_cb(keyboard, [](lv_event_t *e) { UITabSettingsWCS::hideKeyboard(); }, LV_EVENT_READY, nullptr);
         lv_obj_add_event_cb(keyboard, [](lv_event_t *e) { UITabSettingsWCS::hideKeyboard(); }, LV_EVENT_CANCEL, nullptr);
@@ -143,7 +144,7 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
     // Title with 20px top margin
     lv_obj_t *title = lv_label_create(parent);
     lv_label_set_text(title, "WORK COORDINATE SYSTEMS");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(title, ui_font_18, 0);
     lv_obj_set_style_text_color(title, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(title, 20, 20);
     
@@ -173,7 +174,7 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
         // WCS label (G54-G59) - aligned with text area content at y+12
         lv_obj_t *lbl_wcs = lv_label_create(parent);
         lv_label_set_text(lbl_wcs, wcs_labels[i]);
-        lv_obj_set_style_text_font(lbl_wcs, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(lbl_wcs, ui_font_20, 0);
         lv_obj_set_style_text_color(lbl_wcs, UITheme::POS_MODAL, 0);
         lv_obj_set_pos(lbl_wcs, col_x, y_pos + 12);  // Align with text area content
         
@@ -184,7 +185,7 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
         lv_textarea_set_text(name_inputs[i], names[i]);
         lv_obj_set_size(name_inputs[i], name_width, field_height);
         lv_obj_set_pos(name_inputs[i], col_x + 45, y_pos);
-        lv_obj_set_style_text_font(name_inputs[i], &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(name_inputs[i], ui_font_18, 0);
         lv_obj_set_style_pad_left(name_inputs[i], 5, 0);  // Left padding to align text to left
         lv_obj_set_style_pad_right(name_inputs[i], 2, 0);  // Minimal right padding
         lv_obj_clear_flag(name_inputs[i], LV_OBJ_FLAG_SCROLLABLE);
@@ -219,7 +220,7 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
     lv_obj_set_style_bg_color(btn_save, UITheme::BTN_PLAY, LV_PART_MAIN);
     lv_obj_t *lbl_save = lv_label_create(btn_save);
     lv_label_set_text(lbl_save, "Save Settings");
-    lv_obj_set_style_text_font(lbl_save, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_save, ui_font_16, 0);
     lv_obj_center(lbl_save);
     lv_obj_add_event_cb(btn_save, btn_save_event_handler, LV_EVENT_CLICKED, NULL);
     
@@ -230,14 +231,14 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
     lv_obj_set_style_bg_color(btn_reset, UITheme::BG_BUTTON, LV_PART_MAIN);
     lv_obj_t *lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, "Reset Defaults");
-    lv_obj_set_style_text_font(lbl_reset, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_reset, ui_font_16, 0);
     lv_obj_center(lbl_reset);
     lv_obj_add_event_cb(btn_reset, btn_reset_event_handler, LV_EVENT_CLICKED, NULL);
     
     // Status label (positioned below buttons)
     status_label = lv_label_create(parent);
     lv_label_set_text(status_label, "");
-    lv_obj_set_style_text_font(status_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(status_label, ui_font_14, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
     lv_obj_set_pos(status_label, 20, 335);
 }

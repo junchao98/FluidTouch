@@ -600,17 +600,17 @@
 #define LV_FONT_MONTSERRAT_22 1  // Used: Machine select, dialogs, state popups
 #define LV_FONT_MONTSERRAT_24 1  // Used: State popup messages, empty state messages
 #define LV_FONT_MONTSERRAT_26 1  // Used: Machine select connection label
-#define LV_FONT_MONTSERRAT_28 0  // Disabled: Not used in UI
-#define LV_FONT_MONTSERRAT_30 0  // Disabled: Not used in UI
+#define LV_FONT_MONTSERRAT_28 1  // Used: Tab5 font scaling (remap of 20)  // Disabled: Not used in UI
+#define LV_FONT_MONTSERRAT_30 1  // Used: Tab5 font scaling (remap of 22)  // Disabled: Not used in UI
 #define LV_FONT_MONTSERRAT_32 1  // Used: Page titles, state labels, large value displays
-#define LV_FONT_MONTSERRAT_34 0  // Disabled: Not used in UI
-#define LV_FONT_MONTSERRAT_36 0  // Disabled: Not used in UI
+#define LV_FONT_MONTSERRAT_34 1  // Used: Tab5 font scaling (remap of 24)  // Disabled: Not used in UI
+#define LV_FONT_MONTSERRAT_36 1  // Used: Tab5 font scaling (remap of 26)  // Disabled: Not used in UI
 #define LV_FONT_MONTSERRAT_38 0
 #define LV_FONT_MONTSERRAT_40 0
 #define LV_FONT_MONTSERRAT_42 0
-#define LV_FONT_MONTSERRAT_44 0
+#define LV_FONT_MONTSERRAT_44 1  // Used: Tab5 font scaling (remap of 32)
 #define LV_FONT_MONTSERRAT_46 0
-#define LV_FONT_MONTSERRAT_48 0
+#define LV_FONT_MONTSERRAT_48 1  // Used: Tab5 font scaling (remap of 32)
 
 /* Demonstrate special features */
 #define LV_FONT_MONTSERRAT_28_COMPRESSED    0  /**< bpp = 3 */
@@ -636,7 +636,11 @@
 #define LV_FONT_CUSTOM_DECLARE
 
 /** Always set a default font */
+#ifdef HARDWARE_TAB5
+#define LV_FONT_DEFAULT &lv_font_montserrat_18  /* Tab5: scaled default (ui_font_14 equivalent) */
+#else
 #define LV_FONT_DEFAULT &lv_font_montserrat_14
+#endif
 
 /** Enable handling large font and/or fonts with a lot of characters.
  *  The limit depends on the font size, font face and bpp.

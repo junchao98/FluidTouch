@@ -139,12 +139,12 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     
     lv_obj_t* feed_header = lv_label_create(feed_col);
     lv_label_set_text(feed_header, "FEED");
-    lv_obj_set_style_text_font(feed_header, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(feed_header, ui_font_18, 0);
     lv_obj_set_style_text_color(feed_header, UITheme::TEXT_DISABLED, 0);
     
     lbl_feed_value = lv_label_create(feed_col);
     lv_label_set_text(lbl_feed_value, "100%");
-    lv_obj_set_style_text_font(lbl_feed_value, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(lbl_feed_value, ui_font_32, 0);
     lv_obj_set_style_text_color(lbl_feed_value, UITheme::ACCENT_SECONDARY, 0);
     
     // Reset button (distinctive color)
@@ -154,7 +154,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(feed_reset_btn, feed_reset_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* feed_reset_lbl = lv_label_create(feed_reset_btn);
     lv_label_set_text(feed_reset_lbl, "100%");
-    lv_obj_set_style_text_font(feed_reset_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(feed_reset_lbl, ui_font_20, 0);
     lv_obj_center(feed_reset_lbl);
     
     // +10% button
@@ -164,7 +164,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(feed_plus10_btn, feed_coarse_plus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* feed_plus10_lbl = lv_label_create(feed_plus10_btn);
     lv_label_set_text(feed_plus10_lbl, "+10%");
-    lv_obj_set_style_text_font(feed_plus10_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(feed_plus10_lbl, ui_font_20, 0);
     lv_obj_center(feed_plus10_lbl);
     
     // +1% button
@@ -174,7 +174,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(feed_plus1_btn, feed_fine_plus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* feed_plus1_lbl = lv_label_create(feed_plus1_btn);
     lv_label_set_text(feed_plus1_lbl, "+1%");
-    lv_obj_set_style_text_font(feed_plus1_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(feed_plus1_lbl, ui_font_20, 0);
     lv_obj_center(feed_plus1_lbl);
     
     // -1% button
@@ -184,7 +184,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(feed_minus1_btn, feed_fine_minus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* feed_minus1_lbl = lv_label_create(feed_minus1_btn);
     lv_label_set_text(feed_minus1_lbl, "-1%");
-    lv_obj_set_style_text_font(feed_minus1_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(feed_minus1_lbl, ui_font_20, 0);
     lv_obj_center(feed_minus1_lbl);
     
     // -10% button
@@ -194,7 +194,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(feed_minus10_btn, feed_coarse_minus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* feed_minus10_lbl = lv_label_create(feed_minus10_btn);
     lv_label_set_text(feed_minus10_lbl, "-10%");
-    lv_obj_set_style_text_font(feed_minus10_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(feed_minus10_lbl, ui_font_20, 0);
     lv_obj_center(feed_minus10_lbl);
     
     // === COLUMN 2: RAPID OVERRIDE ===
@@ -209,12 +209,12 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     
     lv_obj_t* rapid_header = lv_label_create(rapid_col);
     lv_label_set_text(rapid_header, "RAPID");
-    lv_obj_set_style_text_font(rapid_header, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(rapid_header, ui_font_18, 0);
     lv_obj_set_style_text_color(rapid_header, UITheme::TEXT_DISABLED, 0);
     
     lbl_rapid_value = lv_label_create(rapid_col);
     lv_label_set_text(lbl_rapid_value, "100%");
-    lv_obj_set_style_text_font(lbl_rapid_value, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(lbl_rapid_value, ui_font_32, 0);
     lv_obj_set_style_text_color(lbl_rapid_value, UITheme::ACCENT_SECONDARY, 0);
     
     // 100% button
@@ -224,7 +224,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(rapid_100_btn, rapid_100_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* rapid_100_lbl = lv_label_create(rapid_100_btn);
     lv_label_set_text(rapid_100_lbl, "100%");
-    lv_obj_set_style_text_font(rapid_100_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(rapid_100_lbl, ui_font_20, 0);
     lv_obj_center(rapid_100_lbl);
     
     // 50% button
@@ -234,7 +234,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(rapid_50_btn, rapid_50_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* rapid_50_lbl = lv_label_create(rapid_50_btn);
     lv_label_set_text(rapid_50_lbl, "50%");
-    lv_obj_set_style_text_font(rapid_50_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(rapid_50_lbl, ui_font_20, 0);
     lv_obj_center(rapid_50_lbl);
     
     // 25% button
@@ -244,7 +244,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(rapid_25_btn, rapid_25_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* rapid_25_lbl = lv_label_create(rapid_25_btn);
     lv_label_set_text(rapid_25_lbl, "25%");
-    lv_obj_set_style_text_font(rapid_25_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(rapid_25_lbl, ui_font_20, 0);
     lv_obj_center(rapid_25_lbl);
     
     // === COLUMN 3: SPINDLE OVERRIDE ===
@@ -259,12 +259,12 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     
     lv_obj_t* spindle_header = lv_label_create(spindle_col);
     lv_label_set_text(spindle_header, "SPINDLE");
-    lv_obj_set_style_text_font(spindle_header, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(spindle_header, ui_font_18, 0);
     lv_obj_set_style_text_color(spindle_header, UITheme::TEXT_DISABLED, 0);
     
     lbl_spindle_value = lv_label_create(spindle_col);
     lv_label_set_text(lbl_spindle_value, "100%");
-    lv_obj_set_style_text_font(lbl_spindle_value, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(lbl_spindle_value, ui_font_32, 0);
     lv_obj_set_style_text_color(lbl_spindle_value, UITheme::ACCENT_SECONDARY, 0);
     
     // Reset button (distinctive color)
@@ -274,7 +274,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(spindle_reset_btn, spindle_reset_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* spindle_reset_lbl = lv_label_create(spindle_reset_btn);
     lv_label_set_text(spindle_reset_lbl, "100%");
-    lv_obj_set_style_text_font(spindle_reset_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(spindle_reset_lbl, ui_font_20, 0);
     lv_obj_center(spindle_reset_lbl);
     
     // +10% button
@@ -284,7 +284,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(spindle_plus10_btn, spindle_coarse_plus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* spindle_plus10_lbl = lv_label_create(spindle_plus10_btn);
     lv_label_set_text(spindle_plus10_lbl, "+10%");
-    lv_obj_set_style_text_font(spindle_plus10_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(spindle_plus10_lbl, ui_font_20, 0);
     lv_obj_center(spindle_plus10_lbl);
     
     // +1% button
@@ -294,7 +294,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(spindle_plus1_btn, spindle_fine_plus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* spindle_plus1_lbl = lv_label_create(spindle_plus1_btn);
     lv_label_set_text(spindle_plus1_lbl, "+1%");
-    lv_obj_set_style_text_font(spindle_plus1_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(spindle_plus1_lbl, ui_font_20, 0);
     lv_obj_center(spindle_plus1_lbl);
     
     // -1% button
@@ -304,7 +304,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(spindle_minus1_btn, spindle_fine_minus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* spindle_minus1_lbl = lv_label_create(spindle_minus1_btn);
     lv_label_set_text(spindle_minus1_lbl, "-1%");
-    lv_obj_set_style_text_font(spindle_minus1_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(spindle_minus1_lbl, ui_font_20, 0);
     lv_obj_center(spindle_minus1_lbl);
     
     // -10% button
@@ -314,7 +314,7 @@ lv_obj_t* UITabControlOverride::create(lv_obj_t* parent) {
     lv_obj_add_event_cb(spindle_minus10_btn, spindle_coarse_minus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* spindle_minus10_lbl = lv_label_create(spindle_minus10_btn);
     lv_label_set_text(spindle_minus10_lbl, "-10%");
-    lv_obj_set_style_text_font(spindle_minus10_lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(spindle_minus10_lbl, ui_font_20, 0);
     lv_obj_center(spindle_minus10_lbl);
     
     return cont;

@@ -49,7 +49,7 @@ void UIMachineSelect::show(lv_display_t *disp) {
     // Title
     lv_obj_t *title = lv_label_create(screen);
     lv_label_set_text(title, "Select Machine");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_32, 0);  // Larger font
+    lv_obj_set_style_text_font(title, ui_font_32, 0);  // Larger font
     lv_obj_set_style_text_color(title, UITheme::TEXT_LIGHT, 0);
     lv_obj_align(title, LV_ALIGN_TOP_LEFT, 20, 15);
     
@@ -74,7 +74,7 @@ void UIMachineSelect::show(lv_display_t *disp) {
     
     lv_obj_t *add_label = lv_label_create(add_button);
     lv_label_set_text(add_label, LV_SYMBOL_PLUS " Add");
-    lv_obj_set_style_text_font(add_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(add_label, ui_font_16, 0);
     lv_obj_center(add_label);
     
     // Edit Mode toggle button
@@ -85,7 +85,7 @@ void UIMachineSelect::show(lv_display_t *disp) {
     
     lv_obj_t *edit_mode_label = lv_label_create(edit_mode_button);
     lv_label_set_text(edit_mode_label, LV_SYMBOL_EDIT " Edit");
-    lv_obj_set_style_text_font(edit_mode_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(edit_mode_label, ui_font_16, 0);
     lv_obj_center(edit_mode_label);
     
     // Power Off button - only show if power management is enabled
@@ -99,7 +99,7 @@ void UIMachineSelect::show(lv_display_t *disp) {
         
         lv_obj_t *power_off_label = lv_label_create(power_off_btn);
         lv_label_set_text(power_off_label, LV_SYMBOL_POWER);  // Just icon to fit
-        lv_obj_set_style_text_font(power_off_label, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(power_off_label, ui_font_20, 0);
         lv_obj_center(power_off_label);
     }
     
@@ -190,7 +190,7 @@ void UIMachineSelect::refreshMachineList() {
                 const char *symbol = (machines[i].connection_type == CONN_WIRELESS) ? LV_SYMBOL_WIFI : LV_SYMBOL_USB;
                 String text = String(symbol) + " " + String(machines[i].name);
                 lv_label_set_text(label, text.c_str());
-                lv_obj_set_style_text_font(label, &lv_font_montserrat_22, 0);
+                lv_obj_set_style_text_font(label, ui_font_22, 0);
                 lv_obj_align(label, LV_ALIGN_LEFT_MID, 10, 0);
                 
                 // Move Up button (5px gap from machine button)
@@ -207,7 +207,7 @@ void UIMachineSelect::refreshMachineList() {
                 
                 lv_obj_t *up_label = lv_label_create(move_up_buttons[i]);
                 lv_label_set_text(up_label, LV_SYMBOL_UP);
-                lv_obj_set_style_text_font(up_label, &lv_font_montserrat_22, 0);
+                lv_obj_set_style_text_font(up_label, ui_font_22, 0);
                 lv_obj_center(up_label);
                 
                 // Move Down button (5px gap from up button)
@@ -224,7 +224,7 @@ void UIMachineSelect::refreshMachineList() {
                 
                 lv_obj_t *down_label = lv_label_create(move_down_buttons[i]);
                 lv_label_set_text(down_label, LV_SYMBOL_DOWN);
-                lv_obj_set_style_text_font(down_label, &lv_font_montserrat_22, 0);
+                lv_obj_set_style_text_font(down_label, ui_font_22, 0);
                 lv_obj_center(down_label);
                 
                 // Edit button (5px gap from down button)
@@ -236,7 +236,7 @@ void UIMachineSelect::refreshMachineList() {
                 
                 lv_obj_t *edit_label = lv_label_create(edit_buttons[i]);
                 lv_label_set_text(edit_label, LV_SYMBOL_EDIT);
-                lv_obj_set_style_text_font(edit_label, &lv_font_montserrat_22, 0);
+                lv_obj_set_style_text_font(edit_label, ui_font_22, 0);
                 lv_obj_center(edit_label);
                 
                 // Delete button (5px gap from edit button)
@@ -248,7 +248,7 @@ void UIMachineSelect::refreshMachineList() {
                 
                 lv_obj_t *del_label = lv_label_create(delete_buttons[i]);
                 lv_label_set_text(del_label, LV_SYMBOL_TRASH);
-                lv_obj_set_style_text_font(del_label, &lv_font_montserrat_20, 0);
+                lv_obj_set_style_text_font(del_label, ui_font_20, 0);
                 lv_obj_center(del_label);
                 
                 displayed_index++;
@@ -280,7 +280,7 @@ void UIMachineSelect::refreshMachineList() {
                 // Line 1: Machine Name (centered, supports 2 lines)
                 lv_obj_t *name_label = lv_label_create(machine_buttons[i]);
                 lv_label_set_text(name_label, machines[i].name);
-                lv_obj_set_style_text_font(name_label, &lv_font_montserrat_32, 0);  // Large font
+                lv_obj_set_style_text_font(name_label, ui_font_32, 0);  // Large font
                 lv_obj_set_style_text_color(name_label, UITheme::TEXT_LIGHT, 0);
                 lv_label_set_long_mode(name_label, LV_LABEL_LONG_WRAP);  // Enable text wrapping
                 lv_obj_set_width(name_label, 309);  // Set width for wrapping (349 - 40px padding)
@@ -295,7 +295,7 @@ void UIMachineSelect::refreshMachineList() {
                     connection_text = String(LV_SYMBOL_USB) + " Wired";
                 }
                 lv_label_set_text(connection_label, connection_text.c_str());
-                lv_obj_set_style_text_font(connection_label, &lv_font_montserrat_26, 0);  // Larger font
+                lv_obj_set_style_text_font(connection_label, ui_font_26, 0);  // Larger font
                 lv_obj_set_style_text_color(connection_label, UITheme::UI_INFO, 0);
                 lv_obj_align(connection_label, LV_ALIGN_BOTTOM_LEFT, 0, -30);  // 30px from bottom
                 
@@ -305,7 +305,7 @@ void UIMachineSelect::refreshMachineList() {
                 snprintf(url_text, sizeof(url_text), "%s:%d", 
                         machines[i].fluidnc_url, machines[i].websocket_port);
                 lv_label_set_text(url_label, url_text);
-                lv_obj_set_style_text_font(url_label, &lv_font_montserrat_24, 0);  // Larger font
+                lv_obj_set_style_text_font(url_label, ui_font_24, 0);  // Larger font
                 lv_obj_set_style_text_color(url_label, UITheme::TEXT_MEDIUM, 0);
                 lv_obj_align(url_label, LV_ALIGN_BOTTOM_LEFT, 0, 0);  // At bottom
                 
@@ -443,7 +443,7 @@ void UIMachineSelect::onMachineSelected(lv_event_t *e) {
         // Title (positioned near top)
         lv_obj_t *title = lv_label_create(dialog);
         lv_label_set_text(title, LV_SYMBOL_WARNING " WiFi Password Required");
-        lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+        lv_obj_set_style_text_font(title, ui_font_22, 0);
         lv_obj_set_style_text_color(title, UITheme::STATE_ALARM, 0);
         lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 0);
         
@@ -458,7 +458,7 @@ void UIMachineSelect::onMachineSelected(lv_event_t *e) {
             "WiFi password before attempting to connect.",
             machines[index].name);
         lv_label_set_text(message, msg);
-        lv_obj_set_style_text_font(message, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_font(message, ui_font_16, 0);
         lv_obj_set_style_text_color(message, UITheme::TEXT_LIGHT, 0);
         lv_obj_set_style_text_align(message, LV_TEXT_ALIGN_CENTER, 0);
         lv_label_set_long_mode(message, LV_LABEL_LONG_WRAP);
@@ -481,7 +481,7 @@ void UIMachineSelect::onMachineSelected(lv_event_t *e) {
         lv_obj_set_style_bg_color(btn_ok, UITheme::BTN_PLAY, 0);
         lv_obj_t *lbl_ok = lv_label_create(btn_ok);
         lv_label_set_text(lbl_ok, "OK");
-        lv_obj_set_style_text_font(lbl_ok, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_ok, ui_font_18, 0);
         lv_obj_center(lbl_ok);
         lv_obj_add_event_cb(btn_ok, [](lv_event_t *e) {
             if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
@@ -632,7 +632,7 @@ void UIMachineSelect::showConfigDialog(int index) {
     // Title (uppercase, gray like settings section titles)
     lv_obj_t *dlg_title = lv_label_create(dialog_content);
     lv_label_set_text(dlg_title, is_new ? "ADD MACHINE" : "EDIT MACHINE");
-    lv_obj_set_style_text_font(dlg_title, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(dlg_title, ui_font_18, 0);
     lv_obj_set_style_text_color(dlg_title, UITheme::TEXT_DISABLED, 0);  // Gray color
     lv_obj_set_pos(dlg_title, 0, 0);
     lv_obj_set_width(dlg_title, 740);  // 780 - 40px padding
@@ -660,42 +660,42 @@ void UIMachineSelect::showConfigDialog(int index) {
     // Name field
     lv_obj_t *lbl_name = lv_label_create(left_col);
     lv_label_set_text(lbl_name, "Name:");
-    lv_obj_set_style_text_font(lbl_name, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_name, ui_font_18, 0);
     
     ta_name = lv_textarea_create(left_col);
     lv_obj_set_width(ta_name, LV_PCT(100));
     lv_obj_set_height(ta_name, 40);
     lv_textarea_set_one_line(ta_name, true);
     lv_textarea_set_max_length(ta_name, 31);
-    lv_obj_set_style_text_font(ta_name, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_name, ui_font_18, 0);
     if (!is_new) lv_textarea_set_text(ta_name, machines[index].name);
     lv_obj_add_event_cb(ta_name, onTextareaFocused, LV_EVENT_FOCUSED, nullptr);
     
     // WiFi SSID field
     lv_obj_t *lbl_ssid = lv_label_create(left_col);
     lv_label_set_text(lbl_ssid, "WiFi SSID:");
-    lv_obj_set_style_text_font(lbl_ssid, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_ssid, ui_font_18, 0);
     
     ta_ssid = lv_textarea_create(left_col);
     lv_obj_set_width(ta_ssid, LV_PCT(100));
     lv_obj_set_height(ta_ssid, 40);
     lv_textarea_set_one_line(ta_ssid, true);
     lv_textarea_set_max_length(ta_ssid, 32);
-    lv_obj_set_style_text_font(ta_ssid, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_ssid, ui_font_18, 0);
     if (!is_new) lv_textarea_set_text(ta_ssid, machines[index].ssid);
     lv_obj_add_event_cb(ta_ssid, onTextareaFocused, LV_EVENT_FOCUSED, nullptr);
     
     // FluidNC URL field
     lv_obj_t *lbl_url = lv_label_create(left_col);
     lv_label_set_text(lbl_url, "FluidNC URL:");
-    lv_obj_set_style_text_font(lbl_url, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_url, ui_font_18, 0);
     
     ta_url = lv_textarea_create(left_col);
     lv_obj_set_width(ta_url, LV_PCT(100));
     lv_obj_set_height(ta_url, 40);
     lv_textarea_set_one_line(ta_url, true);
     lv_textarea_set_max_length(ta_url, 127);
-    lv_obj_set_style_text_font(ta_url, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_url, ui_font_18, 0);
     if (!is_new) {
         lv_textarea_set_text(ta_url, machines[index].fluidnc_url);
     } else {
@@ -716,12 +716,12 @@ void UIMachineSelect::showConfigDialog(int index) {
     // Connection Type
     lv_obj_t *lbl_type = lv_label_create(right_col);
     lv_label_set_text(lbl_type, "Connection:");
-    lv_obj_set_style_text_font(lbl_type, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_type, ui_font_18, 0);
     
     dd_connection_type = lv_dropdown_create(right_col);
     lv_obj_set_width(dd_connection_type, LV_PCT(100));
     lv_obj_set_height(dd_connection_type, 48);
-    lv_obj_set_style_text_font(dd_connection_type, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(dd_connection_type, ui_font_18, 0);
     lv_obj_set_style_pad_top(dd_connection_type, 12, LV_PART_MAIN);  // Adjust top padding to vertically center text
     lv_dropdown_set_options(dd_connection_type, "Wireless");  // Wired option hidden for now, reserved for future
     if (!is_new) lv_dropdown_set_selected(dd_connection_type, machines[index].connection_type);
@@ -730,7 +730,7 @@ void UIMachineSelect::showConfigDialog(int index) {
     // Password field
     lv_obj_t *lbl_pwd = lv_label_create(right_col);
     lv_label_set_text(lbl_pwd, "Password:");
-    lv_obj_set_style_text_font(lbl_pwd, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_pwd, ui_font_18, 0);
     
     ta_password = lv_textarea_create(right_col);
     lv_obj_set_width(ta_password, LV_PCT(100));
@@ -738,14 +738,14 @@ void UIMachineSelect::showConfigDialog(int index) {
     lv_textarea_set_one_line(ta_password, true);
     lv_textarea_set_max_length(ta_password, 63);
     lv_textarea_set_password_mode(ta_password, true);
-    lv_obj_set_style_text_font(ta_password, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_password, ui_font_18, 0);
     if (!is_new) lv_textarea_set_text(ta_password, machines[index].password);
     lv_obj_add_event_cb(ta_password, onTextareaFocused, LV_EVENT_FOCUSED, nullptr);
     
     // Port field
     lv_obj_t *lbl_port = lv_label_create(right_col);
     lv_label_set_text(lbl_port, "Port:");
-    lv_obj_set_style_text_font(lbl_port, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_port, ui_font_18, 0);
     
     ta_port = lv_textarea_create(right_col);
     lv_obj_set_width(ta_port, LV_PCT(100));
@@ -753,7 +753,7 @@ void UIMachineSelect::showConfigDialog(int index) {
     lv_textarea_set_one_line(ta_port, true);
     lv_textarea_set_max_length(ta_port, 5);
     lv_textarea_set_accepted_chars(ta_port, "0123456789");
-    lv_obj_set_style_text_font(ta_port, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_port, ui_font_18, 0);
     if (!is_new) {
         char port_str[6];
         snprintf(port_str, sizeof(port_str), "%d", machines[index].websocket_port);
@@ -780,7 +780,7 @@ void UIMachineSelect::showConfigDialog(int index) {
     
     lv_obj_t *lbl_save = lv_label_create(btn_save);
     lv_label_set_text(lbl_save, LV_SYMBOL_OK " Save");
-    lv_obj_set_style_text_font(lbl_save, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_save, ui_font_18, 0);
     lv_obj_center(lbl_save);
     
     lv_obj_t *btn_cancel = lv_btn_create(btn_container);
@@ -790,7 +790,7 @@ void UIMachineSelect::showConfigDialog(int index) {
     
     lv_obj_t *lbl_cancel = lv_label_create(btn_cancel);
     lv_label_set_text(lbl_cancel, LV_SYMBOL_CLOSE " Cancel");
-    lv_obj_set_style_text_font(lbl_cancel, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_cancel, ui_font_18, 0);
     lv_obj_center(lbl_cancel);
     
     // Initialize connection fields state
@@ -834,19 +834,19 @@ void UIMachineSelect::showDeleteConfirmDialog(int index) {
     // Warning icon and title
     lv_obj_t *title = lv_label_create(content);
     lv_label_set_text_fmt(title, "%s Delete Machine?", LV_SYMBOL_WARNING);
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(title, ui_font_22, 0);
     lv_obj_set_style_text_color(title, UITheme::STATE_ALARM, 0);
     
     // Machine name
     lv_obj_t *name_label = lv_label_create(content);
     lv_label_set_text_fmt(name_label, "\"%s\"", machines[index].name);
-    lv_obj_set_style_text_font(name_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(name_label, ui_font_20, 0);
     lv_obj_set_style_text_color(name_label, UITheme::TEXT_LIGHT, 0);
     
     // Message
     lv_obj_t *msg_label = lv_label_create(content);
     lv_label_set_text(msg_label, "This action cannot be undone.");
-    lv_obj_set_style_text_font(msg_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(msg_label, ui_font_16, 0);
     lv_obj_set_style_text_color(msg_label, UITheme::UI_WARNING, 0);
     
     // Button container
@@ -867,7 +867,7 @@ void UIMachineSelect::showDeleteConfirmDialog(int index) {
     
     lv_obj_t *cancel_label = lv_label_create(cancel_btn);
     lv_label_set_text(cancel_label, "Cancel");
-    lv_obj_set_style_text_font(cancel_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(cancel_label, ui_font_18, 0);
     lv_obj_center(cancel_label);
     
     // Delete button
@@ -878,7 +878,7 @@ void UIMachineSelect::showDeleteConfirmDialog(int index) {
     
     lv_obj_t *delete_label = lv_label_create(delete_btn);
     lv_label_set_text(delete_label, LV_SYMBOL_TRASH " Delete");
-    lv_obj_set_style_text_font(delete_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(delete_label, ui_font_18, 0);
     lv_obj_center(delete_label);
 }
 
@@ -899,9 +899,10 @@ void UIMachineSelect::showKeyboard(lv_obj_t *ta) {
     if (!keyboard) {
         // Create keyboard at screen level (not inside dialog) so it stays fixed at bottom
         keyboard = lv_keyboard_create(lv_scr_act());
-        lv_obj_set_size(keyboard, SCREEN_WIDTH, 220);
+        lv_obj_set_size(keyboard, SCREEN_WIDTH, UI_SCALE_Y(220));
+        lv_obj_set_style_text_font(keyboard, UI_KBD_FONT, 0);
         lv_obj_align(keyboard, LV_ALIGN_BOTTOM_MID, 0, 0);
-        lv_obj_set_style_text_font(keyboard, &lv_font_montserrat_20, 0);  // Larger font for better visibility
+        lv_obj_set_style_text_font(keyboard, ui_font_20, 0);  // Larger font for better visibility
         
         // Add event handler for keyboard ready/cancel events
         lv_obj_add_event_cb(keyboard, [](lv_event_t *e) {

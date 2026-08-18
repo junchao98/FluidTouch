@@ -69,11 +69,15 @@ void PowerManager::update(int machine_state) {
     uint32_t idle_ms = millis() - last_activity_ms;
     uint32_t idle_sec = idle_ms / 1000;
     
+#ifndef HARDWARE_TAB5
     // Check for deep sleep timeout (if enabled)
     if (deep_sleep_timeout_sec > 0 && idle_sec >= deep_sleep_timeout_sec) {
         enterDeepSleep();
         return;  // Never returns, but good practice
     }
+#endif
+    // (Tab5: deep sleep not supported by its PMU power architecture -
+    //  screen-off light idle is the deepest state; power off via power button)
     
     // State machine for screen power management
     switch (current_state) {
@@ -256,6 +260,16 @@ void PowerManager::enterDeepSleep() {
     display_driver->powerDown();
     delay(100);
     
+#ifdef HARDWARE_TAB5
+    // Tab5: no SoC deep sleep - the PMU/battery architecture requires clean
+    // shutdown via the power button. Stay in screen-off light idle instead.
+    FluidNCClient::disconnect();
+    WiFi.disconnect(true);
+    WiFi.mode(WIFI_OFF);
+    current_state = SCREEN_OFF;
+    Serial.println("Tab5: entering screen-off light idle (no deep sleep)");
+    return;
+#else
     // Shutdown network and radios for power savings
     FluidNCClient::disconnect();
     WiFi.disconnect(true);
@@ -275,4 +289,5 @@ void PowerManager::enterDeepSleep() {
     
     esp_deep_sleep_start();
     // Never returns
+#endif
 }

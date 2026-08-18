@@ -2,6 +2,9 @@
 #include <lvgl.h>
 #include <WiFi.h>
 #include <Preferences.h>
+#ifdef HARDWARE_TAB5
+#include <M5Unified.h>  // Tab5: PMU power-off / battery via M5Unified (display handled by our own M5GFX instance)
+#endif
 #include "core/display_driver.h"     // Display driver module
 #include "core/touch_driver.h"       // Touch driver module
 #include "core/power_manager.h"      // Power management module
@@ -31,6 +34,23 @@ void setup()
     Serial.printf("Free heap: %d bytes\n", ESP.getFreeHeap());
     Serial.printf("PSRAM size: %d bytes\n", ESP.getPsramSize());
     Serial.printf("Free PSRAM: %d bytes\n", ESP.getFreePsram());
+
+#ifdef HARDWARE_TAB5
+    // Initialize M5Unified for PMU/battery support. Its display init is
+    // unavoidable but harmless - our DisplayDriver re-inits the panel after.
+    {
+        m5::M5Unified::config_t m5cfg;
+        m5cfg.serial_baudrate = 0;   // Serial already begun above
+        m5cfg.internal_imu = false;
+        m5cfg.internal_rtc = false;
+        m5cfg.internal_mic = false;
+        m5cfg.internal_spk = false;
+        m5cfg.clear_display = false;
+        m5cfg.output_power = false;  // no 5V needed on external bus
+        M5.begin(m5cfg);
+        Serial.println("M5Unified initialized (PMU support)");
+    }
+#endif
 
     // Initialize Display Driver
     Serial.println("Initializing display driver...");

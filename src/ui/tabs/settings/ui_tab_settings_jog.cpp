@@ -68,7 +68,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     // Title
     lv_obj_t *title = lv_label_create(tab);
     lv_label_set_text(title, "JOG & JOYSTICK CONTROL DEFAULTS");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(title, ui_font_18, 0);
     lv_obj_set_style_text_color(title, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(title, col1_x, y_pos);
 
@@ -77,56 +77,56 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     // Column headers - two lines for headers with units
     lv_obj_t *hdr_step = lv_label_create(tab);
     lv_label_set_text(hdr_step, "Step");
-    lv_obj_set_style_text_font(hdr_step, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(hdr_step, ui_font_16, 0);
     lv_obj_set_style_text_color(hdr_step, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_step, col2_x, y_pos);
 
     lv_obj_t *hdr_step_unit = lv_label_create(tab);
     lv_label_set_text(hdr_step_unit, "(mm)");
-    lv_obj_set_style_text_font(hdr_step_unit, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(hdr_step_unit, ui_font_14, 0);
     lv_obj_set_style_text_color(hdr_step_unit, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_step_unit, col2_x, y_pos + 18);
 
     lv_obj_t *hdr_feed = lv_label_create(tab);
     lv_label_set_text(hdr_feed, "Feed");
-    lv_obj_set_style_text_font(hdr_feed, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(hdr_feed, ui_font_16, 0);
     lv_obj_set_style_text_color(hdr_feed, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_feed, col3_x, y_pos);
 
     lv_obj_t *hdr_feed_unit = lv_label_create(tab);
     lv_label_set_text(hdr_feed_unit, "(mm/min)");
-    lv_obj_set_style_text_font(hdr_feed_unit, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(hdr_feed_unit, ui_font_14, 0);
     lv_obj_set_style_text_color(hdr_feed_unit, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_feed_unit, col3_x, y_pos + 18);
 
     lv_obj_t *hdr_max = lv_label_create(tab);
     lv_label_set_text(hdr_max, "Max");
-    lv_obj_set_style_text_font(hdr_max, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(hdr_max, ui_font_16, 0);
     lv_obj_set_style_text_color(hdr_max, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_max, col4_x, y_pos);
 
     lv_obj_t *hdr_max_unit = lv_label_create(tab);
     lv_label_set_text(hdr_max_unit, "(mm/min)");
-    lv_obj_set_style_text_font(hdr_max_unit, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(hdr_max_unit, ui_font_14, 0);
     lv_obj_set_style_text_color(hdr_max_unit, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_max_unit, col4_x, y_pos + 18);
 
     // Headers without units - positioned at second line Y value
     lv_obj_t *hdr_axis = lv_label_create(tab);
     lv_label_set_text(hdr_axis, "Axis");
-    lv_obj_set_style_text_font(hdr_axis, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(hdr_axis, ui_font_16, 0);
     lv_obj_set_style_text_color(hdr_axis, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_axis, col1_x, y_pos + 18);
 
     lv_obj_t *hdr_steps = lv_label_create(tab);
     lv_label_set_text(hdr_steps, "Step List");
-    lv_obj_set_style_text_font(hdr_steps, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(hdr_steps, ui_font_16, 0);
     lv_obj_set_style_text_color(hdr_steps, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_steps, col5_x, y_pos);
 
     lv_obj_t *hdr_steps_unit = lv_label_create(tab);
     lv_label_set_text(hdr_steps_unit, "(comma separated, max 5)");
-    lv_obj_set_style_text_font(hdr_steps_unit, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(hdr_steps_unit, ui_font_14, 0);
     lv_obj_set_style_text_color(hdr_steps_unit, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(hdr_steps_unit, col5_x, y_pos + 18);
 
@@ -137,7 +137,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     // ========== XY ROW ==========
     lv_obj_t *lbl_xy = lv_label_create(tab);
     lv_label_set_text(lbl_xy, "XY");
-    lv_obj_set_style_text_font(lbl_xy, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(lbl_xy, ui_font_20, 0);
     lv_obj_set_style_text_color(lbl_xy, UITheme::AXIS_XY, 0);
     lv_obj_set_pos(lbl_xy, col1_x, y_pos + 8);
 
@@ -147,7 +147,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_xy_step, true);
     lv_textarea_set_max_length(ta_xy_step, 6);
     lv_textarea_set_accepted_chars(ta_xy_step, "0123456789");
-    lv_obj_set_style_text_font(ta_xy_step, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_xy_step, ui_font_18, 0);
     lv_obj_add_event_cb(ta_xy_step, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%.0f", default_xy_step);
     lv_textarea_set_text(ta_xy_step, buf);
@@ -158,7 +158,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_xy_feed, true);
     lv_textarea_set_max_length(ta_xy_feed, 6);
     lv_textarea_set_accepted_chars(ta_xy_feed, "0123456789");
-    lv_obj_set_style_text_font(ta_xy_feed, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_xy_feed, ui_font_18, 0);
     lv_obj_add_event_cb(ta_xy_feed, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%d", default_xy_feed);
     lv_textarea_set_text(ta_xy_feed, buf);
@@ -169,7 +169,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_max_xy_feed, true);
     lv_textarea_set_max_length(ta_max_xy_feed, 6);
     lv_textarea_set_accepted_chars(ta_max_xy_feed, "0123456789");
-    lv_obj_set_style_text_font(ta_max_xy_feed, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_max_xy_feed, ui_font_18, 0);
     lv_obj_add_event_cb(ta_max_xy_feed, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%d", max_xy_feed);
     lv_textarea_set_text(ta_max_xy_feed, buf);
@@ -180,7 +180,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_xy_steps, true);
     lv_textarea_set_max_length(ta_xy_steps, 60);
     lv_textarea_set_accepted_chars(ta_xy_steps, "0123456789,.");
-    lv_obj_set_style_text_font(ta_xy_steps, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_xy_steps, ui_font_18, 0);
     lv_obj_add_event_cb(ta_xy_steps, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     lv_textarea_set_text(ta_xy_steps, xy_steps);
 
@@ -189,7 +189,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     // ========== Z ROW ==========
     lv_obj_t *lbl_z = lv_label_create(tab);
     lv_label_set_text(lbl_z, "Z");
-    lv_obj_set_style_text_font(lbl_z, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(lbl_z, ui_font_20, 0);
     lv_obj_set_style_text_color(lbl_z, UITheme::AXIS_Z, 0);
     lv_obj_set_pos(lbl_z, col1_x, y_pos + 8);
 
@@ -199,7 +199,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_z_step, true);
     lv_textarea_set_max_length(ta_z_step, 6);
     lv_textarea_set_accepted_chars(ta_z_step, "0123456789");
-    lv_obj_set_style_text_font(ta_z_step, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_z_step, ui_font_18, 0);
     lv_obj_add_event_cb(ta_z_step, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%.0f", default_z_step);
     lv_textarea_set_text(ta_z_step, buf);
@@ -210,7 +210,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_z_feed, true);
     lv_textarea_set_max_length(ta_z_feed, 6);
     lv_textarea_set_accepted_chars(ta_z_feed, "0123456789");
-    lv_obj_set_style_text_font(ta_z_feed, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_z_feed, ui_font_18, 0);
     lv_obj_add_event_cb(ta_z_feed, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%d", default_z_feed);
     lv_textarea_set_text(ta_z_feed, buf);
@@ -221,7 +221,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_max_z_feed, true);
     lv_textarea_set_max_length(ta_max_z_feed, 6);
     lv_textarea_set_accepted_chars(ta_max_z_feed, "0123456789");
-    lv_obj_set_style_text_font(ta_max_z_feed, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_max_z_feed, ui_font_18, 0);
     lv_obj_add_event_cb(ta_max_z_feed, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%d", max_z_feed);
     lv_textarea_set_text(ta_max_z_feed, buf);
@@ -232,7 +232,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_z_steps, true);
     lv_textarea_set_max_length(ta_z_steps, 60);
     lv_textarea_set_accepted_chars(ta_z_steps, "0123456789,.");
-    lv_obj_set_style_text_font(ta_z_steps, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_z_steps, ui_font_18, 0);
     lv_obj_add_event_cb(ta_z_steps, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     lv_textarea_set_text(ta_z_steps, z_steps);
 
@@ -242,7 +242,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     if (UICommon::isAAxisEnabled()) {
         lv_obj_t *lbl_a = lv_label_create(tab);
         lv_label_set_text(lbl_a, "A");
-        lv_obj_set_style_text_font(lbl_a, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(lbl_a, ui_font_20, 0);
         lv_obj_set_style_text_color(lbl_a, UITheme::AXIS_A, 0);
         lv_obj_set_pos(lbl_a, col1_x, y_pos + 8);
 
@@ -252,7 +252,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
         lv_textarea_set_one_line(ta_a_step, true);
         lv_textarea_set_max_length(ta_a_step, 6);
         lv_textarea_set_accepted_chars(ta_a_step, "0123456789");
-        lv_obj_set_style_text_font(ta_a_step, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(ta_a_step, ui_font_18, 0);
         lv_obj_add_event_cb(ta_a_step, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
         snprintf(buf, sizeof(buf), "%.0f", default_a_step);
         lv_textarea_set_text(ta_a_step, buf);
@@ -263,7 +263,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
         lv_textarea_set_one_line(ta_a_feed, true);
         lv_textarea_set_max_length(ta_a_feed, 6);
         lv_textarea_set_accepted_chars(ta_a_feed, "0123456789");
-        lv_obj_set_style_text_font(ta_a_feed, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(ta_a_feed, ui_font_18, 0);
         lv_obj_add_event_cb(ta_a_feed, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
         snprintf(buf, sizeof(buf), "%d", default_a_feed);
         lv_textarea_set_text(ta_a_feed, buf);
@@ -274,7 +274,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
         lv_textarea_set_one_line(ta_max_a_feed, true);
         lv_textarea_set_max_length(ta_max_a_feed, 6);
         lv_textarea_set_accepted_chars(ta_max_a_feed, "0123456789");
-        lv_obj_set_style_text_font(ta_max_a_feed, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(ta_max_a_feed, ui_font_18, 0);
         lv_obj_add_event_cb(ta_max_a_feed, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
         snprintf(buf, sizeof(buf), "%d", max_a_feed);
         lv_textarea_set_text(ta_max_a_feed, buf);
@@ -285,7 +285,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
         lv_textarea_set_one_line(ta_a_steps, true);
         lv_textarea_set_max_length(ta_a_steps, 60);
         lv_textarea_set_accepted_chars(ta_a_steps, "0123456789,.");
-        lv_obj_set_style_text_font(ta_a_steps, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(ta_a_steps, ui_font_18, 0);
         lv_obj_add_event_cb(ta_a_steps, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
         lv_textarea_set_text(ta_a_steps, a_steps);
 
@@ -300,7 +300,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_save, UITheme::BTN_PLAY, LV_PART_MAIN);
     lv_obj_t *lbl_save = lv_label_create(btn_save);
     lv_label_set_text(lbl_save, "Save Settings");
-    lv_obj_set_style_text_font(lbl_save, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_save, ui_font_16, 0);
     lv_obj_center(lbl_save);
     lv_obj_add_event_cb(btn_save, btn_save_jog_event_handler, LV_EVENT_CLICKED, NULL);
     
@@ -311,14 +311,14 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_reset, UITheme::BG_BUTTON, LV_PART_MAIN);
     lv_obj_t *lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, "Reset Defaults");
-    lv_obj_set_style_text_font(lbl_reset, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_reset, ui_font_16, 0);
     lv_obj_center(lbl_reset);
     lv_obj_add_event_cb(btn_reset, btn_reset_event_handler, LV_EVENT_CLICKED, NULL);
     
     // Status label
     status_label = lv_label_create(tab);
     lv_label_set_text(status_label, "");
-    lv_obj_set_style_text_font(status_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(status_label, ui_font_14, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
     lv_obj_set_pos(status_label, 20, 335);
 }
@@ -498,9 +498,10 @@ static void textarea_focused_event_handler(lv_event_t *e) {
 void UITabSettingsJog::showKeyboard(lv_obj_t *ta) {
     if (!keyboard) {
         keyboard = lv_keyboard_create(lv_scr_act());
-        lv_obj_set_size(keyboard, SCREEN_WIDTH, 220);
+        lv_obj_set_size(keyboard, SCREEN_WIDTH, UI_SCALE_Y(220));
+        lv_obj_set_style_text_font(keyboard, UI_KBD_FONT, 0);
         lv_obj_align(keyboard, LV_ALIGN_BOTTOM_MID, 0, 0);
-        lv_obj_set_style_text_font(keyboard, &lv_font_montserrat_20, 0);  // Larger font for better visibility
+        lv_obj_set_style_text_font(keyboard, ui_font_20, 0);  // Larger font for better visibility
         lv_obj_add_event_cb(keyboard, [](lv_event_t *e) { UITabSettingsJog::hideKeyboard(); }, LV_EVENT_READY, nullptr);
         lv_obj_add_event_cb(keyboard, [](lv_event_t *e) { UITabSettingsJog::hideKeyboard(); }, LV_EVENT_CANCEL, nullptr);
         if (parent_tab) {

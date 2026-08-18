@@ -46,7 +46,7 @@ void UITabTerminal::create(lv_obj_t *tab) {
     lv_obj_set_pos(input_field, 0, 0);
     lv_textarea_set_one_line(input_field, true);
     lv_textarea_set_placeholder_text(input_field, "Enter command...");
-    lv_obj_set_style_text_font(input_field, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(input_field, ui_font_18, 0);
     lv_obj_set_style_bg_color(input_field, UITheme::BG_BUTTON, LV_PART_MAIN);
     lv_obj_set_style_text_color(input_field, lv_color_white(), LV_PART_MAIN);
     lv_obj_add_event_cb(input_field, input_field_event_cb, LV_EVENT_CLICKED, nullptr);
@@ -95,13 +95,13 @@ void UITabTerminal::create(lv_obj_t *tab) {
 
     lv_obj_t *send_label = lv_label_create(send_btn);
     lv_label_set_text(send_label, "Send");
-    lv_obj_set_style_text_font(send_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(send_label, ui_font_18, 0);
     lv_obj_center(send_label);
 
     // Auto-scroll toggle (switch + label) on the right
     lv_obj_t *auto_scroll_label = lv_label_create(tab);
     lv_label_set_text(auto_scroll_label, "Auto Scroll");
-    lv_obj_set_style_text_font(auto_scroll_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(auto_scroll_label, ui_font_14, 0);
     lv_obj_align(auto_scroll_label, LV_ALIGN_TOP_RIGHT, -5, 0);
 
     auto_scroll_switch = lv_switch_create(tab);
@@ -146,9 +146,10 @@ void UITabTerminal::input_field_event_cb(lv_event_t *e) {
         if (keyboard == nullptr) {
             keyboard = lv_keyboard_create(lv_screen_active());
             lv_keyboard_set_textarea(keyboard, input_field);
-            lv_obj_set_size(keyboard, SCREEN_WIDTH, 240);
+            lv_obj_set_size(keyboard, SCREEN_WIDTH, UI_SCALE_Y(240));
+            lv_obj_set_style_text_font(keyboard, UI_KBD_FONT, 0);
             lv_obj_align(keyboard, LV_ALIGN_BOTTOM_MID, 0, 0);
-            lv_obj_set_style_text_font(keyboard, &lv_font_montserrat_20, 0);  // Larger font for better visibility
+            lv_obj_set_style_text_font(keyboard, ui_font_20, 0);  // Larger font for better visibility
             lv_obj_add_event_cb(keyboard, keyboard_event_cb, LV_EVENT_READY, nullptr);
             lv_obj_add_event_cb(keyboard, keyboard_event_cb, LV_EVENT_CANCEL, nullptr);
         } else {

@@ -46,14 +46,14 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     // === Machine Selection Section ===
     lv_obj_t *section_title = lv_label_create(tab);
     lv_label_set_text(section_title, "MACHINE SELECTION");
-    lv_obj_set_style_text_font(section_title, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(section_title, ui_font_18, 0);
     lv_obj_set_style_text_color(section_title, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(section_title, 20, 20);
     
     // Show label and switch on same line
     lv_obj_t *machine_sel_label = lv_label_create(tab);
     lv_label_set_text(machine_sel_label, "Show:");
-    lv_obj_set_style_text_font(machine_sel_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(machine_sel_label, ui_font_18, 0);
     lv_obj_set_style_text_color(machine_sel_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(machine_sel_label, 20, 70);  // 20 + 40 (title spacing) + 12 (vertical alignment)
     
@@ -66,21 +66,21 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     // Description text
     lv_obj_t *desc_label = lv_label_create(tab);
     lv_label_set_text(desc_label, "When disabled, the first configured machine\nwill be loaded automatically at startup.");
-    lv_obj_set_style_text_font(desc_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(desc_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(desc_label, 20, 107);  // 20 + 40 (title) + 40 (switch row) + 7 (spacing)
     
     // === Display Section (Top right) ===
     lv_obj_t *display_section_title = lv_label_create(tab);
     lv_label_set_text(display_section_title, "DISPLAY");
-    lv_obj_set_style_text_font(display_section_title, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(display_section_title, ui_font_18, 0);
     lv_obj_set_style_text_color(display_section_title, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(display_section_title, 400, 20);  // Top right column
     
     // Rotate display label and switch
     lv_obj_t *rotate_label = lv_label_create(tab);
     lv_label_set_text(rotate_label, "Rotate 180°:");
-    lv_obj_set_style_text_font(rotate_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(rotate_label, ui_font_18, 0);
     lv_obj_set_style_text_color(rotate_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(rotate_label, 400, 70);  // Top right, aligned with Machine Selection Show label
     
@@ -93,21 +93,21 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     // Description text for rotation setting
     lv_obj_t *rotate_desc_label = lv_label_create(tab);
     lv_label_set_text(rotate_desc_label, "Rotate display 180° for\nupside-down mounting.\nRequires restart.");
-    lv_obj_set_style_text_font(rotate_desc_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(rotate_desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(rotate_desc_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(rotate_desc_label, 400, 107);  // Top right, aligned with Machine Selection description
     
     // === Files Section (First column, below Machine Selection) ===
     lv_obj_t *files_section_title = lv_label_create(tab);
     lv_label_set_text(files_section_title, "FILES");
-    lv_obj_set_style_text_font(files_section_title, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(files_section_title, ui_font_18, 0);
     lv_obj_set_style_text_color(files_section_title, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(files_section_title, 20, 155);  // First column, below Machine Selection
     
     // Folders on top label and switch
     lv_obj_t *folders_label = lv_label_create(tab);
     lv_label_set_text(folders_label, "Folders on Top:");
-    lv_obj_set_style_text_font(folders_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(folders_label, ui_font_18, 0);
     lv_obj_set_style_text_color(folders_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(folders_label, 20, 205);  // First column
     
@@ -120,14 +120,14 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     // Description text for folders setting
     lv_obj_t *folders_desc_label = lv_label_create(tab);
     lv_label_set_text(folders_desc_label, "When enabled, folders appear at the top\nof the file list instead of the bottom.");
-    lv_obj_set_style_text_font(folders_desc_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(folders_desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(folders_desc_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(folders_desc_label, 20, 242);  // First column
 
     // Enable A-Axis label and switch (Right column, below Display)
     lv_obj_t *enable_a_axis_label = lv_label_create(tab);
     lv_label_set_text(enable_a_axis_label, "Enable A-Axis:");
-    lv_obj_set_style_text_font(enable_a_axis_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(enable_a_axis_label, ui_font_18, 0);
     lv_obj_set_style_text_color(enable_a_axis_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(enable_a_axis_label, 400, 205);  // Right column
 
@@ -140,7 +140,7 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     // Description text for A-axis setting
     lv_obj_t *a_axis_desc_label = lv_label_create(tab);
     lv_label_set_text(a_axis_desc_label, "Enables 4th axis (rotary) support.\nAdds A-axis controls and display.");
-    lv_obj_set_style_text_font(a_axis_desc_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(a_axis_desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(a_axis_desc_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(a_axis_desc_label, 400, 242);  // Right column
 
@@ -152,7 +152,7 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_save, UITheme::BTN_PLAY, LV_PART_MAIN);
     lv_obj_t *lbl_save = lv_label_create(btn_save);
     lv_label_set_text(lbl_save, "Save Settings");
-    lv_obj_set_style_text_font(lbl_save, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_save, ui_font_16, 0);
     lv_obj_center(lbl_save);
     lv_obj_add_event_cb(btn_save, btn_save_general_event_handler, LV_EVENT_CLICKED, NULL);
     
@@ -163,14 +163,14 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_reset, UITheme::BG_BUTTON, LV_PART_MAIN);
     lv_obj_t *lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, "Reset Defaults");
-    lv_obj_set_style_text_font(lbl_reset, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_reset, ui_font_16, 0);
     lv_obj_center(lbl_reset);
     lv_obj_add_event_cb(btn_reset, btn_reset_event_handler, LV_EVENT_CLICKED, NULL);
     
     // Status label (positioned above buttons)
     status_label = lv_label_create(tab);
     lv_label_set_text(status_label, "");
-    lv_obj_set_style_text_font(status_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(status_label, ui_font_14, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
     lv_obj_set_pos(status_label, 20, 335);
 }
@@ -292,14 +292,14 @@ static void showRotationRestartDialog() {
     // Title
     lv_obj_t *title = lv_label_create(dialog);
     lv_label_set_text(title, LV_SYMBOL_WARNING " Restart Required");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(title, ui_font_22, 0);
     lv_obj_set_style_text_color(title, UITheme::UI_WARNING, 0);
     lv_obj_set_pos(title, 0, 0);
     
     // Message
     lv_obj_t *message = lv_label_create(dialog);
     lv_label_set_text(message, "Display rotation requires a restart\nto take effect.\n\nRestart now?");
-    lv_obj_set_style_text_font(message, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(message, ui_font_18, 0);
     lv_obj_set_style_text_color(message, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(message, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_set_pos(message, 0, 45);
@@ -322,7 +322,7 @@ static void showRotationRestartDialog() {
     lv_obj_set_style_bg_color(btn_restart, UITheme::UI_WARNING, 0);
     lv_obj_t *lbl_restart = lv_label_create(btn_restart);
     lv_label_set_text(lbl_restart, LV_SYMBOL_REFRESH " Restart");
-    lv_obj_set_style_text_font(lbl_restart, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_restart, ui_font_18, 0);
     lv_obj_center(lbl_restart);
     lv_obj_add_event_cb(btn_restart, [](lv_event_t *e) {
         if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
@@ -334,7 +334,7 @@ static void showRotationRestartDialog() {
             
             lv_obj_t *restart_label = lv_label_create(backdrop);
             lv_label_set_text(restart_label, "Restarting...");
-            lv_obj_set_style_text_font(restart_label, &lv_font_montserrat_32, 0);
+            lv_obj_set_style_text_font(restart_label, ui_font_32, 0);
             lv_obj_set_style_text_color(restart_label, UITheme::UI_INFO, 0);
             lv_obj_set_style_text_align(restart_label, LV_TEXT_ALIGN_CENTER, 0);
             lv_obj_center(restart_label);
@@ -354,7 +354,7 @@ static void showRotationRestartDialog() {
     lv_obj_set_style_bg_color(btn_later, UITheme::BG_BUTTON, 0);
     lv_obj_t *lbl_later = lv_label_create(btn_later);
     lv_label_set_text(lbl_later, "Later");
-    lv_obj_set_style_text_font(lbl_later, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_later, ui_font_18, 0);
     lv_obj_center(lbl_later);
     lv_obj_add_event_cb(btn_later, [](lv_event_t *e) {
         if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
@@ -390,14 +390,14 @@ static void showAAxisRestartDialog() {
     // Title
     lv_obj_t *title = lv_label_create(dialog);
     lv_label_set_text(title, LV_SYMBOL_WARNING " Restart Required");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(title, ui_font_22, 0);
     lv_obj_set_style_text_color(title, UITheme::UI_WARNING, 0);
     lv_obj_set_pos(title, 0, 0);
 
     // Message
     lv_obj_t *message = lv_label_create(dialog);
     lv_label_set_text(message, "A-axis setting requires a restart\nto take effect.\n\nRestart now?");
-    lv_obj_set_style_text_font(message, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(message, ui_font_18, 0);
     lv_obj_set_style_text_color(message, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(message, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_set_pos(message, 0, 45);
@@ -420,7 +420,7 @@ static void showAAxisRestartDialog() {
     lv_obj_set_style_bg_color(btn_restart, UITheme::UI_WARNING, 0);
     lv_obj_t *lbl_restart = lv_label_create(btn_restart);
     lv_label_set_text(lbl_restart, LV_SYMBOL_REFRESH " Restart");
-    lv_obj_set_style_text_font(lbl_restart, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_restart, ui_font_18, 0);
     lv_obj_center(lbl_restart);
     lv_obj_add_event_cb(btn_restart, [](lv_event_t *e) {
         if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
@@ -432,7 +432,7 @@ static void showAAxisRestartDialog() {
 
             lv_obj_t *restart_label = lv_label_create(backdrop);
             lv_label_set_text(restart_label, "Restarting...");
-            lv_obj_set_style_text_font(restart_label, &lv_font_montserrat_32, 0);
+            lv_obj_set_style_text_font(restart_label, ui_font_32, 0);
             lv_obj_set_style_text_color(restart_label, UITheme::UI_INFO, 0);
             lv_obj_set_style_text_align(restart_label, LV_TEXT_ALIGN_CENTER, 0);
             lv_obj_center(restart_label);
@@ -452,7 +452,7 @@ static void showAAxisRestartDialog() {
     lv_obj_set_style_bg_color(btn_later, UITheme::BG_BUTTON, 0);
     lv_obj_t *lbl_later = lv_label_create(btn_later);
     lv_label_set_text(lbl_later, "Later");
-    lv_obj_set_style_text_font(lbl_later, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_later, ui_font_18, 0);
     lv_obj_center(lbl_later);
     lv_obj_add_event_cb(btn_later, [](lv_event_t *e) {
         if (lv_event_get_code(e) == LV_EVENT_CLICKED) {

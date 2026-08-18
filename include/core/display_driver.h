@@ -2,11 +2,16 @@
 #define DISPLAY_DRIVER_H
 
 #include <lvgl.h>
+#ifdef HARDWARE_TAB5
+// M5Stack Tab5: MIPI-DSI panel, graphics + touch via M5GFX board auto-detection
+// (supports both ILI9881C+GT911 early units and ST7123/ST7121 TDDI units)
+#include <M5GFX.h>
+typedef M5GFX LGFX;
+#else
 #include <LovyanGFX.hpp>
 #include <lgfx/v1/platforms/esp32s3/Panel_RGB.hpp>
 #include <lgfx/v1/platforms/esp32s3/Bus_RGB.hpp>
 #include <lgfx/v1/touch/Touch_GT911.hpp>
-#include "config.h"
 
 // LovyanGFX configuration for Elecrow CrowPanel 7"
 class LGFX : public lgfx::LGFX_Device
@@ -18,6 +23,8 @@ public:
 
   LGFX(void);
 };
+#endif
+#include "config.h"
 
 // Display driver class
 class DisplayDriver {
@@ -42,7 +49,12 @@ public:
     uint8_t getRotation() const;
     
 private:
+#ifdef HARDWARE_TAB5
+    LGFX &lcd;   // shared M5.Display instance (owned by M5Unified - must be
+                 // a single instance or the LEDA backlight PWM double-attaches)
+#else
     LGFX lcd;
+#endif
     lv_display_t *disp;
     lv_color_t *disp_draw_buf;
     lv_color_t *disp_draw_buf2;

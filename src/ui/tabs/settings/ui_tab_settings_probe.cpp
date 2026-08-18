@@ -46,7 +46,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     // Title
     lv_obj_t *title = lv_label_create(tab);
     lv_label_set_text(title, "PROBE CONTROL DEFAULTS");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(title, ui_font_18, 0);
     lv_obj_set_style_text_color(title, UITheme::TEXT_DISABLED, 0);  // Gray color
     lv_obj_set_pos(title, label_x, y_pos);
     
@@ -55,7 +55,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     // === Feed Rate ===
     lv_obj_t *lbl_feed = lv_label_create(tab);
     lv_label_set_text(lbl_feed, "Feed Rate (mm/min):");
-    lv_obj_set_style_text_font(lbl_feed, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_feed, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_feed, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(lbl_feed, label_x, y_pos + 12);  // Align with text area content
     
@@ -65,7 +65,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_feed, true);
     lv_textarea_set_max_length(ta_feed, 6);
     lv_textarea_set_accepted_chars(ta_feed, "0123456789");
-    lv_obj_set_style_text_font(ta_feed, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_feed, ui_font_18, 0);
     lv_obj_add_event_cb(ta_feed, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     char buf[16];
     snprintf(buf, sizeof(buf), "%d", default_feed_rate);
@@ -75,7 +75,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     // === Max Distance ===
     lv_obj_t *lbl_dist = lv_label_create(tab);
     lv_label_set_text(lbl_dist, "Max Distance (mm):");
-    lv_obj_set_style_text_font(lbl_dist, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_dist, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_dist, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(lbl_dist, label_x, y_pos + 12);  // Align with text area content
     
@@ -85,7 +85,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_dist, true);
     lv_textarea_set_max_length(ta_dist, 6);
     lv_textarea_set_accepted_chars(ta_dist, "0123456789");
-    lv_obj_set_style_text_font(ta_dist, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_dist, ui_font_18, 0);
     lv_obj_add_event_cb(ta_dist, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%d", default_max_distance);
     lv_textarea_set_text(ta_dist, buf);
@@ -94,7 +94,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     // === Retract Distance ===
     lv_obj_t *lbl_retract = lv_label_create(tab);
     lv_label_set_text(lbl_retract, "Retract (mm):");
-    lv_obj_set_style_text_font(lbl_retract, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_retract, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_retract, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(lbl_retract, label_x, y_pos + 12);  // Align with text area content
     
@@ -104,7 +104,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_retract, true);
     lv_textarea_set_max_length(ta_retract, 6);
     lv_textarea_set_accepted_chars(ta_retract, "0123456789");
-    lv_obj_set_style_text_font(ta_retract, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_retract, ui_font_18, 0);
     lv_obj_add_event_cb(ta_retract, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%d", default_retract);
     lv_textarea_set_text(ta_retract, buf);
@@ -113,7 +113,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     // === Probe Thickness ===
     lv_obj_t *lbl_thickness = lv_label_create(tab);
     lv_label_set_text(lbl_thickness, "Probe Thickness (mm):");
-    lv_obj_set_style_text_font(lbl_thickness, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_thickness, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_thickness, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(lbl_thickness, label_x, y_pos + 12);  // Align with text area content
     
@@ -123,7 +123,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     lv_textarea_set_one_line(ta_thickness, true);
     lv_textarea_set_max_length(ta_thickness, 8);
     lv_textarea_set_accepted_chars(ta_thickness, "0123456789.");
-    lv_obj_set_style_text_font(ta_thickness, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(ta_thickness, ui_font_18, 0);
     lv_obj_add_event_cb(ta_thickness, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     snprintf(buf, sizeof(buf), "%.1f", default_thickness);
     lv_textarea_set_text(ta_thickness, buf);
@@ -137,7 +137,7 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_save, UITheme::BTN_PLAY, LV_PART_MAIN);
     lv_obj_t *lbl_save = lv_label_create(btn_save);
     lv_label_set_text(lbl_save, "Save Settings");
-    lv_obj_set_style_text_font(lbl_save, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_save, ui_font_16, 0);
     lv_obj_center(lbl_save);
     lv_obj_add_event_cb(btn_save, btn_save_probe_event_handler, LV_EVENT_CLICKED, NULL);
     
@@ -148,14 +148,14 @@ void UITabSettingsProbe::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_reset, UITheme::BG_BUTTON, LV_PART_MAIN);
     lv_obj_t *lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, "Reset Defaults");
-    lv_obj_set_style_text_font(lbl_reset, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_reset, ui_font_16, 0);
     lv_obj_center(lbl_reset);
     lv_obj_add_event_cb(btn_reset, btn_reset_event_handler, LV_EVENT_CLICKED, NULL);
     
     // Status label (positioned below buttons with 10px gap)
     status_label = lv_label_create(tab);
     lv_label_set_text(status_label, "");
-    lv_obj_set_style_text_font(status_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(status_label, ui_font_14, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
     lv_obj_set_pos(status_label, 20, 335);  // 280 (button y) + 50 (button height) + 5 (gap)
 }
@@ -221,9 +221,10 @@ static void textarea_focused_event_handler(lv_event_t *e) {
 void UITabSettingsProbe::showKeyboard(lv_obj_t *ta) {
     if (!keyboard) {
         keyboard = lv_keyboard_create(lv_scr_act());
-        lv_obj_set_size(keyboard, SCREEN_WIDTH, 220);
+        lv_obj_set_size(keyboard, SCREEN_WIDTH, UI_SCALE_Y(220));
+        lv_obj_set_style_text_font(keyboard, UI_KBD_FONT, 0);
         lv_obj_align(keyboard, LV_ALIGN_BOTTOM_MID, 0, 0);
-        lv_obj_set_style_text_font(keyboard, &lv_font_montserrat_20, 0);  // Larger font for better visibility
+        lv_obj_set_style_text_font(keyboard, ui_font_20, 0);  // Larger font for better visibility
         lv_keyboard_set_mode(keyboard, LV_KEYBOARD_MODE_NUMBER);  // All probe settings are numeric
         lv_obj_add_event_cb(keyboard, [](lv_event_t *e) { UITabSettingsProbe::hideKeyboard(); }, LV_EVENT_READY, nullptr);
         lv_obj_add_event_cb(keyboard, [](lv_event_t *e) { UITabSettingsProbe::hideKeyboard(); }, LV_EVENT_CANCEL, nullptr);

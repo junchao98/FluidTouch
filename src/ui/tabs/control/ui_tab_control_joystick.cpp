@@ -590,7 +590,7 @@ static void rebuildJoystick() {
         
         lv_obj_t *xy_knob_label = lv_label_create(xy_knob);
         lv_label_set_text(xy_knob_label, "XY");
-        lv_obj_set_style_text_font(xy_knob_label, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(xy_knob_label, ui_font_20, 0);
         lv_obj_center(xy_knob_label);
         
         lv_obj_add_flag(xy_knob, LV_OBJ_FLAG_CLICKABLE);
@@ -626,7 +626,7 @@ static void rebuildJoystick() {
         
         lv_obj_t *x_knob_label = lv_label_create(xy_knob);
         lv_label_set_text(x_knob_label, "X");
-        lv_obj_set_style_text_font(x_knob_label, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(x_knob_label, ui_font_20, 0);
         lv_obj_center(x_knob_label);
         
         lv_obj_add_flag(xy_knob, LV_OBJ_FLAG_CLICKABLE);
@@ -662,7 +662,7 @@ static void rebuildJoystick() {
         
         lv_obj_t *y_knob_label = lv_label_create(xy_knob);
         lv_label_set_text(y_knob_label, "Y");
-        lv_obj_set_style_text_font(y_knob_label, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(y_knob_label, ui_font_20, 0);
         lv_obj_center(y_knob_label);
         
         lv_obj_add_flag(xy_knob, LV_OBJ_FLAG_CLICKABLE);
@@ -955,7 +955,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     // XY Label (centered above joystick) - will update based on mode
     xy_jog_label = lv_label_create(xy_outer_container);
     lv_label_set_text(xy_jog_label, "XY JOG");
-    lv_obj_set_style_text_font(xy_jog_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(xy_jog_label, ui_font_18, 0);
     lv_obj_set_style_text_color(xy_jog_label, UITheme::AXIS_XY, 0);
 
     // Joystick container (will be rebuilt based on mode)
@@ -988,7 +988,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     lv_obj_set_style_border_color(btn_xy, lv_color_white(), LV_PART_MAIN);
     lv_obj_t *lbl_xy = lv_label_create(btn_xy);
     lv_label_set_text(lbl_xy, "XY");
-    lv_obj_set_style_text_font(lbl_xy, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_xy, ui_font_16, 0);
     lv_obj_center(lbl_xy);
     lv_obj_add_event_cb(btn_xy, axis_button_event_handler, LV_EVENT_CLICKED, (void*)MODE_XY);
     
@@ -998,7 +998,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     lv_obj_set_style_bg_color(btn_x, UITheme::AXIS_X, LV_PART_MAIN);
     lv_obj_t *lbl_x = lv_label_create(btn_x);
     lv_label_set_text(lbl_x, "X");
-    lv_obj_set_style_text_font(lbl_x, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_x, ui_font_16, 0);
     lv_obj_center(lbl_x);
     lv_obj_add_event_cb(btn_x, axis_button_event_handler, LV_EVENT_CLICKED, (void*)MODE_X);
     
@@ -1008,7 +1008,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     lv_obj_set_style_bg_color(btn_y, UITheme::AXIS_Y, LV_PART_MAIN);
     lv_obj_t *lbl_y = lv_label_create(btn_y);
     lv_label_set_text(lbl_y, "Y");
-    lv_obj_set_style_text_font(lbl_y, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_y, ui_font_16, 0);
     lv_obj_center(lbl_y);
     lv_obj_add_event_cb(btn_y, axis_button_event_handler, LV_EVENT_CLICKED, (void*)MODE_Y);
 
@@ -1027,13 +1027,13 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     // XY Percentage (radial distance)
     xy_percent_label = lv_label_create(info_container);
     lv_label_set_text(xy_percent_label, "XY: 0%");
-    lv_obj_set_style_text_font(xy_percent_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(xy_percent_label, ui_font_20, 0);
     lv_obj_set_style_text_color(xy_percent_label, UITheme::JOYSTICK_XY, 0);
     
     // XY Feedrate
     xy_feedrate_label = lv_label_create(info_container);
     lv_label_set_text(xy_feedrate_label, "0 mm/min");
-    lv_obj_set_style_text_font(xy_feedrate_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(xy_feedrate_label, ui_font_18, 0);
     lv_obj_set_style_text_color(xy_feedrate_label, UITheme::TEXT_LIGHT, 0);
     
     // XY Max Feedrate (from settings)
@@ -1041,7 +1041,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     char xy_max_text[32];
     snprintf(xy_max_text, sizeof(xy_max_text), "Max: %d mm/min", UITabSettingsJog::getMaxXYFeed());
     lv_label_set_text(xy_max_label, xy_max_text);
-    lv_obj_set_style_text_font(xy_max_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(xy_max_label, ui_font_14, 0);
     lv_obj_set_style_text_color(xy_max_label, UITheme::UI_INFO, 0);
     
     // Spacer between XY and Z info
@@ -1053,13 +1053,13 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     // Z Percentage
     z_percent_label = lv_label_create(info_container);
     lv_label_set_text(z_percent_label, "Z: 0%");
-    lv_obj_set_style_text_font(z_percent_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(z_percent_label, ui_font_20, 0);
     lv_obj_set_style_text_color(z_percent_label, UITheme::AXIS_Z, 0);
     
     // Z Feedrate
     z_feedrate_label = lv_label_create(info_container);
     lv_label_set_text(z_feedrate_label, "0 mm/min");
-    lv_obj_set_style_text_font(z_feedrate_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(z_feedrate_label, ui_font_18, 0);
     lv_obj_set_style_text_color(z_feedrate_label, UITheme::TEXT_LIGHT, 0);
     
     // Z Max Feedrate (from settings)
@@ -1067,7 +1067,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     char z_max_text[32];
     snprintf(z_max_text, sizeof(z_max_text), "Max: %d mm/min", UITabSettingsJog::getMaxZFeed());
     lv_label_set_text(z_max_label, z_max_text);
-    lv_obj_set_style_text_font(z_max_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(z_max_label, ui_font_14, 0);
     lv_obj_set_style_text_color(z_max_label, UITheme::UI_INFO, 0);
 
     // A-axis info (conditional, hidden by default)
@@ -1075,14 +1075,14 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
         // A Percentage
         a_percent_label = lv_label_create(info_container);
         lv_label_set_text(a_percent_label, "A: 0%");
-        lv_obj_set_style_text_font(a_percent_label, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(a_percent_label, ui_font_20, 0);
         lv_obj_set_style_text_color(a_percent_label, UITheme::AXIS_A, 0);
         lv_obj_add_flag(a_percent_label, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
 
         // A Feedrate
         a_feedrate_label = lv_label_create(info_container);
         lv_label_set_text(a_feedrate_label, "0 mm/min");
-        lv_obj_set_style_text_font(a_feedrate_label, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(a_feedrate_label, ui_font_18, 0);
         lv_obj_set_style_text_color(a_feedrate_label, UITheme::TEXT_LIGHT, 0);
         lv_obj_add_flag(a_feedrate_label, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
 
@@ -1091,7 +1091,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
         char a_max_text[32];
         snprintf(a_max_text, sizeof(a_max_text), "Max: %d mm/min", UITabSettingsJog::getMaxAFeed());
         lv_label_set_text(a_max_label, a_max_text);
-        lv_obj_set_style_text_font(a_max_label, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(a_max_label, ui_font_14, 0);
         lv_obj_set_style_text_color(a_max_label, UITheme::UI_INFO, 0);
         lv_obj_add_flag(a_max_label, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
     }
@@ -1109,7 +1109,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     // Z/A Label (centered above slider) - will update based on mode
     za_jog_label = lv_label_create(za_outer_container);
     lv_label_set_text(za_jog_label, "Z JOG");
-    lv_obj_set_style_text_font(za_jog_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(za_jog_label, ui_font_18, 0);
     lv_obj_set_style_text_color(za_jog_label, UITheme::AXIS_Z, 0);
 
     // ========== Z Slider (Vertical) ==========
@@ -1150,7 +1150,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
     // Add label to Z knob
     lv_obj_t *z_knob_label = lv_label_create(z_knob);
     lv_label_set_text(z_knob_label, "Z");
-    lv_obj_set_style_text_font(z_knob_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(z_knob_label, ui_font_20, 0);
     lv_obj_center(z_knob_label);
 
    // Add drag event to knob
@@ -1198,7 +1198,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
         // Add label to A knob
         lv_obj_t *a_knob_label = lv_label_create(a_knob);
         lv_label_set_text(a_knob_label, "A");
-        lv_obj_set_style_text_font(a_knob_label, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(a_knob_label, ui_font_20, 0);
         lv_obj_center(a_knob_label);
 
         // Add drag event to knob
@@ -1227,7 +1227,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
         lv_obj_set_style_border_color(btn_z_mode, lv_color_white(), LV_PART_MAIN);
         lv_obj_t *lbl_z = lv_label_create(btn_z_mode);
         lv_label_set_text(lbl_z, "Z");
-        lv_obj_set_style_text_font(lbl_z, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_font(lbl_z, ui_font_16, 0);
         lv_obj_center(lbl_z);
         lv_obj_add_event_cb(btn_z_mode, za_joystick_toggle_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)1);
 
@@ -1237,7 +1237,7 @@ void UITabControlJoystick::create(lv_obj_t *parent) {
         lv_obj_set_style_bg_color(btn_a_mode, UITheme::AXIS_A, LV_PART_MAIN);
         lv_obj_t *lbl_a = lv_label_create(btn_a_mode);
         lv_label_set_text(lbl_a, "A");
-        lv_obj_set_style_text_font(lbl_a, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_font(lbl_a, ui_font_16, 0);
         lv_obj_center(lbl_a);
         lv_obj_add_event_cb(btn_a_mode, za_joystick_toggle_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)0);
     }

@@ -42,7 +42,7 @@ void UITabControl::create(lv_obj_t *tab) {
     lv_obj_set_style_pad_all(tab_bar, 0, LV_PART_ITEMS);
     lv_obj_set_style_pad_row(tab_bar, 0, 0);  // Remove vertical spacing between buttons
     lv_obj_set_style_pad_column(tab_bar, 0, 0);  // Remove horizontal spacing
-    lv_obj_set_style_text_font(tab_bar, &lv_font_montserrat_18, 0);  // Font for subtabs
+    lv_obj_set_style_text_font(tab_bar, ui_font_18, 0);  // Font for subtabs
     lv_obj_set_style_bg_color(tab_bar, UITheme::BG_DARKER, 0);  // Darker background for tab bar
 
     // Also ensure the content area has no padding
@@ -52,7 +52,7 @@ void UITabControl::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(sub_tabview, UITheme::BG_MEDIUM, LV_PART_ITEMS);
     lv_obj_set_style_text_color(sub_tabview, UITheme::TEXT_MEDIUM, LV_PART_ITEMS);
     lv_obj_set_style_border_width(sub_tabview, 0, LV_PART_ITEMS);
-    lv_obj_set_style_text_font(sub_tabview, &lv_font_montserrat_18, LV_PART_ITEMS);
+    lv_obj_set_style_text_font(sub_tabview, ui_font_18, LV_PART_ITEMS);
     
     // Style tab buttons (active/checked) - use a different accent color
     lv_obj_set_style_bg_color(sub_tabview, UITheme::ACCENT_SECONDARY, (lv_state_t)(LV_PART_ITEMS | LV_STATE_CHECKED));

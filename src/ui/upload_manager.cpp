@@ -68,7 +68,11 @@ bool UploadManager::ensureDirectoryExists(const String& machineIP, const String&
 bool UploadManager::init() {
     Serial.println("[UploadManager] Initializing SD card...");
     
-#ifdef HARDWARE_ADVANCE
+#ifdef HARDWARE_TAB5
+    Serial.println("[UploadManager] Tab5: SPI mode (MOSI=42, MISO=39, CLK=41, CS=40)");
+    SPI.begin(SD_CLK, SD_MISO, SD_MOSI, SD_CS);
+    if (!SD.begin(SD_CS, SPI, 4000000, "/sd", 5, false)) {
+#elif defined(HARDWARE_ADVANCE)
     Serial.println("[UploadManager] Advance: SPI mode (MOSI=6, MISO=4, CLK=5, CS=0/GND)");
     // CS is GPIO 0 per Elecrow example, though physically tied to GND
     SPI.begin(SD_CLK, SD_MISO, SD_MOSI, SD_CS);

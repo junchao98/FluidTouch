@@ -95,14 +95,14 @@ void UITabControlJog::create(lv_obj_t *tab) {
     // XY Jog header - centered above Y+ button
     lv_obj_t *xy_jog_header = lv_label_create(tab);
     lv_label_set_text(xy_jog_header, "XY JOG");
-    lv_obj_set_style_text_font(xy_jog_header, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(xy_jog_header, ui_font_18, 0);
     lv_obj_set_style_text_color(xy_jog_header, UITheme::AXIS_XY, 0);
     lv_obj_set_pos(xy_jog_header, 167, 5);  // Centered above Y+ button, shifted 2px right
     
     // XY Step size selection - VERTICAL buttons on left
     lv_obj_t *xy_step_label = lv_label_create(tab);
     lv_label_set_text(xy_step_label, "XY Step");
-    lv_obj_set_style_text_font(xy_step_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(xy_step_label, ui_font_14, 0);
     lv_obj_set_pos(xy_step_label, 5, 9);  // Moved down 4px total
     
     // XY Step size buttons - vertical (largest to smallest)
@@ -118,7 +118,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         char label_buf[12];
         formatStepValue(xy_step_values[i], label_buf, sizeof(label_buf));
         lv_label_set_text(lbl, label_buf);
-        lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(lbl, ui_font_14, 0);
         lv_obj_center(lbl);
     }
     update_xy_step_button_styles();
@@ -176,11 +176,11 @@ void UITabControlJog::create(lv_obj_t *tab) {
         
         if (i == 4) {
             xy_step_display_label = lbl;
-            lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+            lv_obj_set_style_text_font(lbl, ui_font_14, 0);
             lv_obj_set_style_text_align(lbl, LV_TEXT_ALIGN_CENTER, 0);
             // Don't update yet - xy_feedrate_label hasn't been created
         } else {
-            lv_obj_set_style_text_font(lbl, &lv_font_montserrat_32, 0);
+            lv_obj_set_style_text_font(lbl, ui_font_32, 0);
         }
         
         if (xy_rotations[i] != 0) {
@@ -195,7 +195,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     // XY Feed rate control
     lv_obj_t *xy_feed_label = lv_label_create(tab);
     lv_label_set_text(xy_feed_label, "XY Feed:");
-    lv_obj_set_style_text_font(xy_feed_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(xy_feed_label, ui_font_14, 0);
     lv_obj_set_pos(xy_feed_label, 85, 280);
     
     // XY Feedrate value (plain text label) - load from settings
@@ -203,7 +203,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     char xy_feed_buf[16];
     snprintf(xy_feed_buf, sizeof(xy_feed_buf), "%d", xy_current_feed);
     lv_label_set_text(xy_feedrate_label, xy_feed_buf);
-    lv_obj_set_style_text_font(xy_feedrate_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(xy_feedrate_label, ui_font_14, 0);
     lv_obj_set_pos(xy_feedrate_label, 155, 280);
     
     // Now update XY step display (after feedrate label exists)
@@ -211,7 +211,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     
     lv_obj_t *xy_feed_unit = lv_label_create(tab);
     lv_label_set_text(xy_feed_unit, "mm/min");
-    lv_obj_set_style_text_font(xy_feed_unit, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(xy_feed_unit, ui_font_14, 0);
     lv_obj_set_pos(xy_feed_unit, 205, 280);
     
     // XY Feedrate adjustment buttons - all on one line: -1000, -100, +100, +1000
@@ -221,7 +221,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_xy_minus1000, xy_feedrate_adj_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)-1000);
     lv_obj_t *lbl_xy_minus1000 = lv_label_create(btn_xy_minus1000);
     lv_label_set_text(lbl_xy_minus1000, "-1000");
-    lv_obj_set_style_text_font(lbl_xy_minus1000, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_xy_minus1000, ui_font_14, 0);
     lv_obj_center(lbl_xy_minus1000);
     
     lv_obj_t *btn_xy_minus100 = lv_button_create(tab);
@@ -230,7 +230,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_xy_minus100, xy_feedrate_adj_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)-100);
     lv_obj_t *lbl_xy_minus100 = lv_label_create(btn_xy_minus100);
     lv_label_set_text(lbl_xy_minus100, "-100");
-    lv_obj_set_style_text_font(lbl_xy_minus100, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_xy_minus100, ui_font_14, 0);
     lv_obj_center(lbl_xy_minus100);
     
     lv_obj_t *btn_xy_plus100 = lv_button_create(tab);
@@ -239,7 +239,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_xy_plus100, xy_feedrate_adj_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)100);
     lv_obj_t *lbl_xy_plus100 = lv_label_create(btn_xy_plus100);
     lv_label_set_text(lbl_xy_plus100, "+100");
-    lv_obj_set_style_text_font(lbl_xy_plus100, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_xy_plus100, ui_font_14, 0);
     lv_obj_center(lbl_xy_plus100);
     
     lv_obj_t *btn_xy_plus1000 = lv_button_create(tab);
@@ -248,7 +248,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_xy_plus1000, xy_feedrate_adj_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)1000);
     lv_obj_t *lbl_xy_plus1000 = lv_label_create(btn_xy_plus1000);
     lv_label_set_text(lbl_xy_plus1000, "+1000");
-    lv_obj_set_style_text_font(lbl_xy_plus1000, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_xy_plus1000, ui_font_14, 0);
     lv_obj_center(lbl_xy_plus1000);
     
     // ========== Z Section (Right side) ==========
@@ -256,7 +256,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     // Z/A Jog header - changes based on toggle state
     za_header = lv_label_create(tab);
     lv_label_set_text(za_header, "Z JOG");
-    lv_obj_set_style_text_font(za_header, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(za_header, ui_font_18, 0);
     lv_obj_set_style_text_color(za_header, UITheme::AXIS_Z, 0);
     lv_obj_set_pos(za_header, 467, 5);  // Centered above Z+ button at x=460
 
@@ -270,7 +270,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_set_style_bg_color(btn_z_mode, UITheme::ACCENT_PRIMARY, 0);  // Selected by default
         lv_obj_t *lbl_z = lv_label_create(btn_z_mode);
         lv_label_set_text(lbl_z, "Z");
-        lv_obj_set_style_text_font(lbl_z, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_z, ui_font_18, 0);
         lv_obj_center(lbl_z);
 
         // A button (right side) - 5px gap to match step button spacing
@@ -281,14 +281,14 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_set_style_bg_color(btn_a_mode, UITheme::BG_BUTTON, 0);  // Unselected by default
         lv_obj_t *lbl_a = lv_label_create(btn_a_mode);
         lv_label_set_text(lbl_a, "A");
-        lv_obj_set_style_text_font(lbl_a, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_a, ui_font_18, 0);
         lv_obj_center(lbl_a);
     }
 
     // Z Step size selection - VERTICAL buttons on left of Z controls
     z_step_label = lv_label_create(tab);
     lv_label_set_text(z_step_label, "Z Step");
-    lv_obj_set_style_text_font(z_step_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(z_step_label, ui_font_14, 0);
     lv_obj_set_pos(z_step_label, 395, 9);  // Moved down 4px total
     
     // Z Step size buttons - vertical (largest to smallest)
@@ -304,7 +304,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         char label_buf[12];
         formatStepValue(z_step_values[i], label_buf, sizeof(label_buf));
         lv_label_set_text(lbl, label_buf);
-        lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(lbl, ui_font_14, 0);
         lv_obj_center(lbl);
     }
     update_z_step_button_styles();
@@ -317,7 +317,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_z_up, z_jog_button_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)1);  // +Z
     lv_obj_t *lbl_z_up = lv_label_create(btn_z_up);
     lv_label_set_text(lbl_z_up, LV_SYMBOL_UP);
-    lv_obj_set_style_text_font(lbl_z_up, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(lbl_z_up, ui_font_32, 0);
     lv_obj_center(lbl_z_up);
 
     // Z step display (between up/down buttons)
@@ -329,7 +329,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_clear_flag(z_step_display_bg, LV_OBJ_FLAG_SCROLLABLE);
 
     z_step_display_label = lv_label_create(z_step_display_bg);
-    lv_obj_set_style_text_font(z_step_display_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(z_step_display_label, ui_font_14, 0);
     lv_obj_set_style_text_align(z_step_display_label, LV_TEXT_ALIGN_CENTER, 0);
     // Don't update yet - z_feedrate_label hasn't been created
     lv_obj_center(z_step_display_label);
@@ -342,13 +342,13 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_z_down, z_jog_button_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)-1);  // -Z
     lv_obj_t *lbl_z_down = lv_label_create(btn_z_down);
     lv_label_set_text(lbl_z_down, LV_SYMBOL_DOWN);
-    lv_obj_set_style_text_font(lbl_z_down, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(lbl_z_down, ui_font_32, 0);
     lv_obj_center(lbl_z_down);
 
     // Z Feed rate control
     z_feed_label = lv_label_create(tab);
     lv_label_set_text(z_feed_label, "Z Feed:");
-    lv_obj_set_style_text_font(z_feed_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(z_feed_label, ui_font_14, 0);
     lv_obj_set_pos(z_feed_label, 395, 280);
     
     // Z Feedrate value (plain text label) - load from settings
@@ -356,7 +356,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     char z_feed_buf[16];
     snprintf(z_feed_buf, sizeof(z_feed_buf), "%d", z_current_feed);
     lv_label_set_text(z_feedrate_label, z_feed_buf);
-    lv_obj_set_style_text_font(z_feedrate_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(z_feedrate_label, ui_font_14, 0);
     lv_obj_set_pos(z_feedrate_label, 460, 280);
     
     // Now update Z step display (after feedrate label exists)
@@ -364,7 +364,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
 
     z_feed_unit = lv_label_create(tab);
     lv_label_set_text(z_feed_unit, "mm/min");
-    lv_obj_set_style_text_font(z_feed_unit, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(z_feed_unit, ui_font_14, 0);
     lv_obj_set_pos(z_feed_unit, 505, 280);
 
     // Z Feedrate adjustment buttons - all on one line: -1000, -100, +100, +1000
@@ -374,7 +374,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_z_minus1000, z_feedrate_adj_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)-1000);
     lv_obj_t *lbl_z_minus1000 = lv_label_create(btn_z_minus1000);
     lv_label_set_text(lbl_z_minus1000, "-1000");
-    lv_obj_set_style_text_font(lbl_z_minus1000, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_z_minus1000, ui_font_14, 0);
     lv_obj_center(lbl_z_minus1000);
 
     btn_z_minus100 = lv_button_create(tab);
@@ -383,7 +383,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_z_minus100, z_feedrate_adj_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)-100);
     lv_obj_t *lbl_z_minus100 = lv_label_create(btn_z_minus100);
     lv_label_set_text(lbl_z_minus100, "-100");
-    lv_obj_set_style_text_font(lbl_z_minus100, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_z_minus100, ui_font_14, 0);
     lv_obj_center(lbl_z_minus100);
 
     btn_z_plus100 = lv_button_create(tab);
@@ -392,7 +392,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_z_plus100, z_feedrate_adj_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)100);
     lv_obj_t *lbl_z_plus100 = lv_label_create(btn_z_plus100);
     lv_label_set_text(lbl_z_plus100, "+100");
-    lv_obj_set_style_text_font(lbl_z_plus100, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_z_plus100, ui_font_14, 0);
     lv_obj_center(lbl_z_plus100);
 
     btn_z_plus1000 = lv_button_create(tab);
@@ -401,7 +401,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     lv_obj_add_event_cb(btn_z_plus1000, z_feedrate_adj_event_cb, LV_EVENT_CLICKED, (void*)(intptr_t)1000);
     lv_obj_t *lbl_z_plus1000 = lv_label_create(btn_z_plus1000);
     lv_label_set_text(lbl_z_plus1000, "+1000");
-    lv_obj_set_style_text_font(lbl_z_plus1000, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_z_plus1000, ui_font_14, 0);
     lv_obj_center(lbl_z_plus1000);
     
     // ========== Cancel Jog Button (Upper Right) ==========
@@ -421,7 +421,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
     
     lv_obj_t *lbl_cancel = lv_label_create(btn_cancel);
     lv_label_set_text(lbl_cancel, "STOP");
-    lv_obj_set_style_text_font(lbl_cancel, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_cancel, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_cancel, lv_color_white(), 0);
     lv_obj_center(lbl_cancel);
 
@@ -430,7 +430,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         // A Step size label
         a_step_label = lv_label_create(tab);
         lv_label_set_text(a_step_label, "A Step");
-        lv_obj_set_style_text_font(a_step_label, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(a_step_label, ui_font_14, 0);
         lv_obj_set_pos(a_step_label, 395, 9);  // Same position as Z step label
         lv_obj_add_flag(a_step_label, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
 
@@ -448,7 +448,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
             char label_buf[12];
             formatStepValue(a_step_values[i], label_buf, sizeof(label_buf));
             lv_label_set_text(lbl, label_buf);
-            lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+            lv_obj_set_style_text_font(lbl, ui_font_14, 0);
             lv_obj_center(lbl);
         }
 
@@ -461,7 +461,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_add_flag(btn_a_up, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
         lv_obj_t *lbl_a_up = lv_label_create(btn_a_up);
         lv_label_set_text(lbl_a_up, LV_SYMBOL_UP);
-        lv_obj_set_style_text_font(lbl_a_up, &lv_font_montserrat_32, 0);
+        lv_obj_set_style_text_font(lbl_a_up, ui_font_32, 0);
         lv_obj_center(lbl_a_up);
 
         // A step display (same position as Z)
@@ -474,7 +474,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_add_flag(a_step_display_bg, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
 
         a_step_display_label = lv_label_create(a_step_display_bg);
-        lv_obj_set_style_text_font(a_step_display_label, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(a_step_display_label, ui_font_14, 0);
         lv_obj_set_style_text_align(a_step_display_label, LV_TEXT_ALIGN_CENTER, 0);
         lv_obj_center(a_step_display_label);
 
@@ -487,13 +487,13 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_add_flag(btn_a_down, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
         lv_obj_t *lbl_a_down = lv_label_create(btn_a_down);
         lv_label_set_text(lbl_a_down, LV_SYMBOL_DOWN);
-        lv_obj_set_style_text_font(lbl_a_down, &lv_font_montserrat_32, 0);
+        lv_obj_set_style_text_font(lbl_a_down, ui_font_32, 0);
         lv_obj_center(lbl_a_down);
 
         // A Feed rate controls (same positions as Z)
         a_feed_label = lv_label_create(tab);
         lv_label_set_text(a_feed_label, "A Feed:");
-        lv_obj_set_style_text_font(a_feed_label, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(a_feed_label, ui_font_14, 0);
         lv_obj_set_pos(a_feed_label, 395, 280);
         lv_obj_add_flag(a_feed_label, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
 
@@ -501,7 +501,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         char a_feed_buf[16];
         snprintf(a_feed_buf, sizeof(a_feed_buf), "%d", a_current_feed);
         lv_label_set_text(a_feedrate_label, a_feed_buf);
-        lv_obj_set_style_text_font(a_feedrate_label, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(a_feedrate_label, ui_font_14, 0);
         lv_obj_set_pos(a_feedrate_label, 460, 280);
         lv_obj_add_flag(a_feedrate_label, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
 
@@ -510,7 +510,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
 
         a_feed_unit = lv_label_create(tab);
         lv_label_set_text(a_feed_unit, "mm/min");
-        lv_obj_set_style_text_font(a_feed_unit, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(a_feed_unit, ui_font_14, 0);
         lv_obj_set_pos(a_feed_unit, 505, 280);
         lv_obj_add_flag(a_feed_unit, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
 
@@ -522,7 +522,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_add_flag(a_feed_minus1000_btn, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
         lv_obj_t *lbl_a_minus1000 = lv_label_create(a_feed_minus1000_btn);
         lv_label_set_text(lbl_a_minus1000, "-1000");
-        lv_obj_set_style_text_font(lbl_a_minus1000, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(lbl_a_minus1000, ui_font_14, 0);
         lv_obj_center(lbl_a_minus1000);
 
         a_feed_minus100_btn = lv_button_create(tab);
@@ -532,7 +532,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_add_flag(a_feed_minus100_btn, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
         lv_obj_t *lbl_a_minus100 = lv_label_create(a_feed_minus100_btn);
         lv_label_set_text(lbl_a_minus100, "-100");
-        lv_obj_set_style_text_font(lbl_a_minus100, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(lbl_a_minus100, ui_font_14, 0);
         lv_obj_center(lbl_a_minus100);
 
         a_feed_plus100_btn = lv_button_create(tab);
@@ -542,7 +542,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_add_flag(a_feed_plus100_btn, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
         lv_obj_t *lbl_a_plus100 = lv_label_create(a_feed_plus100_btn);
         lv_label_set_text(lbl_a_plus100, "+100");
-        lv_obj_set_style_text_font(lbl_a_plus100, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(lbl_a_plus100, ui_font_14, 0);
         lv_obj_center(lbl_a_plus100);
 
         a_feed_plus1000_btn = lv_button_create(tab);
@@ -552,7 +552,7 @@ void UITabControlJog::create(lv_obj_t *tab) {
         lv_obj_add_flag(a_feed_plus1000_btn, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
         lv_obj_t *lbl_a_plus1000 = lv_label_create(a_feed_plus1000_btn);
         lv_label_set_text(lbl_a_plus1000, "+1000");
-        lv_obj_set_style_text_font(lbl_a_plus1000, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(lbl_a_plus1000, ui_font_14, 0);
         lv_obj_center(lbl_a_plus1000);
 
         // Update A step button styles

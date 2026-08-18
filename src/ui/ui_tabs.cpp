@@ -36,8 +36,8 @@ void UITabs::createTabs() {
     lv_obj_clear_flag(lv_tabview_get_content(tabview), LV_OBJ_FLAG_SCROLLABLE);
     
     // Style tab buttons with larger font
-    lv_obj_set_style_text_font(tab_bar, &lv_font_montserrat_20, 0);  // Direct to tab bar
-    lv_obj_set_style_text_font(tabview, &lv_font_montserrat_20, LV_PART_ITEMS);
+    lv_obj_set_style_text_font(tab_bar, ui_font_20, 0);  // Direct to tab bar
+    lv_obj_set_style_text_font(tabview, ui_font_20, LV_PART_ITEMS);
     lv_obj_set_style_bg_color(tabview, UITheme::BG_BUTTON, LV_PART_ITEMS);
     lv_obj_set_style_text_color(tabview, UITheme::TEXT_LIGHT, LV_PART_ITEMS);
     lv_obj_set_style_bg_color(tabview, UITheme::ACCENT_PRIMARY, (lv_state_t)(LV_PART_ITEMS | LV_STATE_CHECKED));

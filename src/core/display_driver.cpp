@@ -1,7 +1,11 @@
 #include "core/display_driver.h"
 #include <esp_heap_caps.h>
 #include <Wire.h>
+#ifdef HARDWARE_TAB5
+#include <M5Unified.h>  // M5.Display shared instance
+#endif
 
+#ifndef HARDWARE_TAB5
 // LovyanGFX constructor
 LGFX::LGFX(void) {
     {
@@ -149,10 +153,16 @@ LGFX::LGFX(void) {
         _panel_instance.setTouch(&_touch_instance);
     }
 }
+#endif  // !HARDWARE_TAB5
 
 // DisplayDriver constructor
+#ifdef HARDWARE_TAB5
+DisplayDriver::DisplayDriver() : lcd(M5.Display), disp(nullptr), disp_draw_buf(nullptr), disp_draw_buf2(nullptr), current_rotation(0) {
+}
+#else
 DisplayDriver::DisplayDriver() : disp(nullptr), disp_draw_buf(nullptr), disp_draw_buf2(nullptr), current_rotation(0) {
 }
+#endif
 
 // Initialize display
 bool DisplayDriver::init() {
@@ -160,7 +170,10 @@ bool DisplayDriver::init() {
     // Touch driver will call Wire.begin() again but that's safe if already initialized
     
     // Initialize backlight based on hardware variant
-#ifdef BACKLIGHT_PWM
+#if defined(HARDWARE_TAB5)
+    // Tab5: backlight (LEDA) managed by M5GFX; nothing to configure here
+    Serial.println("Initializing M5Stack Tab5 hardware (M5GFX)...");
+#elif defined(BACKLIGHT_PWM)
     // Basic: PWM backlight - configure but keep OFF until screen is cleared
     pinMode(2, OUTPUT);
     ledcAttach(2, 300, 8);  // IDF 5.3: attach PWM to pin 2, 300Hz, 8-bit resolution
@@ -180,8 +193,18 @@ bool DisplayDriver::init() {
     #error "No backlight type defined! Use -DBACKLIGHT_PWM or -DBACKLIGHT_I2C"
 #endif
     
+    // Initialize graphics
+#ifdef HARDWARE_TAB5
+    // Reuse the panel instance M5.begin() already initialized. Running
+    // init() on a second M5GFX instance double-attaches the LEDA backlight
+    // PWM (pin 22); the failed re-attach leaves the backlight OFF (black
+    // screen). Touch is also already initialized on this instance.
+    lcd.setRotation(1);  // panel is native portrait (720x1280) - use landscape
+    Serial.printf("M5GFX panel: %dx%d\n", lcd.width(), lcd.height());
+#else
     // Initialize LovyanGFX (this will initialize I2C for touch panel)
     lcd.init();
+#endif
     lcd.setColorDepth(16);
     lcd.setBrightness(255);
     lcd.fillScreen(0x0000);  // Clear screen to black
@@ -356,7 +379,10 @@ void DisplayDriver::setBacklight(uint8_t brightness_percent) {
     // Convert percentage (0-100) to hardware value (0-255)
     uint8_t hw_value = (brightness_percent * 255) / 100;
     
-#ifdef BACKLIGHT_PWM
+#ifdef HARDWARE_TAB5
+    // Tab5: backlight via M5GFX (LEDA PWM)
+    lcd.setBrightness(hw_value);
+#elif defined(BACKLIGHT_PWM)
     // Basic: PWM backlight on GPIO2
     ledcWrite(2, hw_value);  // Pin 2, not channel
 #elif defined(BACKLIGHT_I2C)
@@ -382,7 +408,11 @@ void DisplayDriver::setBacklightOn() {
 }
 
 void DisplayDriver::setBacklightOff() {
-#ifdef BACKLIGHT_PWM
+#ifdef HARDWARE_TAB5
+    // Tab5: backlight via M5GFX (LEDA PWM)
+    lcd.setBrightness(0);
+    Serial.println("Backlight OFF (M5GFX)");
+#elif defined(BACKLIGHT_PWM)
     // Basic: PWM backlight on GPIO2
     ledcWrite(2, 0);  // Pin 2, not channel
     Serial.println("Backlight OFF (PWM)");
@@ -426,7 +456,12 @@ void DisplayDriver::setRotation(uint8_t rotation) {
     }
     
     current_rotation = rotation;
+#ifdef HARDWARE_TAB5
+    // Tab5 panel is native portrait; landscape base = rotation 1
+    lcd.setRotation(rotation == 2 ? 3 : 1);
+#else
     lcd.setRotation(rotation);
+#endif
     Serial.printf("Display rotation set to %d degrees\n", rotation * 90);
 }
 

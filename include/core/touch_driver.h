@@ -4,8 +4,13 @@
 #include <lvgl.h>
 #include "config.h"
 
+#ifdef HARDWARE_TAB5
+// Tab5: LGFX is a typedef of M5GFX, include the full definition
+#include "core/display_driver.h"
+#else
 // Forward declaration
 class LGFX;
+#endif
 
 // Touch driver class
 class TouchDriver {

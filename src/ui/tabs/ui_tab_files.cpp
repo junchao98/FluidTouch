@@ -100,7 +100,7 @@ void UITabFiles::create(lv_obj_t *tab) {
     lv_dropdown_set_selected(storage_dropdown, 0);
     lv_obj_set_size(storage_dropdown, 150, 45);
     lv_obj_set_pos(storage_dropdown, 5, 5);
-    lv_obj_set_style_text_font(storage_dropdown, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(storage_dropdown, ui_font_16, 0);
     lv_obj_set_style_bg_color(storage_dropdown, UITheme::BG_BUTTON, 0);
     lv_obj_set_style_text_color(storage_dropdown, lv_color_white(), 0);
     lv_obj_add_event_cb(storage_dropdown, storage_dropdown_event_cb, LV_EVENT_VALUE_CHANGED, nullptr);
@@ -120,7 +120,7 @@ void UITabFiles::create(lv_obj_t *tab) {
     
     lv_obj_t *lbl_refresh = lv_label_create(btn_refresh);
     lv_label_set_text(lbl_refresh, LV_SYMBOL_REFRESH " Refresh");
-    lv_obj_set_style_text_font(lbl_refresh, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_refresh, ui_font_16, 0);
     lv_obj_center(lbl_refresh);
 
     // Up button (navigate to parent directory)
@@ -132,13 +132,13 @@ void UITabFiles::create(lv_obj_t *tab) {
     
     lv_obj_t *lbl_up = lv_label_create(btn_up);
     lv_label_set_text(lbl_up, LV_SYMBOL_UP " Up");
-    lv_obj_set_style_text_font(lbl_up, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_up, ui_font_16, 0);
     lv_obj_center(lbl_up);
 
     // Path label (shows current directory)
     path_label = lv_label_create(tab);
     lv_label_set_text(path_label, "/sd/");
-    lv_obj_set_style_text_font(path_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(path_label, ui_font_16, 0);
     lv_obj_set_style_text_color(path_label, UITheme::ACCENT_SECONDARY, 0);
     lv_obj_set_pos(path_label, 415, 9);
     lv_label_set_long_mode(path_label, LV_LABEL_LONG_DOT);
@@ -147,7 +147,7 @@ void UITabFiles::create(lv_obj_t *tab) {
     // Status label
     status_label = lv_label_create(tab);
     lv_label_set_text(status_label, "Click Refresh");
-    lv_obj_set_style_text_font(status_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(status_label, ui_font_16, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
     lv_obj_set_pos(status_label, 415, 32);
 
@@ -622,13 +622,13 @@ static void delete_button_event_cb(lv_event_t *e) {
         // Warning icon and title
         lv_obj_t *title = lv_label_create(content);
         lv_label_set_text_fmt(title, "%s Delete File?", LV_SYMBOL_WARNING);
-        lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+        lv_obj_set_style_text_font(title, ui_font_22, 0);
         lv_obj_set_style_text_color(title, UITheme::STATE_ALARM, 0);
         
         // File name
         lv_obj_t *name_label = lv_label_create(content);
         lv_label_set_text_fmt(name_label, "%s", filename);
-        lv_obj_set_style_text_font(name_label, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(name_label, ui_font_20, 0);
         lv_obj_set_style_text_color(name_label, UITheme::TEXT_LIGHT, 0);
         lv_obj_set_style_text_align(name_label, LV_TEXT_ALIGN_CENTER, 0);
         lv_label_set_long_mode(name_label, LV_LABEL_LONG_DOT);
@@ -637,7 +637,7 @@ static void delete_button_event_cb(lv_event_t *e) {
         // Message
         lv_obj_t *msg_label = lv_label_create(content);
         lv_label_set_text(msg_label, "This action cannot be undone.");
-        lv_obj_set_style_text_font(msg_label, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_font(msg_label, ui_font_16, 0);
         lv_obj_set_style_text_color(msg_label, UITheme::UI_WARNING, 0);
         
         // Button container
@@ -665,7 +665,7 @@ static void delete_button_event_cb(lv_event_t *e) {
         
         lv_obj_t *cancel_label = lv_label_create(cancel_btn);
         lv_label_set_text(cancel_label, "Cancel");
-        lv_obj_set_style_text_font(cancel_label, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(cancel_label, ui_font_18, 0);
         lv_obj_center(cancel_label);
         
         // Delete button
@@ -677,7 +677,7 @@ static void delete_button_event_cb(lv_event_t *e) {
         
         lv_obj_t *delete_label = lv_label_create(delete_btn);
         lv_label_set_text(delete_label, LV_SYMBOL_TRASH " Delete");
-        lv_obj_set_style_text_font(delete_label, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(delete_label, ui_font_18, 0);
         lv_obj_center(delete_label);
         
         storage_index = (storage_index + 1) % 10;
@@ -823,7 +823,7 @@ void UITabFiles::updateFileListUI() {
     if (cache->file_list.empty()) {
         lv_obj_t *empty_label = lv_label_create(file_list_container);
         lv_label_set_text(empty_label, "No files found");
-        lv_obj_set_style_text_font(empty_label, &lv_font_montserrat_24, 0);
+        lv_obj_set_style_text_font(empty_label, ui_font_24, 0);
         lv_obj_set_style_text_color(empty_label, UITheme::TEXT_MEDIUM, 0);
         
         if (status_label) {
@@ -882,7 +882,7 @@ void UITabFiles::updateFileListUI() {
             lv_label_set_text(lbl_filename, file.name.c_str());
             lv_obj_set_style_text_color(lbl_filename, lv_color_white(), 0);
         }
-        lv_obj_set_style_text_font(lbl_filename, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_font(lbl_filename, ui_font_20, 0);
         lv_obj_align(lbl_filename, LV_ALIGN_LEFT_MID, 5, 0);
         lv_label_set_long_mode(lbl_filename, LV_LABEL_LONG_DOT);
         lv_obj_set_width(lbl_filename, file.is_directory ? 720 : 400);
@@ -900,7 +900,7 @@ void UITabFiles::updateFileListUI() {
                 snprintf(size_str, sizeof(size_str), "%d B", file.size);
             }
             lv_label_set_text(lbl_size, size_str);
-            lv_obj_set_style_text_font(lbl_size, &lv_font_montserrat_20, 0);
+            lv_obj_set_style_text_font(lbl_size, ui_font_20, 0);
             lv_obj_set_style_text_color(lbl_size, UITheme::TEXT_MEDIUM, 0);
             lv_obj_align(lbl_size, LV_ALIGN_LEFT_MID, 420, 0);
             
@@ -916,7 +916,7 @@ void UITabFiles::updateFileListUI() {
                 
                 lv_obj_t *lbl_upload = lv_label_create(btn_upload);
                 lv_label_set_text(lbl_upload, LV_SYMBOL_UPLOAD " Upload");
-                lv_obj_set_style_text_font(lbl_upload, &lv_font_montserrat_18, 0);
+                lv_obj_set_style_text_font(lbl_upload, ui_font_18, 0);
                 lv_obj_center(lbl_upload);
             } else {
                 // Delete button (for FluidNC files)
@@ -929,7 +929,7 @@ void UITabFiles::updateFileListUI() {
                 
                 lv_obj_t *lbl_delete = lv_label_create(btn_delete);
                 lv_label_set_text(lbl_delete, LV_SYMBOL_TRASH);
-                lv_obj_set_style_text_font(lbl_delete, &lv_font_montserrat_18, 0);
+                lv_obj_set_style_text_font(lbl_delete, ui_font_18, 0);
                 lv_obj_center(lbl_delete);
                 
                 // Play button (for FluidNC files)
@@ -942,7 +942,7 @@ void UITabFiles::updateFileListUI() {
                 
                 lv_obj_t *lbl_play = lv_label_create(btn_play);
                 lv_label_set_text(lbl_play, LV_SYMBOL_PLAY);
-                lv_obj_set_style_text_font(lbl_play, &lv_font_montserrat_18, 0);
+                lv_obj_set_style_text_font(lbl_play, ui_font_18, 0);
                 lv_obj_center(lbl_play);
             }
         }  // End of if (!file.is_directory)
@@ -1102,7 +1102,7 @@ void UITabFiles::upload_button_event_cb(lv_event_t *e) {
         
         lv_obj_t *label = lv_label_create(content);
         lv_label_set_text(label, "SD card not available.\nPlease insert SD card.");
-        lv_obj_set_style_text_font(label, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(label, ui_font_18, 0);
         lv_obj_align(label, LV_ALIGN_CENTER, 0, -20);
         
         lv_obj_t *btn = lv_btn_create(content);
@@ -1114,7 +1114,7 @@ void UITabFiles::upload_button_event_cb(lv_event_t *e) {
         
         lv_obj_t *btn_label = lv_label_create(btn);
         lv_label_set_text(btn_label, "OK");
-        lv_obj_set_style_text_font(btn_label, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(btn_label, ui_font_18, 0);
         lv_obj_center(btn_label);
         
         return;
@@ -1167,14 +1167,14 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     // Title
     lv_obj_t *title = lv_label_create(content);
     lv_label_set_text(title, LV_SYMBOL_UPLOAD " Upload to FluidNC");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(title, ui_font_22, 0);
     lv_obj_set_style_text_color(title, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 0);
     
     // Filename
     lv_obj_t *lbl_filename = lv_label_create(content);
     lv_label_set_text_fmt(lbl_filename, "File: %s", filename);
-    lv_obj_set_style_text_font(lbl_filename, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_filename, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_filename, UITheme::TEXT_LIGHT, 0);
     lv_label_set_long_mode(lbl_filename, LV_LABEL_LONG_DOT);
     lv_obj_set_width(lbl_filename, 550);
@@ -1191,7 +1191,7 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
         snprintf(sizeText, sizeof(sizeText), "Size: %.2f KB", sizeKB);
     }
     lv_label_set_text(lbl_size, sizeText);
-    lv_obj_set_style_text_font(lbl_size, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_size, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_size, UITheme::TEXT_LIGHT, 0);
     lv_obj_align(lbl_size, LV_ALIGN_TOP_LEFT, 0, 80);
     
@@ -1203,7 +1203,7 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
         destPath = destPath.substring(0, destPath.length() - 1);
     }
     lv_label_set_text_fmt(lbl_dest, "Destination: /sd%s/%s", destPath.c_str(), filename);
-    lv_obj_set_style_text_font(lbl_dest, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_dest, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_dest, UITheme::TEXT_LIGHT, 0);
     lv_label_set_long_mode(lbl_dest, LV_LABEL_LONG_DOT);
     lv_obj_set_width(lbl_dest, 550);
@@ -1282,7 +1282,7 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     
     lv_obj_t *lbl_upload = lv_label_create(btn_upload);
     lv_label_set_text(lbl_upload, "Upload");
-    lv_obj_set_style_text_font(lbl_upload, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_upload, ui_font_18, 0);
     lv_obj_center(lbl_upload);
     
     // Cancel button (right side)
@@ -1296,7 +1296,7 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     
     lv_obj_t *lbl_cancel = lv_label_create(btn_cancel);
     lv_label_set_text(lbl_cancel, "Cancel");
-    lv_obj_set_style_text_font(lbl_cancel, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_cancel, ui_font_18, 0);
     lv_obj_center(lbl_cancel);
 }
 
@@ -1341,14 +1341,14 @@ void UITabFiles::showUploadProgress(const char* filename) {
     // Title
     lv_obj_t *title = lv_label_create(content);
     lv_label_set_text(title, LV_SYMBOL_UPLOAD " Uploading...");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(title, ui_font_22, 0);
     lv_obj_set_style_text_color(title, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 0);
     
     // Filename
     lv_obj_t *lbl_filename = lv_label_create(content);
     lv_label_set_text_fmt(lbl_filename, "File: %s", filename);
-    lv_obj_set_style_text_font(lbl_filename, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_filename, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_filename, UITheme::TEXT_LIGHT, 0);
     lv_label_set_long_mode(lbl_filename, LV_LABEL_LONG_DOT);
     lv_obj_set_width(lbl_filename, 550);
@@ -1367,7 +1367,7 @@ void UITabFiles::showUploadProgress(const char* filename) {
     // Progress label
     upload_progress_label = lv_label_create(content);
     lv_label_set_text(upload_progress_label, "0 KB / 0 KB (0%)");
-    lv_obj_set_style_text_font(upload_progress_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(upload_progress_label, ui_font_18, 0);
     lv_obj_set_style_text_color(upload_progress_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_align(upload_progress_label, LV_ALIGN_TOP_LEFT, 0, 130);
     
@@ -1375,7 +1375,7 @@ void UITabFiles::showUploadProgress(const char* filename) {
     
     // Info text at bottom (will be replaced with Close button on success)
     lv_obj_t *lbl_info = lv_label_create(content);
-    lv_obj_set_style_text_font(lbl_info, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl_info, ui_font_16, 0);
     lv_obj_set_style_text_color(lbl_info, UITheme::TEXT_DISABLED, 0);
     lv_obj_align(lbl_info, LV_ALIGN_BOTTOM_MID, 0, -10);
     lv_label_set_text(lbl_info, "Reset device to cancel upload");
@@ -1474,7 +1474,7 @@ void UITabFiles::closeUploadProgress(bool success, const char* error) {
             
             lv_obj_t *lbl_goto = lv_label_create(btn_goto);
             lv_label_set_text(lbl_goto, "Open Upload Folder");
-            lv_obj_set_style_text_font(lbl_goto, &lv_font_montserrat_18, 0);
+            lv_obj_set_style_text_font(lbl_goto, ui_font_18, 0);
             lv_obj_center(lbl_goto);
             
             // Close button (RIGHT)
@@ -1494,7 +1494,7 @@ void UITabFiles::closeUploadProgress(bool success, const char* error) {
             
             lv_obj_t *lbl_close = lv_label_create(btn_close);
             lv_label_set_text(lbl_close, "Close");
-            lv_obj_set_style_text_font(lbl_close, &lv_font_montserrat_18, 0);
+            lv_obj_set_style_text_font(lbl_close, ui_font_18, 0);
             lv_obj_center(lbl_close);
         }
         
@@ -1519,7 +1519,7 @@ void UITabFiles::closeUploadProgress(bool success, const char* error) {
             if (error && !strstr(error, "cancelled")) {
                 lv_obj_t *error_label = lv_label_create(content);
                 lv_label_set_text(error_label, error);
-                lv_obj_set_style_text_font(error_label, &lv_font_montserrat_16, 0);
+                lv_obj_set_style_text_font(error_label, ui_font_16, 0);
                 lv_obj_set_style_text_color(error_label, UITheme::TEXT_LIGHT, 0);
                 lv_obj_align(error_label, LV_ALIGN_TOP_LEFT, 0, 180);
             }

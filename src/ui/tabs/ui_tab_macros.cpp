@@ -65,7 +65,7 @@ void UITabMacros::create(lv_obj_t *tab) {
     // Macro name label
     lbl_macro_name = lv_label_create(progress_container);
     lv_label_set_text(lbl_macro_name, "Running: Macro Name");
-    lv_obj_set_style_text_font(lbl_macro_name, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_macro_name, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_macro_name, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(lbl_macro_name, 0, 0);
     lv_label_set_long_mode(lbl_macro_name, LV_LABEL_LONG_DOT);
@@ -82,14 +82,14 @@ void UITabMacros::create(lv_obj_t *tab) {
     // Percentage label
     lbl_percent = lv_label_create(progress_container);
     lv_label_set_text(lbl_percent, "0%");
-    lv_obj_set_style_text_font(lbl_percent, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_percent, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_percent, UITheme::UI_SUCCESS, 0);
     lv_obj_set_pos(lbl_percent, 510, 18);
     
     // Message label
     lbl_message = lv_label_create(progress_container);
     lv_label_set_text(lbl_message, "");
-    lv_obj_set_style_text_font(lbl_message, &lv_font_montserrat_14, 0);  // Increased from 12 to 14
+    lv_obj_set_style_text_font(lbl_message, ui_font_14, 0);  // Increased from 12 to 14
     lv_obj_set_style_text_color(lbl_message, UITheme::UI_INFO, 0);
     lv_obj_set_pos(lbl_message, 0, 40);
     lv_label_set_long_mode(lbl_message, LV_LABEL_LONG_DOT);
@@ -104,7 +104,7 @@ void UITabMacros::create(lv_obj_t *tab) {
     
     lv_obj_t *edit_label = lv_label_create(btn_edit);
     lv_label_set_text(edit_label, LV_SYMBOL_EDIT " Edit");
-    lv_obj_set_style_text_font(edit_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(edit_label, ui_font_16, 0);
     lv_obj_center(edit_label);
 
     // Add button (initially hidden)
@@ -117,7 +117,7 @@ void UITabMacros::create(lv_obj_t *tab) {
     
     lv_obj_t *add_label = lv_label_create(btn_add);
     lv_label_set_text(add_label, LV_SYMBOL_PLUS " Add");
-    lv_obj_set_style_text_font(add_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(add_label, ui_font_16, 0);
     lv_obj_center(add_label);
 
     // Done button (initially hidden)
@@ -130,7 +130,7 @@ void UITabMacros::create(lv_obj_t *tab) {
     
     lv_obj_t *done_label = lv_label_create(btn_done);
     lv_label_set_text(done_label, LV_SYMBOL_OK " Done");
-    lv_obj_set_style_text_font(done_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(done_label, ui_font_16, 0);
     lv_obj_center(done_label);
 
     // Macro container for flex layout
@@ -147,7 +147,7 @@ void UITabMacros::create(lv_obj_t *tab) {
     // Empty message label (shown when no macros configured)
     lbl_empty_message = lv_label_create(macro_container);
     lv_label_set_text(lbl_empty_message, "No macros configured.\n\nClick " LV_SYMBOL_EDIT " Edit to add macros.\n\nMacro files must be on machine SD card in /fluidtouch/macros directory.");
-    lv_obj_set_style_text_font(lbl_empty_message, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(lbl_empty_message, ui_font_24, 0);
     lv_obj_set_style_text_color(lbl_empty_message, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(lbl_empty_message, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_set_width(lbl_empty_message, 700);  // Constrain width for better text layout
@@ -279,7 +279,7 @@ void UITabMacros::refreshMacroList() {
             
             lv_obj_t *btn_label = lv_label_create(macro_buttons[i]);
             lv_label_set_text(btn_label, macros[i].name);
-            lv_obj_set_style_text_font(btn_label, &lv_font_montserrat_22, 0);
+            lv_obj_set_style_text_font(btn_label, ui_font_22, 0);
             lv_obj_align(btn_label, LV_ALIGN_LEFT_MID, 10, 0);
             
             // Up button
@@ -295,7 +295,7 @@ void UITabMacros::refreshMacroList() {
             
             lv_obj_t *up_label = lv_label_create(up_buttons[i]);
             lv_label_set_text(up_label, LV_SYMBOL_UP);
-            lv_obj_set_style_text_font(up_label, &lv_font_montserrat_22, 0);
+            lv_obj_set_style_text_font(up_label, ui_font_22, 0);
             lv_obj_center(up_label);
             
             // Down button
@@ -316,7 +316,7 @@ void UITabMacros::refreshMacroList() {
             
             lv_obj_t *down_label = lv_label_create(down_buttons[i]);
             lv_label_set_text(down_label, LV_SYMBOL_DOWN);
-            lv_obj_set_style_text_font(down_label, &lv_font_montserrat_22, 0);
+            lv_obj_set_style_text_font(down_label, ui_font_22, 0);
             lv_obj_center(down_label);
             
             // Edit button - same width as ordering buttons
@@ -328,7 +328,7 @@ void UITabMacros::refreshMacroList() {
             
             lv_obj_t *edit_label = lv_label_create(edit_buttons[i]);
             lv_label_set_text(edit_label, LV_SYMBOL_EDIT);
-            lv_obj_set_style_text_font(edit_label, &lv_font_montserrat_22, 0);
+            lv_obj_set_style_text_font(edit_label, ui_font_22, 0);
             lv_obj_center(edit_label);
             
             // Delete button - same width as ordering buttons
@@ -340,7 +340,7 @@ void UITabMacros::refreshMacroList() {
             
             lv_obj_t *delete_label = lv_label_create(delete_buttons[i]);
             lv_label_set_text(delete_label, LV_SYMBOL_TRASH);
-            lv_obj_set_style_text_font(delete_label, &lv_font_montserrat_20, 0);
+            lv_obj_set_style_text_font(delete_label, ui_font_20, 0);
             lv_obj_center(delete_label);
             
             displayed_index++;
@@ -365,7 +365,7 @@ void UITabMacros::refreshMacroList() {
             
             lv_obj_t *label = lv_label_create(macro_buttons[i]);
             lv_label_set_text(label, macros[i].name);
-            lv_obj_set_style_text_font(label, &lv_font_montserrat_20, 0);
+            lv_obj_set_style_text_font(label, ui_font_20, 0);
             lv_obj_center(label);
         }
     }
@@ -380,7 +380,7 @@ void UITabMacros::refreshMacroList() {
         // Recreate empty message label since we cleared the container
         lbl_empty_message = lv_label_create(macro_container);
         lv_label_set_text(lbl_empty_message, "No macros configured.\n\nClick " LV_SYMBOL_EDIT " Edit to add macros.\n\nMacro files must be on machine SD card in /fluidtouch/macros directory.");
-        lv_obj_set_style_text_font(lbl_empty_message, &lv_font_montserrat_24, 0);
+        lv_obj_set_style_text_font(lbl_empty_message, ui_font_24, 0);
         lv_obj_set_style_text_color(lbl_empty_message, UITheme::TEXT_LIGHT, 0);
         lv_obj_set_style_text_align(lbl_empty_message, LV_TEXT_ALIGN_CENTER, 0);
         lv_obj_set_width(lbl_empty_message, 700);  // Constrain width for better text layout
@@ -547,21 +547,21 @@ void UITabMacros::showConfigDialog(bool is_add) {
     // Title
     lv_obj_t *title = lv_label_create(dialog);
     lv_label_set_text(title, is_add ? "Add Macro" : "Edit Macro");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(title, ui_font_24, 0);
     lv_obj_set_style_text_color(title, UITheme::ACCENT_SECONDARY, 0);
     lv_obj_set_pos(title, 0, 0);
     
     // Name label
     lv_obj_t *name_label = lv_label_create(dialog);
     lv_label_set_text(name_label, "Name:");
-    lv_obj_set_style_text_font(name_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(name_label, ui_font_20, 0);
     lv_obj_set_pos(name_label, 0, 50);
     
     // Name textarea
     config_name_textarea = lv_textarea_create(dialog);
     lv_obj_set_size(config_name_textarea, 560, 50);
     lv_obj_set_pos(config_name_textarea, 0, 80);
-    lv_obj_set_style_text_font(config_name_textarea, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(config_name_textarea, ui_font_20, 0);
     lv_textarea_set_max_length(config_name_textarea, 31);
     lv_textarea_set_one_line(config_name_textarea, true);
     lv_obj_add_event_cb(config_name_textarea, onTextareaFocused, LV_EVENT_FOCUSED, nullptr);
@@ -573,7 +573,7 @@ void UITabMacros::showConfigDialog(bool is_add) {
     // File Path label
     lv_obj_t *path_label = lv_label_create(dialog);
     lv_label_set_text(path_label, "File: /sd/fluidtouch/macros/");
-    lv_obj_set_style_text_font(path_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(path_label, ui_font_20, 0);
     lv_obj_set_pos(path_label, 0, 145);
     
     // Load macro files from SD card
@@ -583,7 +583,7 @@ void UITabMacros::showConfigDialog(bool is_add) {
     config_path_dropdown = lv_dropdown_create(dialog);
     lv_obj_set_size(config_path_dropdown, 490, 50);
     lv_obj_set_pos(config_path_dropdown, 0, 175);
-    lv_obj_set_style_text_font(config_path_dropdown, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(config_path_dropdown, ui_font_20, 0);
     
     // Refresh button for file list
     lv_obj_t *btn_refresh = lv_button_create(dialog);
@@ -594,7 +594,7 @@ void UITabMacros::showConfigDialog(bool is_add) {
     
     lv_obj_t *refresh_icon = lv_label_create(btn_refresh);
     lv_label_set_text(refresh_icon, LV_SYMBOL_REFRESH);
-    lv_obj_set_style_text_font(refresh_icon, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(refresh_icon, ui_font_20, 0);
     lv_obj_center(refresh_icon);
     
     // Populate dropdown with files
@@ -624,7 +624,7 @@ void UITabMacros::showConfigDialog(bool is_add) {
     // Color label
     lv_obj_t *color_label = lv_label_create(dialog);
     lv_label_set_text(color_label, "Color:");
-    lv_obj_set_style_text_font(color_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(color_label, ui_font_18, 0);
     lv_obj_set_pos(color_label, 0, 240);
     
     // Color button grid (single row of 8 buttons)
@@ -646,7 +646,7 @@ void UITabMacros::showConfigDialog(bool is_add) {
             
             lv_obj_t *check = lv_label_create(config_color_buttons[i]);
             lv_label_set_text(check, LV_SYMBOL_OK);
-            lv_obj_set_style_text_font(check, &lv_font_montserrat_24, 0);
+            lv_obj_set_style_text_font(check, ui_font_24, 0);
             lv_obj_set_style_text_color(check, lv_color_hex(0xFFFFFF), 0);
             lv_obj_center(check);
         } else {
@@ -665,7 +665,7 @@ void UITabMacros::showConfigDialog(bool is_add) {
     
     lv_obj_t *cancel_label = lv_label_create(btn_cancel);
     lv_label_set_text(cancel_label, "Cancel");
-    lv_obj_set_style_text_font(cancel_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(cancel_label, ui_font_18, 0);
     lv_obj_center(cancel_label);
     
     // Save button
@@ -677,7 +677,7 @@ void UITabMacros::showConfigDialog(bool is_add) {
     
     lv_obj_t *save_label = lv_label_create(btn_save);
     lv_label_set_text(save_label, "Save");
-    lv_obj_set_style_text_font(save_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(save_label, ui_font_18, 0);
     lv_obj_center(save_label);
 }
 
@@ -765,13 +765,13 @@ void UITabMacros::showDeleteConfirmDialog() {
     // Warning icon and title
     lv_obj_t *title = lv_label_create(content);
     lv_label_set_text_fmt(title, "%s Delete Macro?", LV_SYMBOL_WARNING);
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(title, ui_font_22, 0);
     lv_obj_set_style_text_color(title, UITheme::STATE_ALARM, 0);
     
     // Macro name
     lv_obj_t *name_label = lv_label_create(content);
     lv_label_set_text(name_label, macros[editing_index].name);
-    lv_obj_set_style_text_font(name_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(name_label, ui_font_20, 0);
     lv_obj_set_style_text_color(name_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(name_label, LV_TEXT_ALIGN_CENTER, 0);
     lv_label_set_long_mode(name_label, LV_LABEL_LONG_DOT);
@@ -780,7 +780,7 @@ void UITabMacros::showDeleteConfirmDialog() {
     // Message
     lv_obj_t *msg_label = lv_label_create(content);
     lv_label_set_text(msg_label, "This action cannot be undone.");
-    lv_obj_set_style_text_font(msg_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(msg_label, ui_font_16, 0);
     lv_obj_set_style_text_color(msg_label, UITheme::UI_WARNING, 0);
     
     // Button container
@@ -801,7 +801,7 @@ void UITabMacros::showDeleteConfirmDialog() {
     
     lv_obj_t *cancel_label = lv_label_create(cancel_btn);
     lv_label_set_text(cancel_label, "Cancel");
-    lv_obj_set_style_text_font(cancel_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(cancel_label, ui_font_18, 0);
     lv_obj_center(cancel_label);
     
     // Delete button
@@ -812,7 +812,7 @@ void UITabMacros::showDeleteConfirmDialog() {
     
     lv_obj_t *delete_label = lv_label_create(delete_btn);
     lv_label_set_text(delete_label, LV_SYMBOL_TRASH " Delete");
-    lv_obj_set_style_text_font(delete_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(delete_label, ui_font_18, 0);
     lv_obj_center(delete_label);
 }
 
@@ -867,7 +867,7 @@ void UITabMacros::onColorButtonClicked(lv_event_t *e) {
                 
                 lv_obj_t *check = lv_label_create(config_color_buttons[i]);
                 lv_label_set_text(check, LV_SYMBOL_OK);
-                lv_obj_set_style_text_font(check, &lv_font_montserrat_24, 0);
+                lv_obj_set_style_text_font(check, ui_font_24, 0);
                 lv_obj_set_style_text_color(check, lv_color_hex(0xFFFFFF), 0);
                 lv_obj_center(check);
             } else {
@@ -893,9 +893,10 @@ void UITabMacros::showKeyboard(lv_obj_t *textarea) {
     }
     
     keyboard = lv_keyboard_create(lv_scr_act());
-    lv_obj_set_size(keyboard, 800, 280);
+    lv_obj_set_size(keyboard, UI_SCALE_X(800), UI_SCALE_Y(280));
+    lv_obj_set_style_text_font(keyboard, UI_KBD_FONT, 0);
     lv_obj_align(keyboard, LV_ALIGN_BOTTOM_MID, 0, 0);
-    lv_obj_set_style_text_font(keyboard, &lv_font_montserrat_20, 0);  // Larger font for better visibility
+    lv_obj_set_style_text_font(keyboard, ui_font_20, 0);  // Larger font for better visibility
     lv_keyboard_set_textarea(keyboard, textarea);
     
     // Add event handler for keyboard close button

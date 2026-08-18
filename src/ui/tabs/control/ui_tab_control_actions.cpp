@@ -27,7 +27,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     // ========== LEFT COLUMN: Control Buttons ==========
     lv_obj_t *control_label = lv_label_create(tab);
     lv_label_set_text(control_label, "CONTROL");
-    lv_obj_set_style_text_font(control_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(control_label, ui_font_18, 0);
     lv_obj_set_style_text_color(control_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(control_label, left_col_x, 10);
     
@@ -39,7 +39,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_pause, UITheme::STATE_HOLD, LV_PART_MAIN);  // Dark yellow for pause
     lbl_pause = lv_label_create(btn_pause);
     lv_label_set_text(lbl_pause, LV_SYMBOL_PAUSE " Pause");
-    lv_obj_set_style_text_font(lbl_pause, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_pause, ui_font_18, 0);
     lv_obj_center(lbl_pause);
     lv_obj_add_event_cb(btn_pause, onPauseResumeClicked, LV_EVENT_CLICKED, nullptr);
     
@@ -51,7 +51,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_unlock, UITheme::ACCENT_PRIMARY, LV_PART_MAIN);  // Blue for unlock
     lv_obj_t *lbl_unlock = lv_label_create(btn_unlock);
     lv_label_set_text(lbl_unlock, LV_SYMBOL_OK " Unlock");
-    lv_obj_set_style_text_font(lbl_unlock, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_unlock, ui_font_18, 0);
     lv_obj_center(lbl_unlock);
     lv_obj_add_event_cb(btn_unlock, onUnlockClicked, LV_EVENT_CLICKED, nullptr);
     
@@ -63,7 +63,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_reset, UITheme::UI_WARNING, LV_PART_MAIN);  // Orange for reset
     lv_obj_t *lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, LV_SYMBOL_REFRESH " Soft Reset");
-    lv_obj_set_style_text_font(lbl_reset, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_reset, ui_font_18, 0);
     lv_obj_center(lbl_reset);
     lv_obj_add_event_cb(btn_reset, onSoftResetClicked, LV_EVENT_CLICKED, nullptr);
     
@@ -76,14 +76,14 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_estop, UITheme::BTN_ESTOP, LV_PART_MAIN);
     lv_obj_t *lbl_estop = lv_label_create(btn_estop);
     lv_label_set_text(lbl_estop, LV_SYMBOL_STOP " STOP");
-    lv_obj_set_style_text_font(lbl_estop, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(lbl_estop, ui_font_20, 0);
     lv_obj_center(lbl_estop);
     lv_obj_add_event_cb(btn_estop, onQuickStopClicked, LV_EVENT_CLICKED, nullptr);
     
     // ========== MIDDLE COLUMN: Home Axis ==========
     lv_obj_t *home_label = lv_label_create(tab);
     lv_label_set_text(home_label, "HOME AXIS");
-    lv_obj_set_style_text_font(home_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(home_label, ui_font_18, 0);
     lv_obj_set_style_text_color(home_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(home_label, middle_col_x, 10);
     
@@ -96,7 +96,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_home_x, UITheme::AXIS_X, LV_PART_MAIN);
     lv_obj_t *lbl_home_x = lv_label_create(btn_home_x);
     lv_label_set_text(lbl_home_x, LV_SYMBOL_HOME " X");
-    lv_obj_set_style_text_font(lbl_home_x, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_home_x, ui_font_18, 0);
     lv_obj_center(lbl_home_x);
     lv_obj_add_event_cb(btn_home_x, onHomeXClicked, LV_EVENT_CLICKED, nullptr);
     
@@ -109,7 +109,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_home_y, UITheme::AXIS_Y, LV_PART_MAIN);
     lv_obj_t *lbl_home_y = lv_label_create(btn_home_y);
     lv_label_set_text(lbl_home_y, LV_SYMBOL_HOME " Y");
-    lv_obj_set_style_text_font(lbl_home_y, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_home_y, ui_font_18, 0);
     lv_obj_center(lbl_home_y);
     lv_obj_add_event_cb(btn_home_y, onHomeYClicked, LV_EVENT_CLICKED, nullptr);
     
@@ -122,7 +122,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_home_z, UITheme::AXIS_Z, LV_PART_MAIN);
     lv_obj_t *lbl_home_z = lv_label_create(btn_home_z);
     lv_label_set_text(lbl_home_z, LV_SYMBOL_HOME " Z");
-    lv_obj_set_style_text_font(lbl_home_z, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_home_z, ui_font_18, 0);
     lv_obj_center(lbl_home_z);
     lv_obj_add_event_cb(btn_home_z, onHomeZClicked, LV_EVENT_CLICKED, nullptr);
     
@@ -135,14 +135,14 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_home_all, UITheme::AXIS_XY, LV_PART_MAIN);
     lv_obj_t *lbl_home_all = lv_label_create(btn_home_all);
     lv_label_set_text(lbl_home_all, LV_SYMBOL_HOME " All");
-    lv_obj_set_style_text_font(lbl_home_all, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_home_all, ui_font_18, 0);
     lv_obj_center(lbl_home_all);
     lv_obj_add_event_cb(btn_home_all, onHomeAllClicked, LV_EVENT_CLICKED, nullptr);
     
     // ========== RIGHT COLUMN: Zero Axis ==========
     lv_obj_t *zero_label = lv_label_create(tab);
     lv_label_set_text(zero_label, "ZERO AXIS");
-    lv_obj_set_style_text_font(zero_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(zero_label, ui_font_18, 0);
     lv_obj_set_style_text_color(zero_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(zero_label, right_col_x, 10);
     
@@ -155,7 +155,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_zero_x, UITheme::AXIS_X, LV_PART_MAIN);
     lv_obj_t *lbl_zero_x = lv_label_create(btn_zero_x);
     lv_label_set_text(lbl_zero_x, LV_SYMBOL_GPS " X");
-    lv_obj_set_style_text_font(lbl_zero_x, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_zero_x, ui_font_18, 0);
     lv_obj_center(lbl_zero_x);
     lv_obj_add_event_cb(btn_zero_x, onZeroXClicked, LV_EVENT_CLICKED, nullptr);
     
@@ -168,7 +168,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_zero_y, UITheme::AXIS_Y, LV_PART_MAIN);
     lv_obj_t *lbl_zero_y = lv_label_create(btn_zero_y);
     lv_label_set_text(lbl_zero_y, LV_SYMBOL_GPS " Y");
-    lv_obj_set_style_text_font(lbl_zero_y, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_zero_y, ui_font_18, 0);
     lv_obj_center(lbl_zero_y);
     lv_obj_add_event_cb(btn_zero_y, onZeroYClicked, LV_EVENT_CLICKED, nullptr);
     
@@ -181,7 +181,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_zero_z, UITheme::AXIS_Z, LV_PART_MAIN);
     lv_obj_t *lbl_zero_z = lv_label_create(btn_zero_z);
     lv_label_set_text(lbl_zero_z, LV_SYMBOL_GPS " Z");
-    lv_obj_set_style_text_font(lbl_zero_z, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_zero_z, ui_font_18, 0);
     lv_obj_center(lbl_zero_z);
     lv_obj_add_event_cb(btn_zero_z, onZeroZClicked, LV_EVENT_CLICKED, nullptr);
 
@@ -195,7 +195,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
         lv_obj_set_style_bg_color(btn_zero_a, UITheme::AXIS_A, LV_PART_MAIN);
         lv_obj_t *lbl_zero_a = lv_label_create(btn_zero_a);
         lv_label_set_text(lbl_zero_a, LV_SYMBOL_GPS " A");
-        lv_obj_set_style_text_font(lbl_zero_a, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_zero_a, ui_font_18, 0);
         lv_obj_center(lbl_zero_a);
         lv_obj_add_event_cb(btn_zero_a, onZeroAClicked, LV_EVENT_CLICKED, nullptr);
 
@@ -209,7 +209,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(btn_zero_all, UITheme::AXIS_XY, LV_PART_MAIN);
     lv_obj_t *lbl_zero_all = lv_label_create(btn_zero_all);
     lv_label_set_text(lbl_zero_all, LV_SYMBOL_GPS " All");
-    lv_obj_set_style_text_font(lbl_zero_all, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_zero_all, ui_font_18, 0);
     lv_obj_center(lbl_zero_all);
     lv_obj_add_event_cb(btn_zero_all, onZeroAllClicked, LV_EVENT_CLICKED, nullptr);
 }

@@ -12,6 +12,9 @@
 #include <WiFi.h>
 #include <ESPmDNS.h>
 #include <esp_sleep.h>
+#ifdef HARDWARE_TAB5
+#include <M5Unified.h>
+#endif
 
 // Static member initialization
 lv_display_t *UICommon::display = nullptr;
@@ -145,7 +148,7 @@ static void on_machine_select_confirm(lv_event_t *e) {
     // Show restart message
     lv_obj_t *restart_label = lv_label_create(lv_screen_active());
     lv_label_set_text(restart_label, "Restarting...");
-    lv_obj_set_style_text_font(restart_label, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(restart_label, ui_font_32, 0);
     lv_obj_set_style_text_color(restart_label, UITheme::UI_INFO, 0);
     lv_obj_center(restart_label);
     
@@ -171,7 +174,7 @@ static void on_power_off_confirm(lv_event_t *e) {
     // Show power off message
     lv_obj_t *poweroff_label = lv_label_create(lv_screen_active());
     lv_label_set_text(poweroff_label, "Powering off...");
-    lv_obj_set_style_text_font(poweroff_label, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(poweroff_label, ui_font_32, 0);
     lv_obj_set_style_text_color(poweroff_label, UITheme::UI_WARNING, 0);
     lv_obj_center(poweroff_label);
     
@@ -195,6 +198,13 @@ static void on_power_off_confirm(lv_event_t *e) {
     WiFi.mode(WIFI_OFF);
     delay(100);
     
+#ifdef HARDWARE_TAB5
+    // Tab5: request PMU power-off through M5Unified (PI4IO PWROFF pulse).
+    // No SoC deep sleep on this hardware - the PMU must cut power instead.
+    M5.Power.powerOff();
+    // If power-off is not honored, stay halted with screen off
+    while (true) delay(1000);
+#else
     // Disable Bluetooth (reduces power even if not used)
     btStop();
     
@@ -218,6 +228,7 @@ static void on_power_off_confirm(lv_event_t *e) {
     delay(100);
     
     esp_deep_sleep_start();
+#endif
 }
 
 // Event handler for canceling machine selection change
@@ -406,7 +417,7 @@ void UICommon::createStatusBar() {
     // Left side: Large Status (centered vertically)
     lbl_status = lv_label_create(status_bar);
     lv_label_set_text(lbl_status, "OFFLINE");
-    lv_obj_set_style_text_font(lbl_status, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(lbl_status, ui_font_32, 0);
     lv_obj_set_style_text_color(lbl_status, UITheme::STATE_ALARM, 0);
     lv_obj_align(lbl_status, LV_ALIGN_LEFT_MID, 5, 0);
 
@@ -414,7 +425,7 @@ void UICommon::createStatusBar() {
     // Work Position - Line 1
     lv_obj_t *lbl_wpos_label = lv_label_create(status_bar);
     lv_label_set_text(lbl_wpos_label, "WPos:");
-    lv_obj_set_style_text_font(lbl_wpos_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_wpos_label, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wpos_label, UITheme::ACCENT_SECONDARY, 0);  // Teal
     lv_obj_set_style_text_align(lbl_wpos_label, LV_TEXT_ALIGN_RIGHT, 0);
     lv_obj_set_width(lbl_wpos_label, 60);  // Fixed width for right alignment
@@ -422,19 +433,19 @@ void UICommon::createStatusBar() {
 
     lbl_wpos_x = lv_label_create(status_bar);
     lv_label_set_text(lbl_wpos_x, "X ----.---");
-    lv_obj_set_style_text_font(lbl_wpos_x, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_wpos_x, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wpos_x, UITheme::AXIS_X, 0);
     lv_obj_set_pos(lbl_wpos_x, 270, 3);
 
     lbl_wpos_y = lv_label_create(status_bar);
     lv_label_set_text(lbl_wpos_y, "Y ----.---");
-    lv_obj_set_style_text_font(lbl_wpos_y, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_wpos_y, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wpos_y, UITheme::AXIS_Y, 0);
     lv_obj_set_pos(lbl_wpos_y, 380, 3);
 
     lbl_wpos_z = lv_label_create(status_bar);
     lv_label_set_text(lbl_wpos_z, "Z ----.---");
-    lv_obj_set_style_text_font(lbl_wpos_z, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_wpos_z, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wpos_z, UITheme::AXIS_Z, 0);
     lv_obj_set_pos(lbl_wpos_z, 490, 3);
 
@@ -444,7 +455,7 @@ void UICommon::createStatusBar() {
         Serial.println("[StatusBar] Creating A-axis label");
         lbl_wpos_a = lv_label_create(status_bar);
         lv_label_set_text(lbl_wpos_a, "A ----.---");
-        lv_obj_set_style_text_font(lbl_wpos_a, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_wpos_a, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_wpos_a, UITheme::AXIS_A, 0);
         lv_obj_set_pos(lbl_wpos_a, 270, 27);  // Line 2, where MPos X would be
     }
@@ -454,7 +465,7 @@ void UICommon::createStatusBar() {
     if (!isAAxisEnabled()) {
         lbl_mpos_label = lv_label_create(status_bar);
         lv_label_set_text(lbl_mpos_label, "MPos:");
-        lv_obj_set_style_text_font(lbl_mpos_label, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_mpos_label, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_mpos_label, UITheme::POS_MACHINE, 0);  // Cyan - secondary data
         lv_obj_set_style_text_align(lbl_mpos_label, LV_TEXT_ALIGN_RIGHT, 0);
         lv_obj_set_width(lbl_mpos_label, 60);  // Fixed width for right alignment
@@ -462,19 +473,19 @@ void UICommon::createStatusBar() {
 
         lbl_mpos_x = lv_label_create(status_bar);
         lv_label_set_text(lbl_mpos_x, "X ----.---");
-        lv_obj_set_style_text_font(lbl_mpos_x, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_mpos_x, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_mpos_x, UITheme::AXIS_X, 0);
         lv_obj_set_pos(lbl_mpos_x, 270, 27);
 
         lbl_mpos_y = lv_label_create(status_bar);
         lv_label_set_text(lbl_mpos_y, "Y ----.---");
-        lv_obj_set_style_text_font(lbl_mpos_y, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_mpos_y, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_mpos_y, UITheme::AXIS_Y, 0);
         lv_obj_set_pos(lbl_mpos_y, 380, 27);
 
         lbl_mpos_z = lv_label_create(status_bar);
         lv_label_set_text(lbl_mpos_z, "Z ----.---");
-        lv_obj_set_style_text_font(lbl_mpos_z, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_mpos_z, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_mpos_z, UITheme::AXIS_Z, 0);
         lv_obj_set_pos(lbl_mpos_z, 490, 27);
 
@@ -496,7 +507,7 @@ void UICommon::createStatusBar() {
     // Filename label
     lbl_filename = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_filename, "filename.gcode");
-    lv_obj_set_style_text_font(lbl_filename, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_filename, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_filename, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(lbl_filename, 0, 0);
     lv_label_set_long_mode(lbl_filename, LV_LABEL_LONG_DOT);
@@ -513,14 +524,14 @@ void UICommon::createStatusBar() {
     // Percentage label (next to progress bar)
     lbl_percent = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_percent, "0.0%");
-    lv_obj_set_style_text_font(lbl_percent, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_percent, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_percent, UITheme::UI_SUCCESS, 0);
     lv_obj_set_pos(lbl_percent, 305, 20);
     
     // Elapsed time - split into label, value, unit (moved 85px right for 5px more space)
     lv_obj_t *elapsed_label = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(elapsed_label, "Elapsed");
-    lv_obj_set_style_text_font(elapsed_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(elapsed_label, ui_font_14, 0);
     lv_obj_set_style_text_color(elapsed_label, UITheme::UI_INFO, 0);  // Colored label
     lv_obj_set_style_text_align(elapsed_label, LV_TEXT_ALIGN_RIGHT, 0);
     lv_obj_set_pos(elapsed_label, 355, 2);  // 5px more space (390→385)
@@ -528,20 +539,20 @@ void UICommon::createStatusBar() {
     
     lbl_elapsed_time = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_elapsed_time, "00:00");
-    lv_obj_set_style_text_font(lbl_elapsed_time, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_elapsed_time, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_elapsed_time, UITheme::TEXT_LIGHT, 0);  // White value
     lv_obj_set_pos(lbl_elapsed_time, 435, 2);
     
     lbl_elapsed_unit = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_elapsed_unit, "min:sec");  // Changed from mm:ss
-    lv_obj_set_style_text_font(lbl_elapsed_unit, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_elapsed_unit, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_elapsed_unit, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(lbl_elapsed_unit, 480, 2);
     
     // Estimated time - split into label, value, unit
     lv_obj_t *estimated_label = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(estimated_label, "Estimated");
-    lv_obj_set_style_text_font(estimated_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(estimated_label, ui_font_14, 0);
     lv_obj_set_style_text_color(estimated_label, UITheme::UI_WARNING, 0);  // Colored label
     lv_obj_set_style_text_align(estimated_label, LV_TEXT_ALIGN_RIGHT, 0);
     lv_obj_set_pos(estimated_label, 355, 21);  // 5px more space (390→385)
@@ -549,13 +560,13 @@ void UICommon::createStatusBar() {
     
     lbl_estimated_time = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_estimated_time, "00:00");
-    lv_obj_set_style_text_font(lbl_estimated_time, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_estimated_time, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_estimated_time, UITheme::TEXT_LIGHT, 0);  // White value
     lv_obj_set_pos(lbl_estimated_time, 435, 21);
     
     lbl_estimated_unit = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_estimated_unit, "min:sec");  // Changed from mm:ss
-    lv_obj_set_style_text_font(lbl_estimated_unit, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_estimated_unit, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_estimated_unit, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(lbl_estimated_unit, 480, 22);
 
@@ -569,20 +580,20 @@ void UICommon::createStatusBar() {
         // Symbol (will be colored based on connection status)
         lbl_machine_symbol = lv_label_create(status_bar);
         lv_label_set_text(lbl_machine_symbol, symbol);
-        lv_obj_set_style_text_font(lbl_machine_symbol, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_machine_symbol, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_machine_symbol, UITheme::STATE_ALARM, 0);  // Start red
         lv_obj_align(lbl_machine_symbol, LV_ALIGN_TOP_RIGHT, -5, 3);
         
         // Machine name
         lbl_machine_name = lv_label_create(status_bar);
         lv_label_set_text(lbl_machine_name, selected_machine.name);
-        lv_obj_set_style_text_font(lbl_machine_name, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_machine_name, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_machine_name, UITheme::ACCENT_PRIMARY, 0);
         lv_obj_align_to(lbl_machine_name, lbl_machine_symbol, LV_ALIGN_OUT_LEFT_MID, -5, 0);
     } else {
         lbl_modal_states = lv_label_create(status_bar);
         lv_label_set_text(lbl_modal_states, "No Machine");
-        lv_obj_set_style_text_font(lbl_modal_states, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(lbl_modal_states, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_modal_states, UITheme::ACCENT_PRIMARY, 0);
         lv_obj_align(lbl_modal_states, LV_ALIGN_TOP_RIGHT, -5, 3);
     }
@@ -605,7 +616,7 @@ void UICommon::createStatusBar() {
     
     lbl_wifi_name = lv_label_create(status_bar);
     lv_label_set_text(lbl_wifi_name, wifi_ssid.c_str());
-    lv_obj_set_style_text_font(lbl_wifi_name, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_wifi_name, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wifi_name, UITheme::UI_INFO, 0);
     lv_obj_set_style_text_align(lbl_wifi_name, LV_TEXT_ALIGN_RIGHT, 0);
     lv_obj_set_width(lbl_wifi_name, 180);  // Set fixed width for right alignment
@@ -614,7 +625,7 @@ void UICommon::createStatusBar() {
     // WiFi symbol (will be colored based on connection status)
     lbl_wifi_symbol = lv_label_create(status_bar);
     lv_label_set_text(lbl_wifi_symbol, LV_SYMBOL_WIFI);
-    lv_obj_set_style_text_font(lbl_wifi_symbol, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_wifi_symbol, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wifi_symbol, WiFi.isConnected() ? UITheme::STATE_IDLE : UITheme::STATE_ALARM, 0);
     lv_obj_align(lbl_wifi_symbol, LV_ALIGN_BOTTOM_RIGHT, -5, -3);
 }
@@ -788,7 +799,7 @@ void UICommon::showMachineSelectConfirmDialog() {
     // Title (positioned near top)
     lv_obj_t *title = lv_label_create(content);
     lv_label_set_text(title, LV_SYMBOL_SETTINGS " System Options");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(title, ui_font_22, 0);
     lv_obj_set_style_text_color(title, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 0);
     
@@ -802,7 +813,7 @@ void UICommon::showMachineSelectConfirmDialog() {
     } else {
         lv_label_set_text(msg_label, "Restart to change machines.");
     }
-    lv_obj_set_style_text_font(msg_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(msg_label, ui_font_16, 0);
     lv_obj_set_style_text_color(msg_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(msg_label, LV_TEXT_ALIGN_CENTER, 0);
     lv_label_set_long_mode(msg_label, LV_LABEL_LONG_WRAP);
@@ -829,7 +840,7 @@ void UICommon::showMachineSelectConfirmDialog() {
     
     lv_obj_t *restart_label = lv_label_create(restart_btn);
     lv_label_set_text(restart_label, LV_SYMBOL_REFRESH " Restart");
-    lv_obj_set_style_text_font(restart_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(restart_label, ui_font_18, 0);
     lv_obj_center(restart_label);
     
     // Power off button (only show if power management is enabled)
@@ -841,7 +852,7 @@ void UICommon::showMachineSelectConfirmDialog() {
         
         lv_obj_t *poweroff_label = lv_label_create(poweroff_btn);
         lv_label_set_text(poweroff_label, LV_SYMBOL_POWER " Power Off");
-        lv_obj_set_style_text_font(poweroff_label, &lv_font_montserrat_18, 0);
+        lv_obj_set_style_text_font(poweroff_label, ui_font_18, 0);
         lv_obj_center(poweroff_label);
     }
     
@@ -853,7 +864,7 @@ void UICommon::showMachineSelectConfirmDialog() {
     
     lv_obj_t *cancel_label = lv_label_create(cancel_btn);
     lv_label_set_text(cancel_label, "Cancel");
-    lv_obj_set_style_text_font(cancel_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(cancel_label, ui_font_18, 0);
     lv_obj_center(cancel_label);
 }
 
@@ -882,13 +893,13 @@ void UICommon::showPowerOffConfirmDialog() {
     // Icon and title
     lv_obj_t *title = lv_label_create(content);
     lv_label_set_text(title, LV_SYMBOL_POWER " Power Off");
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(title, ui_font_24, 0);
     lv_obj_set_style_text_color(title, lv_color_make(180, 60, 0), 0);  // Orange
     
     // Message
     lv_obj_t *msg_label = lv_label_create(content);
     lv_label_set_text(msg_label, "Power off the controller?\nPress reset button to wake.");
-    lv_obj_set_style_text_font(msg_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(msg_label, ui_font_18, 0);
     lv_obj_set_style_text_color(msg_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(msg_label, LV_TEXT_ALIGN_CENTER, 0);
     
@@ -915,7 +926,7 @@ void UICommon::showPowerOffConfirmDialog() {
     
     lv_obj_t *poweroff_label = lv_label_create(poweroff_btn);
     lv_label_set_text(poweroff_label, LV_SYMBOL_POWER " Power Off");
-    lv_obj_set_style_text_font(poweroff_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(poweroff_label, ui_font_18, 0);
     lv_obj_center(poweroff_label);
     
     // Cancel button
@@ -929,7 +940,7 @@ void UICommon::showPowerOffConfirmDialog() {
     
     lv_obj_t *cancel_label = lv_label_create(cancel_btn);
     lv_label_set_text(cancel_label, "Cancel");
-    lv_obj_set_style_text_font(cancel_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(cancel_label, ui_font_18, 0);
     lv_obj_center(cancel_label);
 }
 
@@ -973,7 +984,7 @@ void UICommon::showConnectingPopup(const char *machine_name, const char *ssid) {
     
     lv_obj_t *conn_label = lv_label_create(content);
     lv_label_set_text(conn_label, conn_text);
-    lv_obj_set_style_text_font(conn_label, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(conn_label, ui_font_22, 0);
     lv_obj_set_style_text_color(conn_label, UITheme::TEXT_LIGHT, 0);
     
     Serial.printf("UICommon: %s\n", conn_text);
@@ -1068,7 +1079,7 @@ static void on_connection_error_restart(lv_event_t *e) {
     // Show restart message
     lv_obj_t *restart_label = lv_label_create(lv_screen_active());
     lv_label_set_text(restart_label, "Restarting...");
-    lv_obj_set_style_text_font(restart_label, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(restart_label, ui_font_32, 0);
     lv_obj_set_style_text_color(restart_label, UITheme::UI_INFO, 0);
     lv_obj_center(restart_label);
     
@@ -1110,14 +1121,14 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     char title_text[128];
     snprintf(title_text, sizeof(title_text), LV_SYMBOL_WARNING " %s", title);
     lv_label_set_text(title_label, title_text);
-    lv_obj_set_style_text_font(title_label, &lv_font_montserrat_22, 0);
+    lv_obj_set_style_text_font(title_label, ui_font_22, 0);
     lv_obj_set_style_text_color(title_label, UITheme::STATE_ALARM, 0);
     lv_obj_align(title_label, LV_ALIGN_TOP_MID, 0, 0);
     
     // Error message (centered vertically in available space)
     lv_obj_t *msg_label = lv_label_create(content);
     lv_label_set_text(msg_label, message);
-    lv_obj_set_style_text_font(msg_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(msg_label, ui_font_16, 0);
     lv_obj_set_style_text_color(msg_label, UITheme::TEXT_LIGHT, 0);
     lv_label_set_long_mode(msg_label, LV_LABEL_LONG_WRAP);
     lv_obj_set_width(msg_label, 560);
@@ -1144,7 +1155,7 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     
     lv_obj_t *connect_label = lv_label_create(connect_btn);
     lv_label_set_text(connect_label, LV_SYMBOL_REFRESH " Connect");
-    lv_obj_set_style_text_font(connect_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(connect_label, ui_font_16, 0);
     lv_obj_center(connect_label);
     
     // Restart button (center)
@@ -1155,7 +1166,7 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     
     lv_obj_t *restart_label = lv_label_create(restart_btn);
     lv_label_set_text(restart_label, LV_SYMBOL_POWER " Restart");
-    lv_obj_set_style_text_font(restart_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(restart_label, ui_font_16, 0);
     lv_obj_center(restart_label);
     
     // Close button (right)
@@ -1166,7 +1177,7 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     
     lv_obj_t *close_label = lv_label_create(close_btn);
     lv_label_set_text(close_label, "Close");
-    lv_obj_set_style_text_font(close_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(close_label, ui_font_18, 0);
     lv_obj_center(close_label);
     
     Serial.printf("UICommon: Connection error dialog shown - %s: %s\n", title, message);
@@ -1245,14 +1256,14 @@ void UICommon::showHoldPopup(const char *message) {
     // State label (large, colored)
     lv_obj_t *state_label = lv_label_create(dialog);
     lv_label_set_text(state_label, "HOLD");
-    lv_obj_set_style_text_font(state_label, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(state_label, ui_font_32, 0);
     lv_obj_set_style_text_color(state_label, UITheme::STATE_HOLD, 0);
     lv_obj_align(state_label, LV_ALIGN_TOP_MID, 0, 0);
     
     // Message label
     hold_popup_msg_label = lv_label_create(dialog);
     lv_label_set_text(hold_popup_msg_label, message && strlen(message) > 0 ? message : "Machine paused");
-    lv_obj_set_style_text_font(hold_popup_msg_label, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(hold_popup_msg_label, ui_font_24, 0);
     lv_obj_set_style_text_color(hold_popup_msg_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_width(hold_popup_msg_label, 520);
     lv_label_set_long_mode(hold_popup_msg_label, LV_LABEL_LONG_WRAP);
@@ -1281,7 +1292,7 @@ void UICommon::showHoldPopup(const char *message) {
     
     lv_obj_t *resume_label = lv_label_create(resume_btn);
     lv_label_set_text(resume_label, LV_SYMBOL_PLAY " Resume");
-    lv_obj_set_style_text_font(resume_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(resume_label, ui_font_18, 0);
     lv_obj_center(resume_label);
     
     // Close button
@@ -1295,7 +1306,7 @@ void UICommon::showHoldPopup(const char *message) {
     
     lv_obj_t *close_label = lv_label_create(close_btn);
     lv_label_set_text(close_label, LV_SYMBOL_CLOSE " Close");
-    lv_obj_set_style_text_font(close_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(close_label, ui_font_18, 0);
     lv_obj_center(close_label);
     
     Serial.println("UICommon: HOLD popup shown");
@@ -1336,14 +1347,14 @@ void UICommon::showAlarmPopup(const char *message) {
     // State label (large, colored)
     lv_obj_t *state_label = lv_label_create(dialog);
     lv_label_set_text(state_label, "ALARM");
-    lv_obj_set_style_text_font(state_label, &lv_font_montserrat_32, 0);
+    lv_obj_set_style_text_font(state_label, ui_font_32, 0);
     lv_obj_set_style_text_color(state_label, UITheme::STATE_ALARM, 0);
     lv_obj_align(state_label, LV_ALIGN_TOP_MID, 0, 0);
     
     // Message label
     alarm_popup_msg_label = lv_label_create(dialog);
     lv_label_set_text(alarm_popup_msg_label, message && strlen(message) > 0 ? message : "Alarm condition detected");
-    lv_obj_set_style_text_font(alarm_popup_msg_label, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(alarm_popup_msg_label, ui_font_24, 0);
     lv_obj_set_style_text_color(alarm_popup_msg_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_width(alarm_popup_msg_label, 520);
     lv_label_set_long_mode(alarm_popup_msg_label, LV_LABEL_LONG_WRAP);
@@ -1375,7 +1386,7 @@ void UICommon::showAlarmPopup(const char *message) {
     
     lv_obj_t *clear_label = lv_label_create(clear_btn);
     lv_label_set_text(clear_label, LV_SYMBOL_REFRESH " Clear Alarm");
-    lv_obj_set_style_text_font(clear_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(clear_label, ui_font_18, 0);
     lv_obj_center(clear_label);
     
     // Close button
@@ -1389,7 +1400,7 @@ void UICommon::showAlarmPopup(const char *message) {
     
     lv_obj_t *close_label = lv_label_create(close_btn);
     lv_label_set_text(close_label, LV_SYMBOL_CLOSE " Close");
-    lv_obj_set_style_text_font(close_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(close_label, ui_font_18, 0);
     lv_obj_center(close_label);
     
     Serial.println("UICommon: ALARM popup shown");
@@ -1565,7 +1576,7 @@ void UICommon::showWCSLockDialog(const char *wcs_code, const char *wcs_name, voi
         snprintf(title_text, sizeof(title_text), LV_SYMBOL_WARNING " %s is Locked", wcs_code);
     }
     lv_label_set_text(title, title_text);
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(title, ui_font_24, 0);
     lv_obj_set_style_text_color(title, UITheme::UI_WARNING, 0);
     lv_obj_set_style_text_align(title, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_set_width(title, 560);
@@ -1574,7 +1585,7 @@ void UICommon::showWCSLockDialog(const char *wcs_code, const char *wcs_name, voi
     // Warning message with centered text and more spacing from title
     lv_obj_t *message = lv_label_create(dialog);
     lv_label_set_text(message, "Modifying this position may affect fixtures or setups.\n\nAre you sure you want to continue?");
-    lv_obj_set_style_text_font(message, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(message, ui_font_18, 0);
     lv_obj_set_style_text_color(message, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(message, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_set_width(message, 560);
@@ -1589,7 +1600,7 @@ void UICommon::showWCSLockDialog(const char *wcs_code, const char *wcs_name, voi
     
     lv_obj_t *lbl_cancel = lv_label_create(btn_cancel);
     lv_label_set_text(lbl_cancel, "Cancel");
-    lv_obj_set_style_text_font(lbl_cancel, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_cancel, ui_font_18, 0);
     lv_obj_center(lbl_cancel);
     
     // Close on Cancel
@@ -1606,7 +1617,7 @@ void UICommon::showWCSLockDialog(const char *wcs_code, const char *wcs_name, voi
     
     lv_obj_t *lbl_continue = lv_label_create(btn_continue);
     lv_label_set_text(lbl_continue, LV_SYMBOL_WARNING " Continue");
-    lv_obj_set_style_text_font(lbl_continue, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(lbl_continue, ui_font_18, 0);
     lv_obj_center(lbl_continue);
     
     // Store callback and backdrop in user data
