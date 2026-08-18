@@ -50,6 +50,35 @@ void setup()
         M5.begin(m5cfg);
         Serial.println("M5Unified initialized (PMU support)");
     }
+
+    // esp_hosted (ESP32-C6 WiFi co-processor) warm-up & diagnostics.
+    // The C6 hangs off SDIO (CLK=18, CMD=19, D0-D3=14-17) with reset on
+    // GPIO54 (active high). Reset it early so it is fully booted by the time
+    // WiFi is first used, and log bus idle levels for bring-up debugging.
+    Serial.println("C6: resetting co-processor (GPIO54)");
+    pinMode(GPIO_NUM_54, OUTPUT);
+    digitalWrite(GPIO_NUM_54, HIGH);  // hold in reset
+    delay(50);
+    digitalWrite(GPIO_NUM_54, LOW);   // release
+    delay(500);  // boot head start
+    Serial.printf("C6: SDIO idle levels: CMD(19)=%d CLK(18)=%d D0(14)=%d D1(15)=%d D2(16)=%d D3(17)=%d\n",
+                  digitalRead(19), digitalRead(18), digitalRead(14),
+                  digitalRead(15), digitalRead(16), digitalRead(17));
+
+    // Second probe: enable P4-internal pull-ups on the SDIO lines and re-read.
+    // - reads 1  -> lines float high (no slave driving/pulling them) => C6 not running
+    // - still 0  -> something actively drives them low => short or stuck slave
+    {
+        static const int sdio_pins[] = {19, 18, 14, 15, 16, 17};
+        Serial.print("C6: pull-up probe:");
+        for (int p : sdio_pins) {
+            pinMode(p, INPUT_PULLUP);
+            delay(5);
+            Serial.printf("  GPIO%d=%d", p, digitalRead(p));
+            pinMode(p, INPUT);  // release before esp_hosted claims the bus
+        }
+        Serial.println();
+    }
 #endif
 
     // Initialize Display Driver
@@ -120,10 +149,12 @@ void setup()
     
     Serial.printf("Main: show_mach_sel preference = %d\n", show_machine_select);
     
+    bool machine_select_shown = false;
     if (show_machine_select) {
         // Show machine selection screen
         Serial.println("Showing machine selection screen...");
         UIMachineSelect::show(displayDriver.getDisplay());
+        machine_select_shown = true;
     } else {
         // Auto-load first configured machine
         Serial.println("Auto-loading first machine...");
@@ -150,8 +181,31 @@ void setup()
             // No machines configured, show selection screen anyway
             Serial.println("No machines configured, showing selection screen...");
             UIMachineSelect::show(displayDriver.getDisplay());
+            machine_select_shown = true;
         }
     }
+
+#ifdef FLUIDTOUCH_AUTO_CONNECT
+    // DEBUG ONLY: automatically select the first configured machine ~5s
+    // after boot so connection-path issues reproduce without touching the
+    // screen. Enable with -DFLUIDTOUCH_AUTO_CONNECT (see platformio.ini).
+    if (machine_select_shown) {
+        lv_timer_create([](lv_timer_t *timer) {
+            lv_timer_delete(timer);
+            MachineConfig machines[MAX_MACHINES];
+            MachineConfigManager::loadMachines(machines);
+            for (int i = 0; i < MAX_MACHINES; i++) {
+                if (machines[i].is_configured) {
+                    Serial.printf("[AutoConnect] Debug: auto-selecting machine %d (%s)\n", i, machines[i].name);
+                    MachineConfigManager::setSelectedMachineIndex(i);
+                    UICommon::createMainUI();
+                    return;
+                }
+            }
+            Serial.println("[AutoConnect] Debug: no configured machine found");
+        }, 5000, nullptr);
+    }
+#endif
 }
 
 void loop()
