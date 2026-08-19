@@ -41,7 +41,7 @@ void setup()
     {
         m5::M5Unified::config_t m5cfg;
         m5cfg.serial_baudrate = 0;   // Serial already begun above
-        m5cfg.internal_imu = false;
+        m5cfg.internal_imu = true;   // BMI270 for shake-to-wake
         m5cfg.internal_rtc = false;
         m5cfg.internal_mic = false;
         m5cfg.internal_spk = false;
@@ -389,6 +389,9 @@ void loop()
     
     // Check machine connection timeout
     UICommon::checkConnectionTimeout();
+    
+    // Shake-to-wake polling (Tab5 BMI270; internally throttled to ~100Hz)
+    PowerManager::pollShakeWake();
     
     // Update Terminal tab (batched UI updates every 100ms)
     UITabTerminal::update();

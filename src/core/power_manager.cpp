@@ -5,6 +5,9 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <esp_sleep.h>
+#ifdef HARDWARE_TAB5
+#include <M5Unified.h>  // M5.Imu (BMI270) for shake-to-wake
+#endif
 
 // Static member initialization
 DisplayDriver* PowerManager::display_driver = nullptr;
@@ -17,6 +20,7 @@ uint8_t PowerManager::dim_brightness = 25;           // Default: 25% brightness 
 uint32_t PowerManager::last_activity_ms = 0;
 PowerManager::PowerState PowerManager::current_state = PowerManager::FULL_BRIGHTNESS;
 bool PowerManager::state_changed = false;
+bool PowerManager::shake_wake_enabled = true;
 
 void PowerManager::init(DisplayDriver* driver) {
     display_driver = driver;
@@ -111,6 +115,7 @@ void PowerManager::loadSettings() {
     deep_sleep_timeout_sec = prefs.getUInt("pm_deepsleep", 900);
     normal_brightness = prefs.getUChar("pm_norm_bri", 100);  // 0-100 percentage
     dim_brightness = prefs.getUChar("pm_dim_bri", 25);       // 0-100 percentage
+    shake_wake_enabled = prefs.getBool("pm_shake_wake", true);
     
     prefs.end();
     
@@ -139,6 +144,7 @@ void PowerManager::saveSettings() {
     prefs.putUInt("pm_deepsleep", deep_sleep_timeout_sec);
     prefs.putUChar("pm_norm_bri", normal_brightness);
     prefs.putUChar("pm_dim_bri", dim_brightness);
+    prefs.putBool("pm_shake_wake", shake_wake_enabled);
     
     prefs.end();
     
@@ -291,3 +297,99 @@ void PowerManager::enterDeepSleep() {
     // Never returns
 #endif
 }
+
+#ifdef HARDWARE_TAB5
+// Shake-to-wake: poll the BMI270 accelerometer and restore brightness on a
+// firm shake while the screen is dimmed or off. Orientation-independent:
+// gravity always integrates to ~1g in the total magnitude, so we trigger on
+// | ‖a‖ - 1g | spiking above SHAKE_THRESHOLD_G for a few consecutive
+// samples. Hand shakes a 5" panel spike well past 2g; stepper/cutting
+// vibration stays far below the threshold, so a machine running beside the
+// controller does not keep waking the screen.
+// Shake-to-wake via the Tab5's BMI270, following the official M5Stack example
+// (M5.Imu.update() + getImuData(), docs.m5stack.com/zh_CN/arduino/m5tab5/imu).
+// M5Unified's begin() uploads the BMI270 config file but leaves PWR_CTRL=0
+// (it only enables sensors when a BMM150 aux magnetometer answers, which the
+// Tab5 lacks), so we additionally power the accelerometer on. Do NOT soft-
+// reset the chip here - that wipes the config file and blocks all config
+// register writes until M5Unified re-uploads it (which it never does).
+// Registers (BMI270): ACC_CONF=0x40, PWR_CTRL=0x7D; accel data 0x0B-0x10.
+static constexpr uint8_t SHAKE_BMI_ADDR = 0x68;
+static constexpr uint32_t SHAKE_I2C_FREQ = 400000;
+
+void PowerManager::pollShakeWake() {
+    static bool imu_checked = false;
+    static bool imu_available = false;
+    if (!imu_checked) {
+        imu_checked = true;
+        if (M5.Imu.getType() != m5::imu_t::imu_bmi270) {
+            Serial.printf("ShakeWake: no BMI270 (type=%d), disabled\n", (int)M5.Imu.getType());
+            return;
+        }
+        // Config file is loaded by M5.Imu.begin(); just enable the accel.
+        // ACC_CONF 0x28 = bwp normal, ODR 200Hz. PWR_CTRL 0x04 = ACC on only.
+        M5.In_I2C.writeRegister8(SHAKE_BMI_ADDR, 0x40, 0x28, SHAKE_I2C_FREQ);
+        M5.In_I2C.writeRegister8(SHAKE_BMI_ADDR, 0x7D, 0x04, SHAKE_I2C_FREQ);
+        delay(5);
+        Serial.printf("ShakeWake: BMI270 accel on (PWR=0x%02X ACCCONF=0x%02X)\n",
+                      M5.In_I2C.readRegister8(SHAKE_BMI_ADDR, 0x7D, SHAKE_I2C_FREQ),
+                      M5.In_I2C.readRegister8(SHAKE_BMI_ADDR, 0x40, SHAKE_I2C_FREQ));
+
+        // Boot self-test: log 5 samples to prove the data path before relying on it
+        for (int i = 0; i < 5; i++) {
+            M5.Imu.update();
+            m5::IMU_Class::imu_data_t d = M5.Imu.getImuData();
+            Serial.printf("ShakeWake: selftest |a|=%.3f (x=%.2f y=%.2f z=%.2f)\n",
+                          sqrtf(d.accel.x * d.accel.x + d.accel.y * d.accel.y + d.accel.z * d.accel.z),
+                          d.accel.x, d.accel.y, d.accel.z);
+            delay(50);
+        }
+        imu_available = true;
+    }
+    if (!imu_available || !shake_wake_enabled) return;
+
+    // Only meaningful from DIMMED / SCREEN_OFF - while the screen is already
+    // on, motion must NOT reset the idle timer (vibration would keep it lit).
+    if (!enabled || current_state == FULL_BRIGHTNESS) return;
+
+    static uint32_t last_poll_ms = 0;
+    uint32_t now = millis();
+    if (now - last_poll_ms < 10) return;  // ~100 Hz sample rate
+    last_poll_ms = now;
+
+    auto mask = M5.Imu.update();
+    if (!(mask & m5::IMU_Class::sensor_mask_accel)) return;
+
+    m5::IMU_Class::imu_data_t d = M5.Imu.getImuData();
+    float x = d.accel.x, y = d.accel.y, z = d.accel.z;
+    if (x == 0.0f && y == 0.0f && z == 0.0f) return;  // no data yet
+    float mag = sqrtf(x * x + y * y + z * z);
+
+    static const float SHAKE_THRESHOLD_G = 0.6f;  // |a| outside 0.4g..1.6g
+    static const uint8_t SHAKE_SAMPLES = 4;       // ~40ms sustained spike
+
+    static uint8_t spike_count = 0;
+    if (fabsf(mag - 1.0f) > SHAKE_THRESHOLD_G) {
+        if (++spike_count >= SHAKE_SAMPLES) {
+            spike_count = 0;
+            Serial.printf("ShakeWake: wake (|a|=%.2fg)\n", mag);
+            onUserActivity();
+            return;
+        }
+    } else {
+        spike_count = 0;
+    }
+
+    // Debug: dump every 2s while dimmed/off (remove once sensitivity tuned)
+    static uint32_t last_dbg_ms = 0;
+    if (now - last_dbg_ms > 2000) {
+        last_dbg_ms = now;
+        Serial.printf("ShakeWake: state=%d |a|=%.3fg spk=%u\n",
+                      (int)current_state, mag, spike_count);
+    }
+}
+#else
+void PowerManager::pollShakeWake() {
+    // No IMU on this target
+}
+#endif

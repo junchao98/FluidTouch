@@ -10,6 +10,7 @@ static lv_obj_t *sleep_timeout_dropdown = NULL;
 static lv_obj_t *normal_brightness_dropdown = NULL;
 static lv_obj_t *dim_brightness_dropdown = NULL;
 static lv_obj_t *deep_sleep_timeout_dropdown = NULL;
+static lv_obj_t *shake_wake_switch = NULL;  // Tab5 only (BMI270)
 static lv_obj_t *status_label = NULL;
 
 // Forward declarations for event handlers
@@ -175,12 +176,34 @@ void UITabSettingsPower::create(lv_obj_t *tab) {
     lv_dropdown_set_selected(deep_sleep_timeout_dropdown, deep_idx);
     
     // Explanatory note about IDLE/DISCONNECTED only (moved to bottom)
+#ifdef HARDWARE_TAB5
+    // Shake-to-wake switch (BMI270): wake dimmed/off screen by shaking
+    lv_obj_t *shake_label = lv_label_create(tab);
+    lv_label_set_text(shake_label, "Shake Wake:");
+    lv_obj_set_style_text_font(shake_label, ui_font_18, 0);
+    lv_obj_set_style_text_color(shake_label, UITheme::TEXT_LIGHT, 0);
+    lv_obj_set_pos(shake_label, UI_SCALE_X(20), UI_SCALE_Y(212));
+
+    shake_wake_switch = lv_switch_create(tab);
+    lv_obj_set_pos(shake_wake_switch, UI_SCALE_X(140), UI_SCALE_Y(207));
+    if (PowerManager::isShakeWakeEnabled()) {
+        lv_obj_add_state(shake_wake_switch, LV_STATE_CHECKED);
+    }
+
+    lv_obj_t *note_label = lv_label_create(tab);
+    lv_label_set_text(note_label, "Note: Power management is only active during IDLE or OFFLINE states.");
+    lv_obj_set_pos(note_label, UI_SCALE_X(20), UI_SCALE_Y(245));
+    lv_obj_set_style_text_font(note_label, ui_font_14, 0);
+    lv_obj_set_style_text_color(note_label, UITheme::TEXT_DISABLED, 0);
+    lv_obj_set_width(note_label, UI_SCALE_X(760));  // Full width
+#else
     lv_obj_t *note_label = lv_label_create(tab);
     lv_label_set_text(note_label, "Note: Power management is only active during IDLE or OFFLINE states.");
     lv_obj_set_pos(note_label, UI_SCALE_X(20), UI_SCALE_Y(215));
     lv_obj_set_style_text_font(note_label, ui_font_14, 0);
     lv_obj_set_style_text_color(note_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_width(note_label, UI_SCALE_X(760));  // Full width
+#endif
     
     // Enable/disable power management controls based on switch state
     if (!PowerManager::isEnabled()) {
@@ -189,6 +212,9 @@ void UITabSettingsPower::create(lv_obj_t *tab) {
         lv_obj_add_state(normal_brightness_dropdown, LV_STATE_DISABLED);
         lv_obj_add_state(dim_brightness_dropdown, LV_STATE_DISABLED);
         lv_obj_add_state(deep_sleep_timeout_dropdown, LV_STATE_DISABLED);
+#ifdef HARDWARE_TAB5
+        if (shake_wake_switch != NULL) lv_obj_add_state(shake_wake_switch, LV_STATE_DISABLED);
+#endif
     }
     
     // === Action Buttons (positioned at bottom with 20px margins) ===
@@ -264,6 +290,13 @@ static void btn_save_power_event_handler(lv_event_t *e) {
             PowerManager::setDeepSleepTimeout(deep_sleep_seconds[deep_idx]);
         }
         
+        // Save shake-wake setting (Tab5 BMI270)
+#ifdef HARDWARE_TAB5
+        if (shake_wake_switch != NULL) {
+            PowerManager::setShakeWakeEnabled(lv_obj_has_state(shake_wake_switch, LV_STATE_CHECKED));
+        }
+#endif
+        
         // Save power manager settings to NVS
         PowerManager::saveSettings();
         
@@ -288,6 +321,11 @@ static void btn_reset_event_handler(lv_event_t *e) {
         lv_dropdown_set_selected(normal_brightness_dropdown, 3);    // 100%
         lv_dropdown_set_selected(dim_brightness_dropdown, 2);       // 25%
         lv_dropdown_set_selected(deep_sleep_timeout_dropdown, 3);   // 15 min
+#ifdef HARDWARE_TAB5
+        if (shake_wake_switch != NULL) {
+            lv_obj_add_state(shake_wake_switch, LV_STATE_CHECKED);
+        }
+#endif
         
         // Enable power management dropdowns
         lv_obj_clear_state(dim_timeout_dropdown, LV_STATE_DISABLED);
@@ -317,12 +355,18 @@ static void power_mgmt_switch_event_handler(lv_event_t *e) {
             lv_obj_clear_state(normal_brightness_dropdown, LV_STATE_DISABLED);
             lv_obj_clear_state(dim_brightness_dropdown, LV_STATE_DISABLED);
             lv_obj_clear_state(deep_sleep_timeout_dropdown, LV_STATE_DISABLED);
+#ifdef HARDWARE_TAB5
+            if (shake_wake_switch != NULL) lv_obj_clear_state(shake_wake_switch, LV_STATE_DISABLED);
+#endif
         } else {
             lv_obj_add_state(dim_timeout_dropdown, LV_STATE_DISABLED);
             lv_obj_add_state(sleep_timeout_dropdown, LV_STATE_DISABLED);
             lv_obj_add_state(normal_brightness_dropdown, LV_STATE_DISABLED);
             lv_obj_add_state(dim_brightness_dropdown, LV_STATE_DISABLED);
             lv_obj_add_state(deep_sleep_timeout_dropdown, LV_STATE_DISABLED);
+#ifdef HARDWARE_TAB5
+            if (shake_wake_switch != NULL) lv_obj_add_state(shake_wake_switch, LV_STATE_DISABLED);
+#endif
         }
     }
 }

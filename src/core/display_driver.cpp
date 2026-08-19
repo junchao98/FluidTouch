@@ -199,7 +199,7 @@ bool DisplayDriver::init() {
     // init() on a second M5GFX instance double-attaches the LEDA backlight
     // PWM (pin 22); the failed re-attach leaves the backlight OFF (black
     // screen). Touch is also already initialized on this instance.
-    lcd.setRotation(1);  // panel is native portrait (720x1280) - use landscape
+    lcd.setRotation(3);  // panel is native portrait (720x1280) - landscape 180° (panel mounted upside down)
     Serial.printf("M5GFX panel: %dx%d\n", lcd.width(), lcd.height());
 #else
     // Initialize LovyanGFX (this will initialize I2C for touch panel)
@@ -457,8 +457,9 @@ void DisplayDriver::setRotation(uint8_t rotation) {
     
     current_rotation = rotation;
 #ifdef HARDWARE_TAB5
-    // Tab5 panel is native portrait; landscape base = rotation 1
-    lcd.setRotation(rotation == 2 ? 3 : 1);
+    // Tab5 panel is native portrait; base landscape is 180° (mounted upside down),
+    // so pref rotation 0 = lcd 3 and the "rotate 180" setting maps back to lcd 1
+    lcd.setRotation(rotation == 2 ? 1 : 3);
 #else
     lcd.setRotation(rotation);
 #endif

@@ -41,6 +41,11 @@ public:
     // Apply current normal brightness immediately (useful after changing settings)
     static void applyNormalBrightness();
     
+    // Shake-to-wake via BMI270 IMU (Tab5 only; no-op elsewhere)
+    static void pollShakeWake();
+    static bool isShakeWakeEnabled() { return shake_wake_enabled; }
+    static void setShakeWakeEnabled(bool enable) { shake_wake_enabled = enable; }
+    
     // Get current power state for UI feedback
     enum PowerState {
         FULL_BRIGHTNESS,
@@ -60,6 +65,7 @@ private:
     static uint32_t last_activity_ms;         // Last touch/activity timestamp
     static PowerState current_state;
     static bool state_changed;                // Track if we just changed state
+    static bool shake_wake_enabled;           // Wake screen on shake (BMI270)
     
     // Internal state management
     static void enterFullBrightness();
