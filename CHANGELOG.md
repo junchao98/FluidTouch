@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Tab5 Machine Select Layout** - The machine selection screen (list, edit-mode controls, Add/Edit dialog, delete confirmation, warning popups and keyboard scroll logic) used hardcoded 800×480-era geometry while Tab5 fonts render ~1.3x larger, breaking the layout. All geometry now scales via `UI_SCALE_X/Y` (identity on 800×480 targets, unchanged behavior).
+
 - **Tab5 WiFi Crash on Connect** - Selecting a machine crashed and rebooted the display on M5Stack Tab5: the pioarduino `esp32-p4-evboard` board definition ships the ESP32-P4-Function-EV-Board esp_hosted SDIO pinout (CLK=18, CMD=19, D0-D3=14-17, reset=54), which does not match the Tab5 wiring, so the ESP32-C6 co-processor never answered and esp_hosted aborted. The firmware now applies the Tab5 pinout from the official M5Stack documentation (`WiFi.setPins`: D0=11, D1=10, D2=9, D3=8, CMD=13, CLK=12, C6 reset=15) before the first WiFi call. Verified end-to-end: WiFi connect, mDNS resolve and FluidNC WebSocket session all work.
 
 ### Added
