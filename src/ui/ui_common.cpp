@@ -391,12 +391,12 @@ void UICommon::createStatusBar() {
     lv_obj_set_style_border_width(status_bar, 1, LV_PART_MAIN);
     lv_obj_set_style_border_side(status_bar, LV_BORDER_SIDE_TOP, LV_PART_MAIN);
     lv_obj_set_style_radius(status_bar, 0, LV_PART_MAIN); // No rounded corners
-    lv_obj_set_style_pad_all(status_bar, 5, LV_PART_MAIN);
+    lv_obj_set_style_pad_all(status_bar, UI_SCALE_Y(5), LV_PART_MAIN);
     lv_obj_clear_flag(status_bar, LV_OBJ_FLAG_SCROLLABLE);
     
     // Create left clickable area (goes to Status tab)
     status_bar_left_area = lv_obj_create(status_bar);
-    lv_obj_set_size(status_bar_left_area, 550, STATUS_BAR_HEIGHT - 10);  // Left 550px
+    lv_obj_set_size(status_bar_left_area, UI_SCALE_X(550), STATUS_BAR_HEIGHT - 10);  // Left 550px
     lv_obj_align(status_bar_left_area, LV_ALIGN_LEFT_MID, 0, 0);
     lv_obj_set_style_bg_opa(status_bar_left_area, LV_OPA_TRANSP, 0);  // Transparent
     lv_obj_set_style_border_width(status_bar_left_area, 0, 0);
@@ -406,7 +406,7 @@ void UICommon::createStatusBar() {
     
     // Create right clickable area (goes to machine selection with confirmation)
     status_bar_right_area = lv_obj_create(status_bar);
-    lv_obj_set_size(status_bar_right_area, 240, STATUS_BAR_HEIGHT - 10);  // Right 240px
+    lv_obj_set_size(status_bar_right_area, UI_SCALE_X(240), STATUS_BAR_HEIGHT - 10);  // Right 240px
     lv_obj_align(status_bar_right_area, LV_ALIGN_RIGHT_MID, 0, 0);
     lv_obj_set_style_bg_opa(status_bar_right_area, LV_OPA_TRANSP, 0);  // Transparent
     lv_obj_set_style_border_width(status_bar_right_area, 0, 0);
@@ -419,7 +419,7 @@ void UICommon::createStatusBar() {
     lv_label_set_text(lbl_status, "OFFLINE");
     lv_obj_set_style_text_font(lbl_status, ui_font_32, 0);
     lv_obj_set_style_text_color(lbl_status, UITheme::STATE_ALARM, 0);
-    lv_obj_align(lbl_status, LV_ALIGN_LEFT_MID, 5, 0);
+    lv_obj_align(lbl_status, LV_ALIGN_LEFT_MID, UI_SCALE_X(5), 0);
 
     // Middle: Work Position (line 1) and Machine Position (line 2)
     // Work Position - Line 1
@@ -428,26 +428,26 @@ void UICommon::createStatusBar() {
     lv_obj_set_style_text_font(lbl_wpos_label, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wpos_label, UITheme::ACCENT_SECONDARY, 0);  // Teal
     lv_obj_set_style_text_align(lbl_wpos_label, LV_TEXT_ALIGN_RIGHT, 0);
-    lv_obj_set_width(lbl_wpos_label, 60);  // Fixed width for right alignment
-    lv_obj_set_pos(lbl_wpos_label, 200, 3);  // Top line
+    lv_obj_set_width(lbl_wpos_label, UI_SCALE_X(60));  // Fixed width for right alignment
+    lv_obj_set_pos(lbl_wpos_label, UI_SCALE_X(200), 3);  // Top line
 
     lbl_wpos_x = lv_label_create(status_bar);
     lv_label_set_text(lbl_wpos_x, "X ----.---");
     lv_obj_set_style_text_font(lbl_wpos_x, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wpos_x, UITheme::AXIS_X, 0);
-    lv_obj_set_pos(lbl_wpos_x, 270, 3);
+    lv_obj_set_pos(lbl_wpos_x, UI_SCALE_X(270), 3);
 
     lbl_wpos_y = lv_label_create(status_bar);
     lv_label_set_text(lbl_wpos_y, "Y ----.---");
     lv_obj_set_style_text_font(lbl_wpos_y, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wpos_y, UITheme::AXIS_Y, 0);
-    lv_obj_set_pos(lbl_wpos_y, 380, 3);
+    lv_obj_set_pos(lbl_wpos_y, UI_SCALE_X(380), 3);
 
     lbl_wpos_z = lv_label_create(status_bar);
     lv_label_set_text(lbl_wpos_z, "Z ----.---");
     lv_obj_set_style_text_font(lbl_wpos_z, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wpos_z, UITheme::AXIS_Z, 0);
-    lv_obj_set_pos(lbl_wpos_z, 490, 3);
+    lv_obj_set_pos(lbl_wpos_z, UI_SCALE_X(490), 3);
 
     // A-axis position label (conditionally shown when A-axis is enabled)
     // Position at MPos X location (line 2) when A-axis is enabled
@@ -457,7 +457,7 @@ void UICommon::createStatusBar() {
         lv_label_set_text(lbl_wpos_a, "A ----.---");
         lv_obj_set_style_text_font(lbl_wpos_a, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_wpos_a, UITheme::AXIS_A, 0);
-        lv_obj_set_pos(lbl_wpos_a, 270, 27);  // Line 2, where MPos X would be
+        lv_obj_set_pos(lbl_wpos_a, UI_SCALE_X(270), UI_SCALE_Y(27));  // Line 2, where MPos X would be
     }
 
     // Machine Position - Line 2
@@ -468,26 +468,26 @@ void UICommon::createStatusBar() {
         lv_obj_set_style_text_font(lbl_mpos_label, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_mpos_label, UITheme::POS_MACHINE, 0);  // Cyan - secondary data
         lv_obj_set_style_text_align(lbl_mpos_label, LV_TEXT_ALIGN_RIGHT, 0);
-        lv_obj_set_width(lbl_mpos_label, 60);  // Fixed width for right alignment
-        lv_obj_set_pos(lbl_mpos_label, 200, 27);  // Bottom line, aligned with WiFi name
+        lv_obj_set_width(lbl_mpos_label, UI_SCALE_X(60));  // Fixed width for right alignment
+        lv_obj_set_pos(lbl_mpos_label, UI_SCALE_X(200), UI_SCALE_Y(27));  // Bottom line, aligned with WiFi name
 
         lbl_mpos_x = lv_label_create(status_bar);
         lv_label_set_text(lbl_mpos_x, "X ----.---");
         lv_obj_set_style_text_font(lbl_mpos_x, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_mpos_x, UITheme::AXIS_X, 0);
-        lv_obj_set_pos(lbl_mpos_x, 270, 27);
+        lv_obj_set_pos(lbl_mpos_x, UI_SCALE_X(270), UI_SCALE_Y(27));
 
         lbl_mpos_y = lv_label_create(status_bar);
         lv_label_set_text(lbl_mpos_y, "Y ----.---");
         lv_obj_set_style_text_font(lbl_mpos_y, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_mpos_y, UITheme::AXIS_Y, 0);
-        lv_obj_set_pos(lbl_mpos_y, 380, 27);
+        lv_obj_set_pos(lbl_mpos_y, UI_SCALE_X(380), UI_SCALE_Y(27));
 
         lbl_mpos_z = lv_label_create(status_bar);
         lv_label_set_text(lbl_mpos_z, "Z ----.---");
         lv_obj_set_style_text_font(lbl_mpos_z, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_mpos_z, UITheme::AXIS_Z, 0);
-        lv_obj_set_pos(lbl_mpos_z, 490, 27);
+        lv_obj_set_pos(lbl_mpos_z, UI_SCALE_X(490), UI_SCALE_Y(27));
 
         Serial.println("[StatusBar] Created MPos labels (A-axis disabled)");
     } else {
@@ -496,11 +496,11 @@ void UICommon::createStatusBar() {
 
     // Job Progress Container (hidden by default, shown when printing)
     lbl_file_progress_container = lv_obj_create(status_bar);
-    lv_obj_set_size(lbl_file_progress_container, 550, 50);  // Span from col 2 to col 4
-    lv_obj_set_pos(lbl_file_progress_container, 5, 0);
+    lv_obj_set_size(lbl_file_progress_container, UI_SCALE_X(550), UI_SCALE_Y(50));  // Span from col 2 to col 4
+    lv_obj_set_pos(lbl_file_progress_container, UI_SCALE_X(5), 0);
     lv_obj_set_style_bg_color(lbl_file_progress_container, UITheme::BG_DARK, 0);  // Match status bar background
     lv_obj_set_style_border_width(lbl_file_progress_container, 0, 0);  // No border
-    lv_obj_set_style_pad_all(lbl_file_progress_container, 5, 0);
+    lv_obj_set_style_pad_all(lbl_file_progress_container, UI_SCALE_Y(5), 0);
     lv_obj_clear_flag(lbl_file_progress_container, LV_OBJ_FLAG_SCROLLABLE);  // Disable scrolling
     lv_obj_add_flag(lbl_file_progress_container, LV_OBJ_FLAG_HIDDEN);  // Hidden by default
     
@@ -511,12 +511,12 @@ void UICommon::createStatusBar() {
     lv_obj_set_style_text_color(lbl_filename, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_pos(lbl_filename, 0, 0);
     lv_label_set_long_mode(lbl_filename, LV_LABEL_LONG_DOT);
-    lv_obj_set_width(lbl_filename, 350);  // Truncate long filenames
+    lv_obj_set_width(lbl_filename, UI_SCALE_X(350));  // Truncate long filenames
     
     // Progress bar (expanded 80px wider: 250→330, 2px taller: 13→15, black background)
     bar_progress = lv_bar_create(lbl_file_progress_container);
-    lv_obj_set_size(bar_progress, 300, 15);  // 2px taller: 13→15
-    lv_obj_set_pos(bar_progress, 0, 20);
+    lv_obj_set_size(bar_progress, UI_SCALE_X(300), UI_SCALE_Y(15));  // 2px taller: 13→15
+    lv_obj_set_pos(bar_progress, 0, UI_SCALE_Y(20));
     lv_obj_set_style_bg_color(bar_progress, UITheme::BG_PROGRESS, LV_PART_MAIN);  // Black for incomplete
     lv_obj_set_style_bg_color(bar_progress, UITheme::UI_SUCCESS, LV_PART_INDICATOR);
     lv_bar_set_value(bar_progress, 0, LV_ANIM_OFF);
@@ -526,7 +526,7 @@ void UICommon::createStatusBar() {
     lv_label_set_text(lbl_percent, "0.0%");
     lv_obj_set_style_text_font(lbl_percent, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_percent, UITheme::UI_SUCCESS, 0);
-    lv_obj_set_pos(lbl_percent, 305, 20);
+    lv_obj_set_pos(lbl_percent, UI_SCALE_X(305), UI_SCALE_Y(20));
     
     // Elapsed time - split into label, value, unit (moved 85px right for 5px more space)
     lv_obj_t *elapsed_label = lv_label_create(lbl_file_progress_container);
@@ -534,20 +534,20 @@ void UICommon::createStatusBar() {
     lv_obj_set_style_text_font(elapsed_label, ui_font_14, 0);
     lv_obj_set_style_text_color(elapsed_label, UITheme::UI_INFO, 0);  // Colored label
     lv_obj_set_style_text_align(elapsed_label, LV_TEXT_ALIGN_RIGHT, 0);
-    lv_obj_set_pos(elapsed_label, 355, 2);  // 5px more space (390→385)
-    lv_obj_set_width(elapsed_label, 75);  // 5px wider (60→65)
+    lv_obj_set_pos(elapsed_label, UI_SCALE_X(355), 2);  // 5px more space (390→385)
+    lv_obj_set_width(elapsed_label, UI_SCALE_X(75));  // 5px wider (60→65)
     
     lbl_elapsed_time = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_elapsed_time, "00:00");
     lv_obj_set_style_text_font(lbl_elapsed_time, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_elapsed_time, UITheme::TEXT_LIGHT, 0);  // White value
-    lv_obj_set_pos(lbl_elapsed_time, 435, 2);
+    lv_obj_set_pos(lbl_elapsed_time, UI_SCALE_X(435), 2);
     
     lbl_elapsed_unit = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_elapsed_unit, "min:sec");  // Changed from mm:ss
     lv_obj_set_style_text_font(lbl_elapsed_unit, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_elapsed_unit, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(lbl_elapsed_unit, 480, 2);
+    lv_obj_set_pos(lbl_elapsed_unit, UI_SCALE_X(480), 2);
     
     // Estimated time - split into label, value, unit
     lv_obj_t *estimated_label = lv_label_create(lbl_file_progress_container);
@@ -555,20 +555,20 @@ void UICommon::createStatusBar() {
     lv_obj_set_style_text_font(estimated_label, ui_font_14, 0);
     lv_obj_set_style_text_color(estimated_label, UITheme::UI_WARNING, 0);  // Colored label
     lv_obj_set_style_text_align(estimated_label, LV_TEXT_ALIGN_RIGHT, 0);
-    lv_obj_set_pos(estimated_label, 355, 21);  // 5px more space (390→385)
-    lv_obj_set_width(estimated_label, 75);  // 5px wider (60→65)
+    lv_obj_set_pos(estimated_label, UI_SCALE_X(355), UI_SCALE_Y(21));  // 5px more space (390→385)
+    lv_obj_set_width(estimated_label, UI_SCALE_X(75));  // 5px wider (60→65)
     
     lbl_estimated_time = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_estimated_time, "00:00");
     lv_obj_set_style_text_font(lbl_estimated_time, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_estimated_time, UITheme::TEXT_LIGHT, 0);  // White value
-    lv_obj_set_pos(lbl_estimated_time, 435, 21);
+    lv_obj_set_pos(lbl_estimated_time, UI_SCALE_X(435), UI_SCALE_Y(21));
     
     lbl_estimated_unit = lv_label_create(lbl_file_progress_container);
     lv_label_set_text(lbl_estimated_unit, "min:sec");  // Changed from mm:ss
     lv_obj_set_style_text_font(lbl_estimated_unit, ui_font_14, 0);
     lv_obj_set_style_text_color(lbl_estimated_unit, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(lbl_estimated_unit, 480, 22);
+    lv_obj_set_pos(lbl_estimated_unit, UI_SCALE_X(480), UI_SCALE_Y(22));
 
     // Right side Line 1: Machine name with symbol
     // Get selected machine from config manager
@@ -582,20 +582,20 @@ void UICommon::createStatusBar() {
         lv_label_set_text(lbl_machine_symbol, symbol);
         lv_obj_set_style_text_font(lbl_machine_symbol, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_machine_symbol, UITheme::STATE_ALARM, 0);  // Start red
-        lv_obj_align(lbl_machine_symbol, LV_ALIGN_TOP_RIGHT, -5, 3);
+        lv_obj_align(lbl_machine_symbol, LV_ALIGN_TOP_RIGHT, -UI_SCALE_X(5), 3);
         
         // Machine name
         lbl_machine_name = lv_label_create(status_bar);
         lv_label_set_text(lbl_machine_name, selected_machine.name);
         lv_obj_set_style_text_font(lbl_machine_name, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_machine_name, UITheme::ACCENT_PRIMARY, 0);
-        lv_obj_align_to(lbl_machine_name, lbl_machine_symbol, LV_ALIGN_OUT_LEFT_MID, -5, 0);
+        lv_obj_align_to(lbl_machine_name, lbl_machine_symbol, LV_ALIGN_OUT_LEFT_MID, -UI_SCALE_X(5), 0);
     } else {
         lbl_modal_states = lv_label_create(status_bar);
         lv_label_set_text(lbl_modal_states, "No Machine");
         lv_obj_set_style_text_font(lbl_modal_states, ui_font_18, 0);
         lv_obj_set_style_text_color(lbl_modal_states, UITheme::ACCENT_PRIMARY, 0);
-        lv_obj_align(lbl_modal_states, LV_ALIGN_TOP_RIGHT, -5, 3);
+        lv_obj_align(lbl_modal_states, LV_ALIGN_TOP_RIGHT, -UI_SCALE_X(5), 3);
     }
 
     // Right side Line 2: WiFi network
@@ -619,15 +619,15 @@ void UICommon::createStatusBar() {
     lv_obj_set_style_text_font(lbl_wifi_name, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wifi_name, UITheme::UI_INFO, 0);
     lv_obj_set_style_text_align(lbl_wifi_name, LV_TEXT_ALIGN_RIGHT, 0);
-    lv_obj_set_width(lbl_wifi_name, 180);  // Set fixed width for right alignment
-    lv_obj_align(lbl_wifi_name, LV_ALIGN_BOTTOM_RIGHT, -32, -3);  // 32px from right for symbol (2px spacing)
+    lv_obj_set_width(lbl_wifi_name, UI_SCALE_X(180));  // Set fixed width for right alignment
+    lv_obj_align(lbl_wifi_name, LV_ALIGN_BOTTOM_RIGHT, -UI_SCALE_X(32), -3);  // 32px from right for symbol (2px spacing)
     
     // WiFi symbol (will be colored based on connection status)
     lbl_wifi_symbol = lv_label_create(status_bar);
     lv_label_set_text(lbl_wifi_symbol, LV_SYMBOL_WIFI);
     lv_obj_set_style_text_font(lbl_wifi_symbol, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_wifi_symbol, WiFi.isConnected() ? UITheme::STATE_IDLE : UITheme::STATE_ALARM, 0);
-    lv_obj_align(lbl_wifi_symbol, LV_ALIGN_BOTTOM_RIGHT, -5, -3);
+    lv_obj_align(lbl_wifi_symbol, LV_ALIGN_BOTTOM_RIGHT, -UI_SCALE_X(5), -3);
 }
 
 void UICommon::updateModalStates(const char *text) {
@@ -788,12 +788,12 @@ void UICommon::showMachineSelectConfirmDialog() {
     
     // Dialog content box (same size as HOLD/ALARM popups)
     lv_obj_t *content = lv_obj_create(machine_select_dialog);
-    lv_obj_set_size(content, 600, 300);
+    lv_obj_set_size(content, UI_SCALE_X(600), UI_SCALE_Y(300));
     lv_obj_center(content);
     lv_obj_set_style_bg_color(content, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_color(content, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_set_style_border_width(content, 3, 0);
-    lv_obj_set_style_pad_all(content, 20, 0);
+    lv_obj_set_style_pad_all(content, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(content, LV_OBJ_FLAG_SCROLLABLE);
     
     // Title (positioned near top)
@@ -817,16 +817,16 @@ void UICommon::showMachineSelectConfirmDialog() {
     lv_obj_set_style_text_color(msg_label, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(msg_label, LV_TEXT_ALIGN_CENTER, 0);
     lv_label_set_long_mode(msg_label, LV_LABEL_LONG_WRAP);
-    lv_obj_set_width(msg_label, 560);
-    lv_obj_align(msg_label, LV_ALIGN_TOP_MID, 0, 50);
+    lv_obj_set_width(msg_label, UI_SCALE_X(560));
+    lv_obj_align(msg_label, LV_ALIGN_TOP_MID, 0, UI_SCALE_Y(50));
     
     // Button container (positioned at bottom)
     lv_obj_t *btn_container = lv_obj_create(content);
-    lv_obj_set_size(btn_container, 560, 60);
+    lv_obj_set_size(btn_container, UI_SCALE_X(560), UI_SCALE_Y(60));
     lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(btn_container, 0, 0);
     lv_obj_set_style_pad_all(btn_container, 0, 0);
-    lv_obj_set_style_pad_gap(btn_container, 10, 0);
+    lv_obj_set_style_pad_gap(btn_container, UI_SCALE_Y(10), 0);
     lv_obj_set_flex_flow(btn_container, LV_FLEX_FLOW_ROW);
     lv_obj_set_flex_align(btn_container, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
     lv_obj_align(btn_container, LV_ALIGN_BOTTOM_MID, 0, 0);
@@ -834,7 +834,7 @@ void UICommon::showMachineSelectConfirmDialog() {
     
     // Restart button (adjust size based on number of buttons)
     lv_obj_t *restart_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(restart_btn, power_mgmt_enabled ? 165 : 250, 50);
+    lv_obj_set_size(restart_btn, power_mgmt_enabled ? 165 : 250, UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(restart_btn, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_add_event_cb(restart_btn, on_machine_select_confirm, LV_EVENT_CLICKED, nullptr);
     
@@ -846,7 +846,7 @@ void UICommon::showMachineSelectConfirmDialog() {
     // Power off button (only show if power management is enabled)
     if (power_mgmt_enabled) {
         lv_obj_t *poweroff_btn = lv_btn_create(btn_container);
-        lv_obj_set_size(poweroff_btn, 165, 50);
+        lv_obj_set_size(poweroff_btn, UI_SCALE_X(165), UI_SCALE_Y(50));
         lv_obj_set_style_bg_color(poweroff_btn, lv_color_make(180, 60, 0), 0);  // Orange/red for power off
         lv_obj_add_event_cb(poweroff_btn, on_power_off_confirm, LV_EVENT_CLICKED, nullptr);
         
@@ -858,7 +858,7 @@ void UICommon::showMachineSelectConfirmDialog() {
     
     // Cancel button (adjust size based on number of buttons)
     lv_obj_t *cancel_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(cancel_btn, power_mgmt_enabled ? 165 : 250, 50);
+    lv_obj_set_size(cancel_btn, power_mgmt_enabled ? 165 : 250, UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(cancel_btn, UITheme::BG_BUTTON, 0);
     lv_obj_add_event_cb(cancel_btn, on_machine_select_cancel, LV_EVENT_CLICKED, nullptr);
     
@@ -879,15 +879,15 @@ void UICommon::showPowerOffConfirmDialog() {
     
     // Dialog content box
     lv_obj_t *content = lv_obj_create(dialog);
-    lv_obj_set_size(content, 520, 220);
+    lv_obj_set_size(content, UI_SCALE_X(520), UI_SCALE_Y(220));
     lv_obj_center(content);
     lv_obj_set_style_bg_color(content, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_color(content, lv_color_make(180, 60, 0), 0);  // Orange
     lv_obj_set_style_border_width(content, 3, 0);
     lv_obj_set_flex_flow(content, LV_FLEX_FLOW_COLUMN);
     lv_obj_set_flex_align(content, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-    lv_obj_set_style_pad_all(content, 20, 0);
-    lv_obj_set_style_pad_gap(content, 20, 0);
+    lv_obj_set_style_pad_all(content, UI_SCALE_Y(20), 0);
+    lv_obj_set_style_pad_gap(content, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(content, LV_OBJ_FLAG_SCROLLABLE);
     
     // Icon and title
@@ -911,12 +911,12 @@ void UICommon::showPowerOffConfirmDialog() {
     lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(btn_container, 0, 0);
     lv_obj_set_style_pad_all(btn_container, 0, 0);
-    lv_obj_set_style_pad_gap(btn_container, 15, 0);
+    lv_obj_set_style_pad_gap(btn_container, UI_SCALE_Y(15), 0);
     lv_obj_clear_flag(btn_container, LV_OBJ_FLAG_SCROLLABLE);
     
     // Power Off button
     lv_obj_t *poweroff_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(poweroff_btn, 200, 50);
+    lv_obj_set_size(poweroff_btn, UI_SCALE_X(200), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(poweroff_btn, lv_color_make(180, 60, 0), 0);  // Orange
     lv_obj_add_event_cb(poweroff_btn, [](lv_event_t *e) {
         lv_obj_t *dialog = (lv_obj_t*)lv_event_get_user_data(e);
@@ -931,7 +931,7 @@ void UICommon::showPowerOffConfirmDialog() {
     
     // Cancel button
     lv_obj_t *cancel_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(cancel_btn, 200, 50);
+    lv_obj_set_size(cancel_btn, UI_SCALE_X(200), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(cancel_btn, UITheme::BG_BUTTON, 0);
     lv_obj_add_event_cb(cancel_btn, [](lv_event_t *e) {
         lv_obj_t *dialog = (lv_obj_t*)lv_event_get_user_data(e);
@@ -962,15 +962,15 @@ void UICommon::showConnectingPopup(const char *machine_name, const char *ssid) {
     
     // Dialog content box
     lv_obj_t *content = lv_obj_create(connecting_popup);
-    lv_obj_set_size(content, 600, 200);
+    lv_obj_set_size(content, UI_SCALE_X(600), UI_SCALE_Y(200));
     lv_obj_center(content);
     lv_obj_set_style_bg_color(content, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_color(content, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_set_style_border_width(content, 3, 0);
     lv_obj_set_flex_flow(content, LV_FLEX_FLOW_COLUMN);
     lv_obj_set_flex_align(content, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-    lv_obj_set_style_pad_all(content, 25, 0);
-    lv_obj_set_style_pad_gap(content, 20, 0);
+    lv_obj_set_style_pad_all(content, UI_SCALE_Y(25), 0);
+    lv_obj_set_style_pad_gap(content, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(content, LV_OBJ_FLAG_SCROLLABLE);
     
     // Connection text - use ssid if provided, otherwise machine name
@@ -1108,12 +1108,12 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     
     // Dialog content box (consistent with System Options)
     lv_obj_t *content = lv_obj_create(connection_error_dialog);
-    lv_obj_set_size(content, 600, 300);
+    lv_obj_set_size(content, UI_SCALE_X(600), UI_SCALE_Y(300));
     lv_obj_center(content);
     lv_obj_set_style_bg_color(content, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_color(content, UITheme::STATE_ALARM, 0);
     lv_obj_set_style_border_width(content, 3, 0);
-    lv_obj_set_style_pad_all(content, 20, 0);
+    lv_obj_set_style_pad_all(content, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(content, LV_OBJ_FLAG_SCROLLABLE);
     
     // Title (positioned near top, consistent with System Options)
@@ -1131,17 +1131,17 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     lv_obj_set_style_text_font(msg_label, ui_font_16, 0);
     lv_obj_set_style_text_color(msg_label, UITheme::TEXT_LIGHT, 0);
     lv_label_set_long_mode(msg_label, LV_LABEL_LONG_WRAP);
-    lv_obj_set_width(msg_label, 560);
+    lv_obj_set_width(msg_label, UI_SCALE_X(560));
     lv_obj_set_style_text_align(msg_label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_align(msg_label, LV_ALIGN_TOP_MID, 0, 50);
+    lv_obj_align(msg_label, LV_ALIGN_TOP_MID, 0, UI_SCALE_Y(50));
     
     // Button container (positioned at bottom, consistent with System Options)
     lv_obj_t *btn_container = lv_obj_create(content);
-    lv_obj_set_size(btn_container, 560, 60);
+    lv_obj_set_size(btn_container, UI_SCALE_X(560), UI_SCALE_Y(60));
     lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(btn_container, 0, 0);
     lv_obj_set_style_pad_all(btn_container, 0, 0);
-    lv_obj_set_style_pad_gap(btn_container, 10, 0);
+    lv_obj_set_style_pad_gap(btn_container, UI_SCALE_Y(10), 0);
     lv_obj_set_flex_flow(btn_container, LV_FLEX_FLOW_ROW);
     lv_obj_set_flex_align(btn_container, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
     lv_obj_align(btn_container, LV_ALIGN_BOTTOM_MID, 0, 0);
@@ -1149,7 +1149,7 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     
     // Connect button (left)
     lv_obj_t *connect_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(connect_btn, 165, 50);
+    lv_obj_set_size(connect_btn, UI_SCALE_X(165), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(connect_btn, UITheme::BTN_CONNECT, 0);
     lv_obj_add_event_cb(connect_btn, on_connection_error_connect, LV_EVENT_CLICKED, nullptr);
     
@@ -1160,7 +1160,7 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     
     // Restart button (center)
     lv_obj_t *restart_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(restart_btn, 165, 50);
+    lv_obj_set_size(restart_btn, UI_SCALE_X(165), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(restart_btn, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_add_event_cb(restart_btn, on_connection_error_restart, LV_EVENT_CLICKED, nullptr);
     
@@ -1171,7 +1171,7 @@ void UICommon::showConnectionErrorDialog(const char *title, const char *message)
     
     // Close button (right)
     lv_obj_t *close_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(close_btn, 165, 50);
+    lv_obj_set_size(close_btn, UI_SCALE_X(165), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(close_btn, UITheme::BG_BUTTON, 0);
     lv_obj_add_event_cb(close_btn, on_connection_error_close, LV_EVENT_CLICKED, nullptr);
     
@@ -1245,11 +1245,11 @@ void UICommon::showHoldPopup(const char *message) {
     
     // Create dialog box
     lv_obj_t *dialog = lv_obj_create(hold_popup);
-    lv_obj_set_size(dialog, 600, 300);
+    lv_obj_set_size(dialog, UI_SCALE_X(600), UI_SCALE_Y(300));
     lv_obj_set_style_bg_color(dialog, UITheme::BG_DARK, 0);
     lv_obj_set_style_border_color(dialog, UITheme::STATE_HOLD, 0);
     lv_obj_set_style_border_width(dialog, 3, 0);
-    lv_obj_set_style_pad_all(dialog, 20, 0);
+    lv_obj_set_style_pad_all(dialog, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(dialog, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_center(dialog);
     
@@ -1265,13 +1265,13 @@ void UICommon::showHoldPopup(const char *message) {
     lv_label_set_text(hold_popup_msg_label, message && strlen(message) > 0 ? message : "Machine paused");
     lv_obj_set_style_text_font(hold_popup_msg_label, ui_font_24, 0);
     lv_obj_set_style_text_color(hold_popup_msg_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_width(hold_popup_msg_label, 520);
+    lv_obj_set_width(hold_popup_msg_label, UI_SCALE_X(520));
     lv_label_set_long_mode(hold_popup_msg_label, LV_LABEL_LONG_WRAP);
-    lv_obj_align(hold_popup_msg_label, LV_ALIGN_TOP_MID, 0, 60);
+    lv_obj_align(hold_popup_msg_label, LV_ALIGN_TOP_MID, 0, UI_SCALE_Y(60));
     
     // Button container
     lv_obj_t *btn_container = lv_obj_create(dialog);
-    lv_obj_set_size(btn_container, 560, 60);
+    lv_obj_set_size(btn_container, UI_SCALE_X(560), UI_SCALE_Y(60));
     lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(btn_container, 0, 0);
     lv_obj_set_style_pad_all(btn_container, 0, 0);
@@ -1281,7 +1281,7 @@ void UICommon::showHoldPopup(const char *message) {
     
     // Resume button
     lv_obj_t *resume_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(resume_btn, 250, 50);
+    lv_obj_set_size(resume_btn, UI_SCALE_X(250), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(resume_btn, UITheme::BTN_PLAY, 0);
     lv_obj_add_event_cb(resume_btn, [](lv_event_t *e) {
         FluidNCClient::sendCommand("~"); // Send cycle start (resume)
@@ -1297,7 +1297,7 @@ void UICommon::showHoldPopup(const char *message) {
     
     // Close button
     lv_obj_t *close_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(close_btn, 250, 50);
+    lv_obj_set_size(close_btn, UI_SCALE_X(250), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(close_btn, UITheme::BG_MEDIUM, 0);
     lv_obj_add_event_cb(close_btn, [](lv_event_t *e) {
         UICommon::hold_popup_dismissed = true;  // Mark as dismissed
@@ -1336,11 +1336,11 @@ void UICommon::showAlarmPopup(const char *message) {
     
     // Create dialog box
     lv_obj_t *dialog = lv_obj_create(alarm_popup);
-    lv_obj_set_size(dialog, 600, 300);
+    lv_obj_set_size(dialog, UI_SCALE_X(600), UI_SCALE_Y(300));
     lv_obj_set_style_bg_color(dialog, UITheme::BG_DARK, 0);
     lv_obj_set_style_border_color(dialog, UITheme::STATE_ALARM, 0);
     lv_obj_set_style_border_width(dialog, 3, 0);
-    lv_obj_set_style_pad_all(dialog, 20, 0);
+    lv_obj_set_style_pad_all(dialog, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(dialog, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_center(dialog);
     
@@ -1356,13 +1356,13 @@ void UICommon::showAlarmPopup(const char *message) {
     lv_label_set_text(alarm_popup_msg_label, message && strlen(message) > 0 ? message : "Alarm condition detected");
     lv_obj_set_style_text_font(alarm_popup_msg_label, ui_font_24, 0);
     lv_obj_set_style_text_color(alarm_popup_msg_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_width(alarm_popup_msg_label, 520);
+    lv_obj_set_width(alarm_popup_msg_label, UI_SCALE_X(520));
     lv_label_set_long_mode(alarm_popup_msg_label, LV_LABEL_LONG_WRAP);
-    lv_obj_align(alarm_popup_msg_label, LV_ALIGN_TOP_MID, 0, 60);
+    lv_obj_align(alarm_popup_msg_label, LV_ALIGN_TOP_MID, 0, UI_SCALE_Y(60));
     
     // Button container
     lv_obj_t *btn_container = lv_obj_create(dialog);
-    lv_obj_set_size(btn_container, 560, 60);
+    lv_obj_set_size(btn_container, UI_SCALE_X(560), UI_SCALE_Y(60));
     lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(btn_container, 0, 0);
     lv_obj_set_style_pad_all(btn_container, 0, 0);
@@ -1372,7 +1372,7 @@ void UICommon::showAlarmPopup(const char *message) {
     
     // Clear Alarm button
     lv_obj_t *clear_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(clear_btn, 250, 50);
+    lv_obj_set_size(clear_btn, UI_SCALE_X(250), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(clear_btn, UITheme::UI_WARNING, 0);
     lv_obj_add_event_cb(clear_btn, [](lv_event_t *e) {
         // Send soft reset, then unlock
@@ -1391,7 +1391,7 @@ void UICommon::showAlarmPopup(const char *message) {
     
     // Close button
     lv_obj_t *close_btn = lv_btn_create(btn_container);
-    lv_obj_set_size(close_btn, 250, 50);
+    lv_obj_set_size(close_btn, UI_SCALE_X(250), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(close_btn, UITheme::BG_MEDIUM, 0);
     lv_obj_add_event_cb(close_btn, [](lv_event_t *e) {
         UICommon::alarm_popup_dismissed = true;  // Mark as dismissed
@@ -1559,12 +1559,12 @@ void UICommon::showWCSLockDialog(const char *wcs_code, const char *wcs_name, voi
     
     // Create dialog container
     lv_obj_t *dialog = lv_obj_create(backdrop);
-    lv_obj_set_size(dialog, 600, 300);
+    lv_obj_set_size(dialog, UI_SCALE_X(600), UI_SCALE_Y(300));
     lv_obj_center(dialog);
     lv_obj_set_style_bg_color(dialog, UITheme::BG_DARKER, 0);
     lv_obj_set_style_border_color(dialog, UITheme::UI_WARNING, 0);
     lv_obj_set_style_border_width(dialog, 3, 0);
-    lv_obj_set_style_pad_all(dialog, 20, 0);
+    lv_obj_set_style_pad_all(dialog, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(dialog, LV_OBJ_FLAG_SCROLLABLE);
     
     // Title with warning icon and WCS code
@@ -1579,7 +1579,7 @@ void UICommon::showWCSLockDialog(const char *wcs_code, const char *wcs_name, voi
     lv_obj_set_style_text_font(title, ui_font_24, 0);
     lv_obj_set_style_text_color(title, UITheme::UI_WARNING, 0);
     lv_obj_set_style_text_align(title, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_set_width(title, 560);
+    lv_obj_set_width(title, UI_SCALE_X(560));
     lv_obj_set_pos(title, 0, 0);
     
     // Warning message with centered text and more spacing from title
@@ -1588,14 +1588,14 @@ void UICommon::showWCSLockDialog(const char *wcs_code, const char *wcs_name, voi
     lv_obj_set_style_text_font(message, ui_font_18, 0);
     lv_obj_set_style_text_color(message, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(message, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_set_width(message, 560);
+    lv_obj_set_width(message, UI_SCALE_X(560));
     lv_label_set_long_mode(message, LV_LABEL_LONG_WRAP);
-    lv_obj_set_pos(message, 0, 75);
+    lv_obj_set_pos(message, 0, UI_SCALE_Y(75));
     
     // Cancel button (left)
     lv_obj_t *btn_cancel = lv_button_create(dialog);
-    lv_obj_set_size(btn_cancel, 220, 50);
-    lv_obj_set_pos(btn_cancel, 40, 200);
+    lv_obj_set_size(btn_cancel, UI_SCALE_X(220), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_cancel, UI_SCALE_X(40), UI_SCALE_Y(200));
     lv_obj_set_style_bg_color(btn_cancel, UITheme::BG_MEDIUM, 0);
     
     lv_obj_t *lbl_cancel = lv_label_create(btn_cancel);
@@ -1611,8 +1611,8 @@ void UICommon::showWCSLockDialog(const char *wcs_code, const char *wcs_name, voi
     
     // Continue button (right) with warning icon
     lv_obj_t *btn_continue = lv_button_create(dialog);
-    lv_obj_set_size(btn_continue, 220, 50);
-    lv_obj_set_pos(btn_continue, 280, 200);
+    lv_obj_set_size(btn_continue, UI_SCALE_X(220), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_continue, UI_SCALE_X(280), UI_SCALE_Y(200));
     lv_obj_set_style_bg_color(btn_continue, UITheme::UI_WARNING, 0);
     
     lv_obj_t *lbl_continue = lv_label_create(btn_continue);

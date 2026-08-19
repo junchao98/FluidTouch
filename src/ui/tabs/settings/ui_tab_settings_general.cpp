@@ -48,17 +48,17 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     lv_label_set_text(section_title, "MACHINE SELECTION");
     lv_obj_set_style_text_font(section_title, ui_font_18, 0);
     lv_obj_set_style_text_color(section_title, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(section_title, 20, 20);
+    lv_obj_set_pos(section_title, UI_SCALE_X(20), UI_SCALE_Y(20));
     
     // Show label and switch on same line
     lv_obj_t *machine_sel_label = lv_label_create(tab);
     lv_label_set_text(machine_sel_label, "Show:");
     lv_obj_set_style_text_font(machine_sel_label, ui_font_18, 0);
     lv_obj_set_style_text_color(machine_sel_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(machine_sel_label, 20, 70);  // 20 + 40 (title spacing) + 12 (vertical alignment)
+    lv_obj_set_pos(machine_sel_label, UI_SCALE_X(20), UI_SCALE_Y(70));  // 20 + 40 (title spacing) + 12 (vertical alignment)
     
     show_machine_select_switch = lv_switch_create(tab);
-    lv_obj_set_pos(show_machine_select_switch, 140, 65);  // 20 + 40 (title spacing) + 7 (switch alignment)
+    lv_obj_set_pos(show_machine_select_switch, UI_SCALE_X(140), UI_SCALE_Y(65));  // 20 + 40 (title spacing) + 7 (switch alignment)
     if (show_machine_select) {
         lv_obj_add_state(show_machine_select_switch, LV_STATE_CHECKED);
     }
@@ -68,24 +68,24 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     lv_label_set_text(desc_label, "When disabled, the first configured machine\nwill be loaded automatically at startup.");
     lv_obj_set_style_text_font(desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(desc_label, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(desc_label, 20, 107);  // 20 + 40 (title) + 40 (switch row) + 7 (spacing)
+    lv_obj_set_pos(desc_label, UI_SCALE_X(20), UI_SCALE_Y(107));  // 20 + 40 (title) + 40 (switch row) + 7 (spacing)
     
     // === Display Section (Top right) ===
     lv_obj_t *display_section_title = lv_label_create(tab);
     lv_label_set_text(display_section_title, "DISPLAY");
     lv_obj_set_style_text_font(display_section_title, ui_font_18, 0);
     lv_obj_set_style_text_color(display_section_title, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(display_section_title, 400, 20);  // Top right column
+    lv_obj_set_pos(display_section_title, UI_SCALE_X(400), UI_SCALE_Y(20));  // Top right column
     
     // Rotate display label and switch
     lv_obj_t *rotate_label = lv_label_create(tab);
     lv_label_set_text(rotate_label, "Rotate 180°:");
     lv_obj_set_style_text_font(rotate_label, ui_font_18, 0);
     lv_obj_set_style_text_color(rotate_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(rotate_label, 400, 70);  // Top right, aligned with Machine Selection Show label
+    lv_obj_set_pos(rotate_label, UI_SCALE_X(400), UI_SCALE_Y(70));  // Top right, aligned with Machine Selection Show label
     
     rotate_display_switch = lv_switch_create(tab);
-    lv_obj_set_pos(rotate_display_switch, 560, 65);  // Aligned with label
+    lv_obj_set_pos(rotate_display_switch, UI_SCALE_X(560), UI_SCALE_Y(65));  // Aligned with label
     if (display_rotation == 2) {  // Rotation 2 = 180 degrees
         lv_obj_add_state(rotate_display_switch, LV_STATE_CHECKED);
     }
@@ -95,24 +95,24 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     lv_label_set_text(rotate_desc_label, "Rotate display 180° for\nupside-down mounting.\nRequires restart.");
     lv_obj_set_style_text_font(rotate_desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(rotate_desc_label, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(rotate_desc_label, 400, 107);  // Top right, aligned with Machine Selection description
+    lv_obj_set_pos(rotate_desc_label, UI_SCALE_X(400), UI_SCALE_Y(107));  // Top right, aligned with Machine Selection description
     
     // === Files Section (First column, below Machine Selection) ===
     lv_obj_t *files_section_title = lv_label_create(tab);
     lv_label_set_text(files_section_title, "FILES");
     lv_obj_set_style_text_font(files_section_title, ui_font_18, 0);
     lv_obj_set_style_text_color(files_section_title, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(files_section_title, 20, 155);  // First column, below Machine Selection
+    lv_obj_set_pos(files_section_title, UI_SCALE_X(20), UI_SCALE_Y(155));  // First column, below Machine Selection
     
     // Folders on top label and switch
     lv_obj_t *folders_label = lv_label_create(tab);
     lv_label_set_text(folders_label, "Folders on Top:");
     lv_obj_set_style_text_font(folders_label, ui_font_18, 0);
     lv_obj_set_style_text_color(folders_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(folders_label, 20, 205);  // First column
+    lv_obj_set_pos(folders_label, UI_SCALE_X(20), UI_SCALE_Y(205));  // First column
     
     folders_on_top_switch = lv_switch_create(tab);
-    lv_obj_set_pos(folders_on_top_switch, 200, 200);  // Aligned with label
+    lv_obj_set_pos(folders_on_top_switch, UI_SCALE_X(200), UI_SCALE_Y(200));  // Aligned with label
     if (folders_on_top) {
         lv_obj_add_state(folders_on_top_switch, LV_STATE_CHECKED);
     }
@@ -122,17 +122,17 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     lv_label_set_text(folders_desc_label, "When enabled, folders appear at the top\nof the file list instead of the bottom.");
     lv_obj_set_style_text_font(folders_desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(folders_desc_label, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(folders_desc_label, 20, 242);  // First column
+    lv_obj_set_pos(folders_desc_label, UI_SCALE_X(20), UI_SCALE_Y(242));  // First column
 
     // Enable A-Axis label and switch (Right column, below Display)
     lv_obj_t *enable_a_axis_label = lv_label_create(tab);
     lv_label_set_text(enable_a_axis_label, "Enable A-Axis:");
     lv_obj_set_style_text_font(enable_a_axis_label, ui_font_18, 0);
     lv_obj_set_style_text_color(enable_a_axis_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(enable_a_axis_label, 400, 205);  // Right column
+    lv_obj_set_pos(enable_a_axis_label, UI_SCALE_X(400), UI_SCALE_Y(205));  // Right column
 
     enable_a_axis_switch = lv_switch_create(tab);
-    lv_obj_set_pos(enable_a_axis_switch, 560, 200);  // Aligned with label
+    lv_obj_set_pos(enable_a_axis_switch, UI_SCALE_X(560), UI_SCALE_Y(200));  // Aligned with label
     if (enable_a_axis) {
         lv_obj_add_state(enable_a_axis_switch, LV_STATE_CHECKED);
     }
@@ -142,13 +142,13 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     lv_label_set_text(a_axis_desc_label, "Enables 4th axis (rotary) support.\nAdds A-axis controls and display.");
     lv_obj_set_style_text_font(a_axis_desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(a_axis_desc_label, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(a_axis_desc_label, 400, 242);  // Right column
+    lv_obj_set_pos(a_axis_desc_label, UI_SCALE_X(400), UI_SCALE_Y(242));  // Right column
 
     // === Action Buttons (positioned at bottom with 20px margins) ===
     // Save button
     lv_obj_t *btn_save = lv_button_create(tab);
-    lv_obj_set_size(btn_save, 180, 50);
-    lv_obj_set_pos(btn_save, 20, 280);  // 360px (tab height) - 50px (button) - 30px (margin) = 280px
+    lv_obj_set_size(btn_save, UI_SCALE_X(180), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_save, UI_SCALE_X(20), UI_SCALE_Y(280));  // 360px (tab height) - 50px (button) - 30px (margin) = 280px
     lv_obj_set_style_bg_color(btn_save, UITheme::BTN_PLAY, LV_PART_MAIN);
     lv_obj_t *lbl_save = lv_label_create(btn_save);
     lv_label_set_text(lbl_save, "Save Settings");
@@ -158,8 +158,8 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     
     // Reset to defaults button
     lv_obj_t *btn_reset = lv_button_create(tab);
-    lv_obj_set_size(btn_reset, 180, 50);
-    lv_obj_set_pos(btn_reset, 220, 280);  // Same vertical position, 200px gap from Save button
+    lv_obj_set_size(btn_reset, UI_SCALE_X(180), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_reset, UI_SCALE_X(220), UI_SCALE_Y(280));  // Same vertical position, 200px gap from Save button
     lv_obj_set_style_bg_color(btn_reset, UITheme::BG_BUTTON, LV_PART_MAIN);
     lv_obj_t *lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, "Reset Defaults");
@@ -172,7 +172,7 @@ void UITabSettingsGeneral::create(lv_obj_t *tab) {
     lv_label_set_text(status_label, "");
     lv_obj_set_style_text_font(status_label, ui_font_14, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
-    lv_obj_set_pos(status_label, 20, 335);
+    lv_obj_set_pos(status_label, UI_SCALE_X(20), UI_SCALE_Y(335));
 }
 
 // Save button event handler
@@ -281,12 +281,12 @@ static void showRotationRestartDialog() {
     
     // Create dialog
     lv_obj_t *dialog = lv_obj_create(backdrop);
-    lv_obj_set_size(dialog, 600, 250);
+    lv_obj_set_size(dialog, UI_SCALE_X(600), UI_SCALE_Y(250));
     lv_obj_center(dialog);
     lv_obj_set_style_bg_color(dialog, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_width(dialog, 3, 0);
     lv_obj_set_style_border_color(dialog, UITheme::UI_WARNING, 0);
-    lv_obj_set_style_pad_all(dialog, 20, 0);
+    lv_obj_set_style_pad_all(dialog, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(dialog, LV_OBJ_FLAG_SCROLLABLE);
     
     // Title
@@ -302,13 +302,13 @@ static void showRotationRestartDialog() {
     lv_obj_set_style_text_font(message, ui_font_18, 0);
     lv_obj_set_style_text_color(message, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(message, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_set_pos(message, 0, 45);
-    lv_obj_set_width(message, 560);
+    lv_obj_set_pos(message, 0, UI_SCALE_Y(45));
+    lv_obj_set_width(message, UI_SCALE_X(560));
     
     // Button container for horizontal layout
     lv_obj_t *btn_container = lv_obj_create(dialog);
-    lv_obj_set_size(btn_container, 560, 60);
-    lv_obj_set_pos(btn_container, 0, 150);
+    lv_obj_set_size(btn_container, UI_SCALE_X(560), UI_SCALE_Y(60));
+    lv_obj_set_pos(btn_container, 0, UI_SCALE_Y(150));
     lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(btn_container, 0, 0);
     lv_obj_set_style_pad_all(btn_container, 0, 0);
@@ -318,7 +318,7 @@ static void showRotationRestartDialog() {
     
     // Restart button (left)
     lv_obj_t *btn_restart = lv_button_create(btn_container);
-    lv_obj_set_size(btn_restart, 240, 50);
+    lv_obj_set_size(btn_restart, UI_SCALE_X(240), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(btn_restart, UITheme::UI_WARNING, 0);
     lv_obj_t *lbl_restart = lv_label_create(btn_restart);
     lv_label_set_text(lbl_restart, LV_SYMBOL_REFRESH " Restart");
@@ -350,7 +350,7 @@ static void showRotationRestartDialog() {
     
     // Later button (right)
     lv_obj_t *btn_later = lv_button_create(btn_container);
-    lv_obj_set_size(btn_later, 240, 50);
+    lv_obj_set_size(btn_later, UI_SCALE_X(240), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(btn_later, UITheme::BG_BUTTON, 0);
     lv_obj_t *lbl_later = lv_label_create(btn_later);
     lv_label_set_text(lbl_later, "Later");
@@ -379,12 +379,12 @@ static void showAAxisRestartDialog() {
 
     // Create dialog
     lv_obj_t *dialog = lv_obj_create(backdrop);
-    lv_obj_set_size(dialog, 600, 250);
+    lv_obj_set_size(dialog, UI_SCALE_X(600), UI_SCALE_Y(250));
     lv_obj_center(dialog);
     lv_obj_set_style_bg_color(dialog, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_width(dialog, 3, 0);
     lv_obj_set_style_border_color(dialog, UITheme::UI_WARNING, 0);
-    lv_obj_set_style_pad_all(dialog, 20, 0);
+    lv_obj_set_style_pad_all(dialog, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(dialog, LV_OBJ_FLAG_SCROLLABLE);
 
     // Title
@@ -400,13 +400,13 @@ static void showAAxisRestartDialog() {
     lv_obj_set_style_text_font(message, ui_font_18, 0);
     lv_obj_set_style_text_color(message, UITheme::TEXT_LIGHT, 0);
     lv_obj_set_style_text_align(message, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_set_pos(message, 0, 45);
-    lv_obj_set_width(message, 560);
+    lv_obj_set_pos(message, 0, UI_SCALE_Y(45));
+    lv_obj_set_width(message, UI_SCALE_X(560));
 
     // Button container for horizontal layout
     lv_obj_t *btn_container = lv_obj_create(dialog);
-    lv_obj_set_size(btn_container, 560, 60);
-    lv_obj_set_pos(btn_container, 0, 150);
+    lv_obj_set_size(btn_container, UI_SCALE_X(560), UI_SCALE_Y(60));
+    lv_obj_set_pos(btn_container, 0, UI_SCALE_Y(150));
     lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(btn_container, 0, 0);
     lv_obj_set_style_pad_all(btn_container, 0, 0);
@@ -416,7 +416,7 @@ static void showAAxisRestartDialog() {
 
     // Restart button (left)
     lv_obj_t *btn_restart = lv_button_create(btn_container);
-    lv_obj_set_size(btn_restart, 240, 50);
+    lv_obj_set_size(btn_restart, UI_SCALE_X(240), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(btn_restart, UITheme::UI_WARNING, 0);
     lv_obj_t *lbl_restart = lv_label_create(btn_restart);
     lv_label_set_text(lbl_restart, LV_SYMBOL_REFRESH " Restart");
@@ -448,7 +448,7 @@ static void showAAxisRestartDialog() {
 
     // Later button (right)
     lv_obj_t *btn_later = lv_button_create(btn_container);
-    lv_obj_set_size(btn_later, 240, 50);
+    lv_obj_set_size(btn_later, UI_SCALE_X(240), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(btn_later, UITheme::BG_BUTTON, 0);
     lv_obj_t *lbl_later = lv_label_create(btn_later);
     lv_label_set_text(lbl_later, "Later");

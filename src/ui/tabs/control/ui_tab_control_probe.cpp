@@ -46,12 +46,12 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     lv_label_set_text(x_header, "X-AXIS");
     lv_obj_set_style_text_font(x_header, ui_font_18, 0);
     lv_obj_set_style_text_color(x_header, UITheme::TEXT_DISABLED, 0);  // Same as parameters header
-    lv_obj_set_pos(x_header, 10, 10);
+    lv_obj_set_pos(x_header, UI_SCALE_X(10), UI_SCALE_Y(10));
     
     // X- button (colored with axis color)
     lv_obj_t* x_minus_btn = lv_button_create(parent);
-    lv_obj_set_size(x_minus_btn, 100, 50);  // Narrower buttons
-    lv_obj_set_pos(x_minus_btn, 10, 45);
+    lv_obj_set_size(x_minus_btn, UI_SCALE_X(100), UI_SCALE_Y(50));  // Narrower buttons
+    lv_obj_set_pos(x_minus_btn, UI_SCALE_X(10), UI_SCALE_Y(45));
     lv_obj_set_style_bg_color(x_minus_btn, UITheme::AXIS_X, 0);  // Cyan for X-axis
     lv_obj_add_event_cb(x_minus_btn, probe_x_minus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* x_minus_lbl = lv_label_create(x_minus_btn);
@@ -61,8 +61,8 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     
     // X+ button (colored with axis color)
     lv_obj_t* x_plus_btn = lv_button_create(parent);
-    lv_obj_set_size(x_plus_btn, 100, 50);  // Narrower buttons
-    lv_obj_set_pos(x_plus_btn, 120, 45);  // Adjusted position
+    lv_obj_set_size(x_plus_btn, UI_SCALE_X(100), UI_SCALE_Y(50));  // Narrower buttons
+    lv_obj_set_pos(x_plus_btn, UI_SCALE_X(120), UI_SCALE_Y(45));  // Adjusted position
     lv_obj_set_style_bg_color(x_plus_btn, UITheme::AXIS_X, 0);  // Cyan for X-axis
     lv_obj_add_event_cb(x_plus_btn, probe_x_plus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* x_plus_lbl = lv_label_create(x_plus_btn);
@@ -75,12 +75,12 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     lv_label_set_text(y_header, "Y-AXIS");
     lv_obj_set_style_text_font(y_header, ui_font_18, 0);
     lv_obj_set_style_text_color(y_header, UITheme::TEXT_DISABLED, 0);  // Same as parameters header
-    lv_obj_set_pos(y_header, 10, 115);
+    lv_obj_set_pos(y_header, UI_SCALE_X(10), UI_SCALE_Y(115));
     
     // Y- button (colored with axis color)
     lv_obj_t* y_minus_btn = lv_button_create(parent);
-    lv_obj_set_size(y_minus_btn, 100, 50);  // Narrower buttons
-    lv_obj_set_pos(y_minus_btn, 10, 150);
+    lv_obj_set_size(y_minus_btn, UI_SCALE_X(100), UI_SCALE_Y(50));  // Narrower buttons
+    lv_obj_set_pos(y_minus_btn, UI_SCALE_X(10), UI_SCALE_Y(150));
     lv_obj_set_style_bg_color(y_minus_btn, UITheme::AXIS_Y, 0);  // Green for Y-axis
     lv_obj_add_event_cb(y_minus_btn, probe_y_minus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* y_minus_lbl = lv_label_create(y_minus_btn);
@@ -90,8 +90,8 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     
     // Y+ button (colored with axis color)
     lv_obj_t* y_plus_btn = lv_button_create(parent);
-    lv_obj_set_size(y_plus_btn, 100, 50);  // Narrower buttons
-    lv_obj_set_pos(y_plus_btn, 120, 150);  // Adjusted position
+    lv_obj_set_size(y_plus_btn, UI_SCALE_X(100), UI_SCALE_Y(50));  // Narrower buttons
+    lv_obj_set_pos(y_plus_btn, UI_SCALE_X(120), UI_SCALE_Y(150));  // Adjusted position
     lv_obj_set_style_bg_color(y_plus_btn, UITheme::AXIS_Y, 0);  // Green for Y-axis
     lv_obj_add_event_cb(y_plus_btn, probe_y_plus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* y_plus_lbl = lv_label_create(y_plus_btn);
@@ -104,12 +104,12 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     lv_label_set_text(z_header, "Z-AXIS");
     lv_obj_set_style_text_font(z_header, ui_font_18, 0);
     lv_obj_set_style_text_color(z_header, UITheme::TEXT_DISABLED, 0);  // Same as parameters header
-    lv_obj_set_pos(z_header, 10, 220);
+    lv_obj_set_pos(z_header, UI_SCALE_X(10), UI_SCALE_Y(220));
     
     // Z- button (only downward probing makes sense, colored with axis color)
     lv_obj_t* z_minus_btn = lv_button_create(parent);
-    lv_obj_set_size(z_minus_btn, 100, 50);  // Narrower button
-    lv_obj_set_pos(z_minus_btn, 10, 255);
+    lv_obj_set_size(z_minus_btn, UI_SCALE_X(100), UI_SCALE_Y(50));  // Narrower button
+    lv_obj_set_pos(z_minus_btn, UI_SCALE_X(10), UI_SCALE_Y(255));
     lv_obj_set_style_bg_color(z_minus_btn, UITheme::AXIS_Z, 0);  // Magenta for Z-axis
     lv_obj_add_event_cb(z_minus_btn, probe_z_minus_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_t* z_minus_lbl = lv_label_create(z_minus_btn);
@@ -122,14 +122,14 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     lv_label_set_text(params_header, "PARAMETERS");
     lv_obj_set_style_text_font(params_header, ui_font_18, 0);
     lv_obj_set_style_text_color(params_header, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(params_header, 260, 10);  // Moved left to accommodate wider column
+    lv_obj_set_pos(params_header, UI_SCALE_X(260), UI_SCALE_Y(10));  // Moved left to accommodate wider column
     
     // Feed Rate
     lv_obj_t* feed_label = lv_label_create(parent);
     lv_label_set_text(feed_label, "Feed Rate:");
     lv_obj_set_style_text_font(feed_label, ui_font_18, 0);  // Increased from 14pt
     lv_obj_set_style_text_color(feed_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(feed_label, 260, 56);  // Vertically centered with 45px field
+    lv_obj_set_pos(feed_label, UI_SCALE_X(260), UI_SCALE_Y(56));  // Vertically centered with 45px field
     
     feed_input_ptr = lv_textarea_create(parent);
     lv_textarea_set_one_line(feed_input_ptr, true);
@@ -138,8 +138,8 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     snprintf(buf, sizeof(buf), "%d", UITabSettingsProbe::getDefaultFeedRate());
     lv_textarea_set_text(feed_input_ptr, buf);
     lv_textarea_set_accepted_chars(feed_input_ptr, "0123456789");  // Integers only
-    lv_obj_set_size(feed_input_ptr, 120, 45);  // Wider and taller for 18pt font
-    lv_obj_set_pos(feed_input_ptr, 420, 45);  // Shifted left by 30px
+    lv_obj_set_size(feed_input_ptr, UI_SCALE_X(120), UI_SCALE_Y(45));  // Wider and taller for 18pt font
+    lv_obj_set_pos(feed_input_ptr, UI_SCALE_X(420), UI_SCALE_Y(45));  // Shifted left by 30px
     lv_obj_clear_flag(feed_input_ptr, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_event_cb(feed_input_ptr, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     
@@ -147,14 +147,14 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     lv_label_set_text(feed_unit, "mm/min");
     lv_obj_set_style_text_font(feed_unit, ui_font_18, 0);  // Increased from 14pt
     lv_obj_set_style_text_color(feed_unit, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(feed_unit, 550, 56);  // Vertically centered with 45px field
+    lv_obj_set_pos(feed_unit, UI_SCALE_X(550), UI_SCALE_Y(56));  // Vertically centered with 45px field
     
     // Max Distance
     lv_obj_t* dist_label = lv_label_create(parent);
     lv_label_set_text(dist_label, "Max Distance:");
     lv_obj_set_style_text_font(dist_label, ui_font_18, 0);  // Increased from 14pt
     lv_obj_set_style_text_color(dist_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(dist_label, 260, 111);  // Vertically centered with field
+    lv_obj_set_pos(dist_label, UI_SCALE_X(260), UI_SCALE_Y(111));  // Vertically centered with field
     
     dist_input_ptr = lv_textarea_create(parent);
     lv_textarea_set_one_line(dist_input_ptr, true);
@@ -162,8 +162,8 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     snprintf(buf, sizeof(buf), "%d", UITabSettingsProbe::getDefaultMaxDistance());
     lv_textarea_set_text(dist_input_ptr, buf);
     lv_textarea_set_accepted_chars(dist_input_ptr, "0123456789");  // Integers only
-    lv_obj_set_size(dist_input_ptr, 120, 45);  // Wider and taller for 18pt font
-    lv_obj_set_pos(dist_input_ptr, 420, 100);  // Shifted left by 30px
+    lv_obj_set_size(dist_input_ptr, UI_SCALE_X(120), UI_SCALE_Y(45));  // Wider and taller for 18pt font
+    lv_obj_set_pos(dist_input_ptr, UI_SCALE_X(420), UI_SCALE_Y(100));  // Shifted left by 30px
     lv_obj_clear_flag(dist_input_ptr, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_event_cb(dist_input_ptr, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     
@@ -171,14 +171,14 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     lv_label_set_text(dist_unit, "mm");
     lv_obj_set_style_text_font(dist_unit, ui_font_18, 0);  // Increased from 14pt
     lv_obj_set_style_text_color(dist_unit, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(dist_unit, 550, 111);  // Vertically centered with field
+    lv_obj_set_pos(dist_unit, UI_SCALE_X(550), UI_SCALE_Y(111));  // Vertically centered with field
     
     // Retract Distance
     lv_obj_t* retract_label = lv_label_create(parent);
     lv_label_set_text(retract_label, "Retract:");
     lv_obj_set_style_text_font(retract_label, ui_font_18, 0);  // Increased from 14pt
     lv_obj_set_style_text_color(retract_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(retract_label, 260, 166);  // Vertically centered with field
+    lv_obj_set_pos(retract_label, UI_SCALE_X(260), UI_SCALE_Y(166));  // Vertically centered with field
     
     retract_input_ptr = lv_textarea_create(parent);
     lv_textarea_set_one_line(retract_input_ptr, true);
@@ -186,8 +186,8 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     snprintf(buf, sizeof(buf), "%d", UITabSettingsProbe::getDefaultRetract());
     lv_textarea_set_text(retract_input_ptr, buf);
     lv_textarea_set_accepted_chars(retract_input_ptr, "0123456789");  // Integers only
-    lv_obj_set_size(retract_input_ptr, 120, 45);  // Wider and taller for 18pt font
-    lv_obj_set_pos(retract_input_ptr, 420, 155);  // Shifted left by 30px
+    lv_obj_set_size(retract_input_ptr, UI_SCALE_X(120), UI_SCALE_Y(45));  // Wider and taller for 18pt font
+    lv_obj_set_pos(retract_input_ptr, UI_SCALE_X(420), UI_SCALE_Y(155));  // Shifted left by 30px
     lv_obj_clear_flag(retract_input_ptr, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_event_cb(retract_input_ptr, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     
@@ -195,14 +195,14 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     lv_label_set_text(retract_unit, "mm");
     lv_obj_set_style_text_font(retract_unit, ui_font_18, 0);  // Increased from 14pt
     lv_obj_set_style_text_color(retract_unit, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(retract_unit, 550, 166);  // Vertically centered with field
+    lv_obj_set_pos(retract_unit, UI_SCALE_X(550), UI_SCALE_Y(166));  // Vertically centered with field
     
     // Probe Thickness (P parameter)
     lv_obj_t* thickness_label = lv_label_create(parent);
     lv_label_set_text(thickness_label, "Probe Thickness:");
     lv_obj_set_style_text_font(thickness_label, ui_font_18, 0);  // Increased from 14pt
     lv_obj_set_style_text_color(thickness_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(thickness_label, 260, 221);  // Vertically centered with field
+    lv_obj_set_pos(thickness_label, UI_SCALE_X(260), UI_SCALE_Y(221));  // Vertically centered with field
     
     thickness_input_ptr = lv_textarea_create(parent);
     lv_textarea_set_one_line(thickness_input_ptr, true);
@@ -210,8 +210,8 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     snprintf(buf, sizeof(buf), "%.1f", UITabSettingsProbe::getDefaultThickness());
     lv_textarea_set_text(thickness_input_ptr, buf);
     lv_textarea_set_accepted_chars(thickness_input_ptr, "0123456789.");  // Allow decimal point
-    lv_obj_set_size(thickness_input_ptr, 120, 45);  // Wider and taller for 18pt font
-    lv_obj_set_pos(thickness_input_ptr, 420, 210);  // Shifted left by 30px
+    lv_obj_set_size(thickness_input_ptr, UI_SCALE_X(120), UI_SCALE_Y(45));  // Wider and taller for 18pt font
+    lv_obj_set_pos(thickness_input_ptr, UI_SCALE_X(420), UI_SCALE_Y(210));  // Shifted left by 30px
     lv_obj_clear_flag(thickness_input_ptr, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_event_cb(thickness_input_ptr, textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
     
@@ -219,18 +219,18 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     lv_label_set_text(thickness_unit, "mm");
     lv_obj_set_style_text_font(thickness_unit, ui_font_18, 0);  // Increased from 14pt
     lv_obj_set_style_text_color(thickness_unit, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(thickness_unit, 550, 221);  // Vertically centered with field
+    lv_obj_set_pos(thickness_unit, UI_SCALE_X(550), UI_SCALE_Y(221));  // Vertically centered with field
     
     // === RESULTS SECTION ===
     lv_obj_t* results_header = lv_label_create(parent);
     lv_label_set_text(results_header, "PROBE RESULT");
     lv_obj_set_style_text_font(results_header, ui_font_18, 0);
     lv_obj_set_style_text_color(results_header, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(results_header, 280, 260);
+    lv_obj_set_pos(results_header, UI_SCALE_X(280), UI_SCALE_Y(260));
 
     probe_indicator = lv_obj_create(parent);
-    lv_obj_set_size(probe_indicator, 14, 14);
-    lv_obj_set_pos(probe_indicator, 260, 264);
+    lv_obj_set_size(probe_indicator, UI_SCALE_X(14), UI_SCALE_Y(14));
+    lv_obj_set_pos(probe_indicator, UI_SCALE_X(260), UI_SCALE_Y(264));
     lv_obj_set_style_radius(probe_indicator, 7, 0);
     lv_obj_set_style_bg_color(probe_indicator, UITheme::BG_BUTTON, 0);
     lv_obj_set_style_border_width(probe_indicator, 1, 0);
@@ -239,8 +239,8 @@ void UITabControlProbe::create(lv_obj_t *parent) {
     
     results_text = lv_textarea_create(parent);
     lv_textarea_set_text(results_text, "No probe data");
-    lv_obj_set_size(results_text, 370, 50);  // 10px wider for better readability
-    lv_obj_set_pos(results_text, 260, 295);  // Aligned with parameters section, moved down 20px
+    lv_obj_set_size(results_text, UI_SCALE_X(370), UI_SCALE_Y(50));  // 10px wider for better readability
+    lv_obj_set_pos(results_text, UI_SCALE_X(260), UI_SCALE_Y(295));  // Aligned with parameters section, moved down 20px
     lv_obj_set_style_text_font(results_text, ui_font_16, 0);  // Larger font for better readability
     lv_obj_set_style_pad_all(results_text, 3, 0);  // Reduced padding to fit 2 lines comfortably
     lv_obj_clear_flag(results_text, LV_OBJ_FLAG_CLICKABLE);
@@ -444,7 +444,7 @@ void UITabControlProbe::showKeyboard(lv_obj_t *ta) {
     // Enable scrolling on parent tab and add extra padding at bottom for keyboard (every time keyboard is shown)
     if (parent_tab) {
         lv_obj_add_flag(parent_tab, LV_OBJ_FLAG_SCROLLABLE);
-        lv_obj_set_style_pad_bottom(parent_tab, 240, 0); // Extra space for scrolling (keyboard height + margin)
+        lv_obj_set_style_pad_bottom(parent_tab, UI_SCALE_Y(240), 0); // Extra space for scrolling (keyboard height + margin)
     }
     
     lv_keyboard_set_textarea(keyboard, ta);
@@ -484,7 +484,7 @@ void UITabControlProbe::hideKeyboard() {
         // Restore parent tab to non-scrollable and remove extra padding
         if (parent_tab) {
             lv_obj_clear_flag(parent_tab, LV_OBJ_FLAG_SCROLLABLE);
-            lv_obj_set_style_pad_bottom(parent_tab, 10, 0); // Back to original padding
+            lv_obj_set_style_pad_bottom(parent_tab, UI_SCALE_Y(10), 0); // Back to original padding
             lv_obj_scroll_to_y(parent_tab, 0, LV_ANIM_ON); // Reset scroll position
         }
     }

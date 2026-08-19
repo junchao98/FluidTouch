@@ -82,11 +82,11 @@ void UITabControl::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(tab_overrides, UITheme::BG_MEDIUM, 0);
     
     // Add 5px padding to all sub-tabs
-    lv_obj_set_style_pad_all(tab_actions, 5, 0);
-    lv_obj_set_style_pad_all(tab_jog, 5, 0);
-    lv_obj_set_style_pad_all(tab_joystick, 5, 0);
-    lv_obj_set_style_pad_all(tab_probe, 5, 0);
-    lv_obj_set_style_pad_all(tab_overrides, 5, 0);
+    lv_obj_set_style_pad_all(tab_actions, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(tab_jog, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(tab_joystick, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(tab_probe, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(tab_overrides, UI_SCALE_Y(5), 0);
 
     // Get the actual tab buttons and style them directly with the teal accent color
     uint32_t tab_count = lv_obj_get_child_count(tab_bar);

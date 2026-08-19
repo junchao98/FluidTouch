@@ -38,7 +38,7 @@ void UITabSettingsWCS::showKeyboard(lv_obj_t *ta) {
     // Enable scrolling on parent tab and add extra padding at bottom for keyboard
     if (parent_tab) {
         lv_obj_add_flag(parent_tab, LV_OBJ_FLAG_SCROLLABLE);
-        lv_obj_set_style_pad_bottom(parent_tab, 240, 0);
+        lv_obj_set_style_pad_bottom(parent_tab, UI_SCALE_Y(240), 0);
     }
     
     lv_keyboard_set_textarea(keyboard, ta);
@@ -72,7 +72,7 @@ void UITabSettingsWCS::hideKeyboard() {
         
         if (parent_tab) {
             lv_obj_clear_flag(parent_tab, LV_OBJ_FLAG_SCROLLABLE);
-            lv_obj_set_style_pad_bottom(parent_tab, 10, 0);
+            lv_obj_set_style_pad_bottom(parent_tab, UI_SCALE_Y(10), 0);
             lv_obj_scroll_to_y(parent_tab, 0, LV_ANIM_ON);
         }
     }
@@ -146,7 +146,7 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
     lv_label_set_text(title, "WORK COORDINATE SYSTEMS");
     lv_obj_set_style_text_font(title, ui_font_18, 0);
     lv_obj_set_style_text_color(title, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(title, 20, 20);
+    lv_obj_set_pos(title, UI_SCALE_X(20), UI_SCALE_Y(20));
     
     // Load current WCS configuration
     int machine_index = MachineConfigManager::getSelectedMachineIndex();
@@ -186,7 +186,7 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
         lv_obj_set_size(name_inputs[i], name_width, field_height);
         lv_obj_set_pos(name_inputs[i], col_x + 45, y_pos);
         lv_obj_set_style_text_font(name_inputs[i], ui_font_18, 0);
-        lv_obj_set_style_pad_left(name_inputs[i], 5, 0);  // Left padding to align text to left
+        lv_obj_set_style_pad_left(name_inputs[i], UI_SCALE_X(5), 0);  // Left padding to align text to left
         lv_obj_set_style_pad_right(name_inputs[i], 2, 0);  // Minimal right padding
         lv_obj_clear_flag(name_inputs[i], LV_OBJ_FLAG_SCROLLABLE);
         lv_obj_add_event_cb(name_inputs[i], textarea_focused_event_handler, LV_EVENT_FOCUSED, nullptr);
@@ -215,8 +215,8 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
     // === Action Buttons (positioned at bottom like probe/jog tabs) ===
     // Save button (y=280 matches probe/jog positioning)
     lv_obj_t *btn_save = lv_button_create(parent);
-    lv_obj_set_size(btn_save, 180, 50);
-    lv_obj_set_pos(btn_save, 20, 280);
+    lv_obj_set_size(btn_save, UI_SCALE_X(180), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_save, UI_SCALE_X(20), UI_SCALE_Y(280));
     lv_obj_set_style_bg_color(btn_save, UITheme::BTN_PLAY, LV_PART_MAIN);
     lv_obj_t *lbl_save = lv_label_create(btn_save);
     lv_label_set_text(lbl_save, "Save Settings");
@@ -226,8 +226,8 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
     
     // Reset to defaults button (200px gap from Save button)
     lv_obj_t *btn_reset = lv_button_create(parent);
-    lv_obj_set_size(btn_reset, 180, 50);
-    lv_obj_set_pos(btn_reset, 220, 280);
+    lv_obj_set_size(btn_reset, UI_SCALE_X(180), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_reset, UI_SCALE_X(220), UI_SCALE_Y(280));
     lv_obj_set_style_bg_color(btn_reset, UITheme::BG_BUTTON, LV_PART_MAIN);
     lv_obj_t *lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, "Reset Defaults");
@@ -240,5 +240,5 @@ void UITabSettingsWCS::create(lv_obj_t *parent) {
     lv_label_set_text(status_label, "");
     lv_obj_set_style_text_font(status_label, ui_font_14, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
-    lv_obj_set_pos(status_label, 20, 335);
+    lv_obj_set_pos(status_label, UI_SCALE_X(20), UI_SCALE_Y(335));
 }

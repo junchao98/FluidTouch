@@ -87,13 +87,13 @@ void UITabSettings::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(about_tab, UITheme::BG_MEDIUM, 0);
     
     // Add 5px padding to all sub-tabs
-    lv_obj_set_style_pad_all(general_tab, 5, 0);
-    lv_obj_set_style_pad_all(backup_tab, 5, 0);
-    lv_obj_set_style_pad_all(power_tab, 5, 0);
-    lv_obj_set_style_pad_all(jog_tab, 5, 0);
-    lv_obj_set_style_pad_all(probe_tab, 5, 0);
-    lv_obj_set_style_pad_all(wcs_tab, 5, 0);
-    lv_obj_set_style_pad_all(about_tab, 5, 0);
+    lv_obj_set_style_pad_all(general_tab, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(backup_tab, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(power_tab, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(jog_tab, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(probe_tab, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(wcs_tab, UI_SCALE_Y(5), 0);
+    lv_obj_set_style_pad_all(about_tab, UI_SCALE_Y(5), 0);
 
     // Get the actual tab buttons and style them directly with the teal accent color
     uint32_t tab_count = lv_obj_get_child_count(tab_bar);

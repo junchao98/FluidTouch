@@ -142,7 +142,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_obj_set_pos(lbl_xy, col1_x, y_pos + 8);
 
     ta_xy_step = lv_textarea_create(tab);
-    lv_obj_set_size(ta_xy_step, 85, 40);
+    lv_obj_set_size(ta_xy_step, UI_SCALE_X(85), UI_SCALE_Y(40));
     lv_obj_set_pos(ta_xy_step, col2_x, y_pos);
     lv_textarea_set_one_line(ta_xy_step, true);
     lv_textarea_set_max_length(ta_xy_step, 6);
@@ -153,7 +153,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_text(ta_xy_step, buf);
 
     ta_xy_feed = lv_textarea_create(tab);
-    lv_obj_set_size(ta_xy_feed, 85, 40);
+    lv_obj_set_size(ta_xy_feed, UI_SCALE_X(85), UI_SCALE_Y(40));
     lv_obj_set_pos(ta_xy_feed, col3_x, y_pos);
     lv_textarea_set_one_line(ta_xy_feed, true);
     lv_textarea_set_max_length(ta_xy_feed, 6);
@@ -164,7 +164,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_text(ta_xy_feed, buf);
 
     ta_max_xy_feed = lv_textarea_create(tab);
-    lv_obj_set_size(ta_max_xy_feed, 85, 40);
+    lv_obj_set_size(ta_max_xy_feed, UI_SCALE_X(85), UI_SCALE_Y(40));
     lv_obj_set_pos(ta_max_xy_feed, col4_x, y_pos);
     lv_textarea_set_one_line(ta_max_xy_feed, true);
     lv_textarea_set_max_length(ta_max_xy_feed, 6);
@@ -175,7 +175,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_text(ta_max_xy_feed, buf);
 
     ta_xy_steps = lv_textarea_create(tab);
-    lv_obj_set_size(ta_xy_steps, 220, 40);
+    lv_obj_set_size(ta_xy_steps, UI_SCALE_X(220), UI_SCALE_Y(40));
     lv_obj_set_pos(ta_xy_steps, col5_x, y_pos);
     lv_textarea_set_one_line(ta_xy_steps, true);
     lv_textarea_set_max_length(ta_xy_steps, 60);
@@ -194,7 +194,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_obj_set_pos(lbl_z, col1_x, y_pos + 8);
 
     ta_z_step = lv_textarea_create(tab);
-    lv_obj_set_size(ta_z_step, 85, 40);
+    lv_obj_set_size(ta_z_step, UI_SCALE_X(85), UI_SCALE_Y(40));
     lv_obj_set_pos(ta_z_step, col2_x, y_pos);
     lv_textarea_set_one_line(ta_z_step, true);
     lv_textarea_set_max_length(ta_z_step, 6);
@@ -205,7 +205,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_text(ta_z_step, buf);
 
     ta_z_feed = lv_textarea_create(tab);
-    lv_obj_set_size(ta_z_feed, 85, 40);
+    lv_obj_set_size(ta_z_feed, UI_SCALE_X(85), UI_SCALE_Y(40));
     lv_obj_set_pos(ta_z_feed, col3_x, y_pos);
     lv_textarea_set_one_line(ta_z_feed, true);
     lv_textarea_set_max_length(ta_z_feed, 6);
@@ -216,7 +216,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_text(ta_z_feed, buf);
 
     ta_max_z_feed = lv_textarea_create(tab);
-    lv_obj_set_size(ta_max_z_feed, 85, 40);
+    lv_obj_set_size(ta_max_z_feed, UI_SCALE_X(85), UI_SCALE_Y(40));
     lv_obj_set_pos(ta_max_z_feed, col4_x, y_pos);
     lv_textarea_set_one_line(ta_max_z_feed, true);
     lv_textarea_set_max_length(ta_max_z_feed, 6);
@@ -227,7 +227,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_textarea_set_text(ta_max_z_feed, buf);
 
     ta_z_steps = lv_textarea_create(tab);
-    lv_obj_set_size(ta_z_steps, 220, 40);
+    lv_obj_set_size(ta_z_steps, UI_SCALE_X(220), UI_SCALE_Y(40));
     lv_obj_set_pos(ta_z_steps, col5_x, y_pos);
     lv_textarea_set_one_line(ta_z_steps, true);
     lv_textarea_set_max_length(ta_z_steps, 60);
@@ -247,7 +247,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
         lv_obj_set_pos(lbl_a, col1_x, y_pos + 8);
 
         ta_a_step = lv_textarea_create(tab);
-        lv_obj_set_size(ta_a_step, 85, 40);
+        lv_obj_set_size(ta_a_step, UI_SCALE_X(85), UI_SCALE_Y(40));
         lv_obj_set_pos(ta_a_step, col2_x, y_pos);
         lv_textarea_set_one_line(ta_a_step, true);
         lv_textarea_set_max_length(ta_a_step, 6);
@@ -258,7 +258,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
         lv_textarea_set_text(ta_a_step, buf);
 
         ta_a_feed = lv_textarea_create(tab);
-        lv_obj_set_size(ta_a_feed, 85, 40);
+        lv_obj_set_size(ta_a_feed, UI_SCALE_X(85), UI_SCALE_Y(40));
         lv_obj_set_pos(ta_a_feed, col3_x, y_pos);
         lv_textarea_set_one_line(ta_a_feed, true);
         lv_textarea_set_max_length(ta_a_feed, 6);
@@ -269,7 +269,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
         lv_textarea_set_text(ta_a_feed, buf);
 
         ta_max_a_feed = lv_textarea_create(tab);
-        lv_obj_set_size(ta_max_a_feed, 85, 40);
+        lv_obj_set_size(ta_max_a_feed, UI_SCALE_X(85), UI_SCALE_Y(40));
         lv_obj_set_pos(ta_max_a_feed, col4_x, y_pos);
         lv_textarea_set_one_line(ta_max_a_feed, true);
         lv_textarea_set_max_length(ta_max_a_feed, 6);
@@ -280,7 +280,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
         lv_textarea_set_text(ta_max_a_feed, buf);
 
         ta_a_steps = lv_textarea_create(tab);
-        lv_obj_set_size(ta_a_steps, 220, 40);
+        lv_obj_set_size(ta_a_steps, UI_SCALE_X(220), UI_SCALE_Y(40));
         lv_obj_set_pos(ta_a_steps, col5_x, y_pos);
         lv_textarea_set_one_line(ta_a_steps, true);
         lv_textarea_set_max_length(ta_a_steps, 60);
@@ -295,8 +295,8 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     // === Action Buttons (positioned at bottom with 20px margins) ===
     // Save button
     lv_obj_t *btn_save = lv_button_create(tab);
-    lv_obj_set_size(btn_save, 180, 50);
-    lv_obj_set_pos(btn_save, 20, 280);  // 360px (tab height) - 50px (button) - 30px (margin) = 280px
+    lv_obj_set_size(btn_save, UI_SCALE_X(180), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_save, UI_SCALE_X(20), UI_SCALE_Y(280));  // 360px (tab height) - 50px (button) - 30px (margin) = 280px
     lv_obj_set_style_bg_color(btn_save, UITheme::BTN_PLAY, LV_PART_MAIN);
     lv_obj_t *lbl_save = lv_label_create(btn_save);
     lv_label_set_text(lbl_save, "Save Settings");
@@ -306,8 +306,8 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     
     // Reset to defaults button
     lv_obj_t *btn_reset = lv_button_create(tab);
-    lv_obj_set_size(btn_reset, 180, 50);
-    lv_obj_set_pos(btn_reset, 220, 280);  // Same vertical position, 200px gap from Save button
+    lv_obj_set_size(btn_reset, UI_SCALE_X(180), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_reset, UI_SCALE_X(220), UI_SCALE_Y(280));  // Same vertical position, 200px gap from Save button
     lv_obj_set_style_bg_color(btn_reset, UITheme::BG_BUTTON, LV_PART_MAIN);
     lv_obj_t *lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, "Reset Defaults");
@@ -320,7 +320,7 @@ void UITabSettingsJog::create(lv_obj_t *tab) {
     lv_label_set_text(status_label, "");
     lv_obj_set_style_text_font(status_label, ui_font_14, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
-    lv_obj_set_pos(status_label, 20, 335);
+    lv_obj_set_pos(status_label, UI_SCALE_X(20), UI_SCALE_Y(335));
 }
 
 // Load preferences from current machine configuration
@@ -522,7 +522,7 @@ void UITabSettingsJog::showKeyboard(lv_obj_t *ta) {
     // Enable scrolling on parent tab and add extra padding at bottom for keyboard (every time keyboard is shown)
     if (parent_tab) {
         lv_obj_add_flag(parent_tab, LV_OBJ_FLAG_SCROLLABLE);
-        lv_obj_set_style_pad_bottom(parent_tab, 240, 0); // Extra space for scrolling (keyboard height + margin)
+        lv_obj_set_style_pad_bottom(parent_tab, UI_SCALE_Y(240), 0); // Extra space for scrolling (keyboard height + margin)
     }
     
     lv_keyboard_set_textarea(keyboard, ta);
@@ -562,7 +562,7 @@ void UITabSettingsJog::hideKeyboard() {
         // Restore parent tab to non-scrollable and remove extra padding
         if (parent_tab) {
             lv_obj_clear_flag(parent_tab, LV_OBJ_FLAG_SCROLLABLE);
-            lv_obj_set_style_pad_bottom(parent_tab, 10, 0); // Back to original padding
+            lv_obj_set_style_pad_bottom(parent_tab, UI_SCALE_Y(10), 0); // Back to original padding
             lv_obj_scroll_to_y(parent_tab, 0, LV_ANIM_ON); // Reset scroll position
         }
     }

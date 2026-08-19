@@ -92,14 +92,14 @@ void UITabFiles::checkPendingRefresh() {
 
 void UITabFiles::create(lv_obj_t *tab) {
     lv_obj_set_style_bg_color(tab, UITheme::BG_MEDIUM, LV_PART_MAIN);
-    lv_obj_set_style_pad_all(tab, 10, 0);
+    lv_obj_set_style_pad_all(tab, UI_SCALE_Y(10), 0);
 
     // Storage selection dropdown
     storage_dropdown = lv_dropdown_create(tab);
     lv_dropdown_set_options(storage_dropdown, "FluidNC SD\nFluidNC Flash\nDisplay SD");
     lv_dropdown_set_selected(storage_dropdown, 0);
-    lv_obj_set_size(storage_dropdown, 150, 45);
-    lv_obj_set_pos(storage_dropdown, 5, 5);
+    lv_obj_set_size(storage_dropdown, UI_SCALE_X(150), UI_SCALE_Y(45));
+    lv_obj_set_pos(storage_dropdown, UI_SCALE_X(5), UI_SCALE_Y(5));
     lv_obj_set_style_text_font(storage_dropdown, ui_font_16, 0);
     lv_obj_set_style_bg_color(storage_dropdown, UITheme::BG_BUTTON, 0);
     lv_obj_set_style_text_color(storage_dropdown, lv_color_white(), 0);
@@ -113,8 +113,8 @@ void UITabFiles::create(lv_obj_t *tab) {
 
     // Refresh button
     lv_obj_t *btn_refresh = lv_button_create(tab);
-    lv_obj_set_size(btn_refresh, 120, 45);
-    lv_obj_set_pos(btn_refresh, 165, 5);
+    lv_obj_set_size(btn_refresh, UI_SCALE_X(120), UI_SCALE_Y(45));
+    lv_obj_set_pos(btn_refresh, UI_SCALE_X(165), UI_SCALE_Y(5));
     lv_obj_set_style_bg_color(btn_refresh, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_add_event_cb(btn_refresh, refresh_button_event_cb, LV_EVENT_CLICKED, nullptr);
     
@@ -125,8 +125,8 @@ void UITabFiles::create(lv_obj_t *tab) {
 
     // Up button (navigate to parent directory)
     lv_obj_t *btn_up = lv_button_create(tab);
-    lv_obj_set_size(btn_up, 100, 45);
-    lv_obj_set_pos(btn_up, 295, 5);
+    lv_obj_set_size(btn_up, UI_SCALE_X(100), UI_SCALE_Y(45));
+    lv_obj_set_pos(btn_up, UI_SCALE_X(295), UI_SCALE_Y(5));
     lv_obj_set_style_bg_color(btn_up, UITheme::BG_BUTTON, 0);
     lv_obj_add_event_cb(btn_up, up_button_event_cb, LV_EVENT_CLICKED, nullptr);
     
@@ -140,28 +140,28 @@ void UITabFiles::create(lv_obj_t *tab) {
     lv_label_set_text(path_label, "/sd/");
     lv_obj_set_style_text_font(path_label, ui_font_16, 0);
     lv_obj_set_style_text_color(path_label, UITheme::ACCENT_SECONDARY, 0);
-    lv_obj_set_pos(path_label, 415, 9);
+    lv_obj_set_pos(path_label, UI_SCALE_X(415), UI_SCALE_Y(9));
     lv_label_set_long_mode(path_label, LV_LABEL_LONG_DOT);
-    lv_obj_set_width(path_label, 250);
+    lv_obj_set_width(path_label, UI_SCALE_X(250));
 
     // Status label
     status_label = lv_label_create(tab);
     lv_label_set_text(status_label, "Click Refresh");
     lv_obj_set_style_text_font(status_label, ui_font_16, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
-    lv_obj_set_pos(status_label, 415, 32);
+    lv_obj_set_pos(status_label, UI_SCALE_X(415), UI_SCALE_Y(32));
 
     // File list container with scrolling
     file_list_container = lv_obj_create(tab);
-    lv_obj_set_size(file_list_container, 770, 270);
-    lv_obj_set_pos(file_list_container, 5, 65);
+    lv_obj_set_size(file_list_container, UI_SCALE_X(770), UI_SCALE_Y(270));
+    lv_obj_set_pos(file_list_container, UI_SCALE_X(5), UI_SCALE_Y(65));
     lv_obj_set_style_bg_color(file_list_container, UITheme::BG_DARKER, LV_PART_MAIN);
     lv_obj_set_style_border_color(file_list_container, UITheme::BORDER_LIGHT, LV_PART_MAIN);
     lv_obj_set_style_border_width(file_list_container, 2, LV_PART_MAIN);
-    lv_obj_set_style_pad_all(file_list_container, 5, LV_PART_MAIN);
+    lv_obj_set_style_pad_all(file_list_container, UI_SCALE_Y(5), LV_PART_MAIN);
     lv_obj_set_flex_flow(file_list_container, LV_FLEX_FLOW_COLUMN);
     lv_obj_set_flex_align(file_list_container, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START);
-    lv_obj_set_style_pad_row(file_list_container, 6, 0);  // 6px spacing between file rows
+    lv_obj_set_style_pad_row(file_list_container, UI_SCALE_Y(6), 0);  // 6px spacing between file rows
     lv_obj_set_scroll_dir(file_list_container, LV_DIR_VER);
 }
 
@@ -608,15 +608,15 @@ static void delete_button_event_cb(lv_event_t *e) {
         
         // Dialog content box
         lv_obj_t *content = lv_obj_create(dialog);
-        lv_obj_set_size(content, 500, 220);
+        lv_obj_set_size(content, UI_SCALE_X(500), UI_SCALE_Y(220));
         lv_obj_center(content);
         lv_obj_set_style_bg_color(content, UITheme::BG_MEDIUM, 0);
         lv_obj_set_style_border_color(content, UITheme::STATE_ALARM, 0);
         lv_obj_set_style_border_width(content, 3, 0);
         lv_obj_set_flex_flow(content, LV_FLEX_FLOW_COLUMN);
         lv_obj_set_flex_align(content, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-        lv_obj_set_style_pad_all(content, 20, 0);
-        lv_obj_set_style_pad_gap(content, 15, 0);
+        lv_obj_set_style_pad_all(content, UI_SCALE_Y(20), 0);
+        lv_obj_set_style_pad_gap(content, UI_SCALE_Y(15), 0);
         lv_obj_clear_flag(content, LV_OBJ_FLAG_SCROLLABLE);
         
         // Warning icon and title
@@ -632,7 +632,7 @@ static void delete_button_event_cb(lv_event_t *e) {
         lv_obj_set_style_text_color(name_label, UITheme::TEXT_LIGHT, 0);
         lv_obj_set_style_text_align(name_label, LV_TEXT_ALIGN_CENTER, 0);
         lv_label_set_long_mode(name_label, LV_LABEL_LONG_DOT);
-        lv_obj_set_width(name_label, 450);
+        lv_obj_set_width(name_label, UI_SCALE_X(450));
         
         // Message
         lv_obj_t *msg_label = lv_label_create(content);
@@ -658,7 +658,7 @@ static void delete_button_event_cb(lv_event_t *e) {
         
         // Cancel button
         lv_obj_t *cancel_btn = lv_btn_create(btn_container);
-        lv_obj_set_size(cancel_btn, 180, 50);
+        lv_obj_set_size(cancel_btn, UI_SCALE_X(180), UI_SCALE_Y(50));
         lv_obj_set_style_bg_color(cancel_btn, UITheme::BG_BUTTON, 0);
         lv_obj_set_user_data(cancel_btn, dialog);  // Store dialog reference
         lv_obj_add_event_cb(cancel_btn, delete_cancel_event_cb, LV_EVENT_CLICKED, nullptr);
@@ -670,7 +670,7 @@ static void delete_button_event_cb(lv_event_t *e) {
         
         // Delete button
         lv_obj_t *delete_btn = lv_btn_create(btn_container);
-        lv_obj_set_size(delete_btn, 180, 50);
+        lv_obj_set_size(delete_btn, UI_SCALE_X(180), UI_SCALE_Y(50));
         lv_obj_set_style_bg_color(delete_btn, UITheme::STATE_ALARM, 0);
         lv_obj_set_user_data(delete_btn, dialog);  // Store dialog reference
         lv_obj_add_event_cb(delete_btn, delete_confirm_event_cb, LV_EVENT_CLICKED, filename_storage[storage_index]);
@@ -855,11 +855,11 @@ void UITabFiles::updateFileListUI() {
         
         // File/directory row container
         lv_obj_t *file_row = lv_obj_create(file_list_container);
-        lv_obj_set_size(file_row, 750, 46);
+        lv_obj_set_size(file_row, UI_SCALE_X(750), UI_SCALE_Y(46));
         lv_obj_set_style_bg_color(file_row, file.is_directory ? UITheme::BG_BUTTON : UITheme::BG_DARKER, 0);
         lv_obj_set_style_border_width(file_row, 1, 0);
         lv_obj_set_style_border_color(file_row, UITheme::BORDER_MEDIUM, 0);
-        lv_obj_set_style_pad_all(file_row, 5, 0);
+        lv_obj_set_style_pad_all(file_row, UI_SCALE_Y(5), 0);
         lv_obj_set_style_radius(file_row, 3, 0);
         lv_obj_clear_flag(file_row, LV_OBJ_FLAG_SCROLLABLE);
         
@@ -883,7 +883,7 @@ void UITabFiles::updateFileListUI() {
             lv_obj_set_style_text_color(lbl_filename, lv_color_white(), 0);
         }
         lv_obj_set_style_text_font(lbl_filename, ui_font_20, 0);
-        lv_obj_align(lbl_filename, LV_ALIGN_LEFT_MID, 5, 0);
+        lv_obj_align(lbl_filename, LV_ALIGN_LEFT_MID, UI_SCALE_X(5), 0);
         lv_label_set_long_mode(lbl_filename, LV_LABEL_LONG_DOT);
         lv_obj_set_width(lbl_filename, file.is_directory ? 720 : 400);
         
@@ -902,14 +902,14 @@ void UITabFiles::updateFileListUI() {
             lv_label_set_text(lbl_size, size_str);
             lv_obj_set_style_text_font(lbl_size, ui_font_20, 0);
             lv_obj_set_style_text_color(lbl_size, UITheme::TEXT_MEDIUM, 0);
-            lv_obj_align(lbl_size, LV_ALIGN_LEFT_MID, 420, 0);
+            lv_obj_align(lbl_size, LV_ALIGN_LEFT_MID, UI_SCALE_X(420), 0);
             
             // Show upload button for Display SD, or play/delete for FluidNC storage
             if (current_storage == StorageSource::DISPLAY_SD) {
                 // Upload button (for Display SD files)
                 lv_obj_t *btn_upload = lv_button_create(file_row);
-                lv_obj_set_size(btn_upload, 120, 38);
-                lv_obj_align(btn_upload, LV_ALIGN_RIGHT_MID, -5, 0);
+                lv_obj_set_size(btn_upload, UI_SCALE_X(120), UI_SCALE_Y(38));
+                lv_obj_align(btn_upload, LV_ALIGN_RIGHT_MID, -UI_SCALE_X(5), 0);
                 lv_obj_set_style_bg_color(btn_upload, UITheme::ACCENT_PRIMARY, 0);
                 lv_obj_set_style_radius(btn_upload, 3, 0);
                 lv_obj_add_event_cb(btn_upload, upload_button_event_cb, LV_EVENT_CLICKED, filenames_storage[i]);
@@ -921,8 +921,8 @@ void UITabFiles::updateFileListUI() {
             } else {
                 // Delete button (for FluidNC files)
                 lv_obj_t *btn_delete = lv_button_create(file_row);
-                lv_obj_set_size(btn_delete, 70, 38);
-                lv_obj_align(btn_delete, LV_ALIGN_RIGHT_MID, -80, 0);
+                lv_obj_set_size(btn_delete, UI_SCALE_X(70), UI_SCALE_Y(38));
+                lv_obj_align(btn_delete, LV_ALIGN_RIGHT_MID, -UI_SCALE_X(80), 0);
                 lv_obj_set_style_bg_color(btn_delete, UITheme::BTN_ESTOP, 0);
                 lv_obj_set_style_radius(btn_delete, 3, 0);
                 lv_obj_add_event_cb(btn_delete, delete_button_event_cb, LV_EVENT_CLICKED, filenames_storage[i]);
@@ -934,8 +934,8 @@ void UITabFiles::updateFileListUI() {
                 
                 // Play button (for FluidNC files)
                 lv_obj_t *btn_play = lv_button_create(file_row);
-                lv_obj_set_size(btn_play, 70, 38);
-                lv_obj_align(btn_play, LV_ALIGN_RIGHT_MID, -5, 0);
+                lv_obj_set_size(btn_play, UI_SCALE_X(70), UI_SCALE_Y(38));
+                lv_obj_align(btn_play, LV_ALIGN_RIGHT_MID, -UI_SCALE_X(5), 0);
                 lv_obj_set_style_bg_color(btn_play, UITheme::BTN_PLAY, 0);
                 lv_obj_set_style_radius(btn_play, 3, 0);
                 lv_obj_add_event_cb(btn_play, play_button_event_cb, LV_EVENT_CLICKED, filenames_storage[i]);
@@ -1094,7 +1094,7 @@ void UITabFiles::upload_button_event_cb(lv_event_t *e) {
         lv_obj_clear_flag(dialog, LV_OBJ_FLAG_SCROLLABLE);
         
         lv_obj_t *content = lv_obj_create(dialog);
-        lv_obj_set_size(content, 500, 200);
+        lv_obj_set_size(content, UI_SCALE_X(500), UI_SCALE_Y(200));
         lv_obj_center(content);
         lv_obj_set_style_bg_color(content, UITheme::BG_MEDIUM, 0);
         lv_obj_set_style_border_color(content, UITheme::UI_WARNING, 0);
@@ -1103,11 +1103,11 @@ void UITabFiles::upload_button_event_cb(lv_event_t *e) {
         lv_obj_t *label = lv_label_create(content);
         lv_label_set_text(label, "SD card not available.\nPlease insert SD card.");
         lv_obj_set_style_text_font(label, ui_font_18, 0);
-        lv_obj_align(label, LV_ALIGN_CENTER, 0, -20);
+        lv_obj_align(label, LV_ALIGN_CENTER, 0, -UI_SCALE_Y(20));
         
         lv_obj_t *btn = lv_btn_create(content);
-        lv_obj_set_size(btn, 120, 45);
-        lv_obj_align(btn, LV_ALIGN_BOTTOM_MID, 0, -10);
+        lv_obj_set_size(btn, UI_SCALE_X(120), UI_SCALE_Y(45));
+        lv_obj_align(btn, LV_ALIGN_BOTTOM_MID, 0, -UI_SCALE_Y(10));
         lv_obj_add_event_cb(btn, [](lv_event_t *e) {
             lv_obj_delete((lv_obj_t*)lv_event_get_user_data(e));
         }, LV_EVENT_CLICKED, dialog);
@@ -1156,12 +1156,12 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     
     // Dialog content box
     lv_obj_t *content = lv_obj_create(upload_dialog);
-    lv_obj_set_size(content, 600, 300);
+    lv_obj_set_size(content, UI_SCALE_X(600), UI_SCALE_Y(300));
     lv_obj_center(content);
     lv_obj_set_style_bg_color(content, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_color(content, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_set_style_border_width(content, 3, 0);
-    lv_obj_set_style_pad_all(content, 20, 0);
+    lv_obj_set_style_pad_all(content, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(content, LV_OBJ_FLAG_SCROLLABLE);
     
     // Title
@@ -1177,8 +1177,8 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     lv_obj_set_style_text_font(lbl_filename, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_filename, UITheme::TEXT_LIGHT, 0);
     lv_label_set_long_mode(lbl_filename, LV_LABEL_LONG_DOT);
-    lv_obj_set_width(lbl_filename, 550);
-    lv_obj_align(lbl_filename, LV_ALIGN_TOP_LEFT, 0, 45);
+    lv_obj_set_width(lbl_filename, UI_SCALE_X(550));
+    lv_obj_align(lbl_filename, LV_ALIGN_TOP_LEFT, 0, UI_SCALE_Y(45));
     
     // File size
     lv_obj_t *lbl_size = lv_label_create(content);
@@ -1193,7 +1193,7 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     lv_label_set_text(lbl_size, sizeText);
     lv_obj_set_style_text_font(lbl_size, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_size, UITheme::TEXT_LIGHT, 0);
-    lv_obj_align(lbl_size, LV_ALIGN_TOP_LEFT, 0, 80);
+    lv_obj_align(lbl_size, LV_ALIGN_TOP_LEFT, 0, UI_SCALE_Y(80));
     
     // Destination
     lv_obj_t *lbl_dest = lv_label_create(content);
@@ -1206,12 +1206,12 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     lv_obj_set_style_text_font(lbl_dest, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_dest, UITheme::TEXT_LIGHT, 0);
     lv_label_set_long_mode(lbl_dest, LV_LABEL_LONG_DOT);
-    lv_obj_set_width(lbl_dest, 550);
-    lv_obj_align(lbl_dest, LV_ALIGN_TOP_LEFT, 0, 115);
+    lv_obj_set_width(lbl_dest, UI_SCALE_X(550));
+    lv_obj_align(lbl_dest, LV_ALIGN_TOP_LEFT, 0, UI_SCALE_Y(115));
     
     // Button container (positioned at bottom)
     lv_obj_t *btn_container = lv_obj_create(content);
-    lv_obj_set_size(btn_container, 560, 60);
+    lv_obj_set_size(btn_container, UI_SCALE_X(560), UI_SCALE_Y(60));
     lv_obj_set_flex_flow(btn_container, LV_FLEX_FLOW_ROW);
     lv_obj_set_flex_align(btn_container, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
     lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
@@ -1222,7 +1222,7 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     
     // Upload button (left side)
     lv_obj_t *btn_upload = lv_btn_create(btn_container);
-    lv_obj_set_size(btn_upload, 180, 50);
+    lv_obj_set_size(btn_upload, UI_SCALE_X(180), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(btn_upload, UITheme::ACCENT_PRIMARY, 0);
     
     // Store filename and full path for upload callback
@@ -1287,7 +1287,7 @@ void UITabFiles::showUploadDialog(const char* filename, const char* fullPath, si
     
     // Cancel button (right side)
     lv_obj_t *btn_cancel = lv_btn_create(btn_container);
-    lv_obj_set_size(btn_cancel, 180, 50);
+    lv_obj_set_size(btn_cancel, UI_SCALE_X(180), UI_SCALE_Y(50));
     lv_obj_set_style_bg_color(btn_cancel, UITheme::BG_BUTTON, 0);
     lv_obj_add_event_cb(btn_cancel, [](lv_event_t *e) {
         lv_obj_delete(upload_dialog);
@@ -1328,12 +1328,12 @@ void UITabFiles::showUploadProgress(const char* filename) {
     
     // Dialog content box
     lv_obj_t *content = lv_obj_create(upload_progress_dialog);
-    lv_obj_set_size(content, 600, 280);
+    lv_obj_set_size(content, UI_SCALE_X(600), UI_SCALE_Y(280));
     lv_obj_center(content);
     lv_obj_set_style_bg_color(content, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_color(content, UITheme::ACCENT_PRIMARY, 0);
     lv_obj_set_style_border_width(content, 3, 0);
-    lv_obj_set_style_pad_all(content, 20, 0);
+    lv_obj_set_style_pad_all(content, UI_SCALE_Y(20), 0);
     lv_obj_clear_flag(content, LV_OBJ_FLAG_SCROLLABLE);
     
     Serial.printf("[UITabFiles] Upload progress dialog created at %p\n", upload_progress_dialog);
@@ -1351,13 +1351,13 @@ void UITabFiles::showUploadProgress(const char* filename) {
     lv_obj_set_style_text_font(lbl_filename, ui_font_18, 0);
     lv_obj_set_style_text_color(lbl_filename, UITheme::TEXT_LIGHT, 0);
     lv_label_set_long_mode(lbl_filename, LV_LABEL_LONG_DOT);
-    lv_obj_set_width(lbl_filename, 550);
-    lv_obj_align(lbl_filename, LV_ALIGN_TOP_LEFT, 0, 45);
+    lv_obj_set_width(lbl_filename, UI_SCALE_X(550));
+    lv_obj_align(lbl_filename, LV_ALIGN_TOP_LEFT, 0, UI_SCALE_Y(45));
     
     // Progress bar
     upload_progress_bar = lv_bar_create(content);
-    lv_obj_set_size(upload_progress_bar, 560, 30);
-    lv_obj_align(upload_progress_bar, LV_ALIGN_TOP_LEFT, 0, 85);
+    lv_obj_set_size(upload_progress_bar, UI_SCALE_X(560), UI_SCALE_Y(30));
+    lv_obj_align(upload_progress_bar, LV_ALIGN_TOP_LEFT, 0, UI_SCALE_Y(85));
     lv_bar_set_value(upload_progress_bar, 0, LV_ANIM_OFF);
     lv_obj_set_style_bg_color(upload_progress_bar, UITheme::BG_DARKER, LV_PART_MAIN);
     lv_obj_set_style_bg_color(upload_progress_bar, UITheme::ACCENT_PRIMARY, LV_PART_INDICATOR);
@@ -1369,7 +1369,7 @@ void UITabFiles::showUploadProgress(const char* filename) {
     lv_label_set_text(upload_progress_label, "0 KB / 0 KB (0%)");
     lv_obj_set_style_text_font(upload_progress_label, ui_font_18, 0);
     lv_obj_set_style_text_color(upload_progress_label, UITheme::TEXT_LIGHT, 0);
-    lv_obj_align(upload_progress_label, LV_ALIGN_TOP_LEFT, 0, 130);
+    lv_obj_align(upload_progress_label, LV_ALIGN_TOP_LEFT, 0, UI_SCALE_Y(130));
     
     Serial.printf("[UITabFiles] Progress label created at %p\n", upload_progress_label);
     
@@ -1377,7 +1377,7 @@ void UITabFiles::showUploadProgress(const char* filename) {
     lv_obj_t *lbl_info = lv_label_create(content);
     lv_obj_set_style_text_font(lbl_info, ui_font_16, 0);
     lv_obj_set_style_text_color(lbl_info, UITheme::TEXT_DISABLED, 0);
-    lv_obj_align(lbl_info, LV_ALIGN_BOTTOM_MID, 0, -10);
+    lv_obj_align(lbl_info, LV_ALIGN_BOTTOM_MID, 0, -UI_SCALE_Y(10));
     lv_label_set_text(lbl_info, "Reset device to cancel upload");
     
     // Force immediate screen refresh to show dialog before upload blocks
@@ -1450,7 +1450,7 @@ void UITabFiles::closeUploadProgress(bool success, const char* error) {
             
             // Add button container for two buttons side by side
             lv_obj_t *btn_container = lv_obj_create(content);
-            lv_obj_set_size(btn_container, LV_PCT(100), 60);
+            lv_obj_set_size(btn_container, LV_PCT(100), UI_SCALE_Y(60));
             lv_obj_align(btn_container, LV_ALIGN_BOTTOM_MID, 0, 0);
             lv_obj_set_style_border_width(btn_container, 0, 0);
             lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
@@ -1460,7 +1460,7 @@ void UITabFiles::closeUploadProgress(bool success, const char* error) {
             
             // Go to Upload Folder button (LEFT)
             lv_obj_t *btn_goto = lv_btn_create(btn_container);
-            lv_obj_set_size(btn_goto, 250, 50);
+            lv_obj_set_size(btn_goto, UI_SCALE_X(250), UI_SCALE_Y(50));
             lv_obj_set_style_bg_color(btn_goto, UITheme::ACCENT_PRIMARY, 0);
             lv_obj_add_event_cb(btn_goto, [](lv_event_t *e) {
                 if (upload_progress_dialog) {
@@ -1479,7 +1479,7 @@ void UITabFiles::closeUploadProgress(bool success, const char* error) {
             
             // Close button (RIGHT)
             lv_obj_t *btn_close = lv_btn_create(btn_container);
-            lv_obj_set_size(btn_close, 180, 50);
+            lv_obj_set_size(btn_close, UI_SCALE_X(180), UI_SCALE_Y(50));
             lv_obj_set_style_bg_color(btn_close, UITheme::BG_BUTTON, 0);
             lv_obj_set_style_border_color(btn_close, UITheme::BORDER_MEDIUM, 0);
             lv_obj_set_style_border_width(btn_close, 2, 0);
@@ -1521,7 +1521,7 @@ void UITabFiles::closeUploadProgress(bool success, const char* error) {
                 lv_label_set_text(error_label, error);
                 lv_obj_set_style_text_font(error_label, ui_font_16, 0);
                 lv_obj_set_style_text_color(error_label, UITheme::TEXT_LIGHT, 0);
-                lv_obj_align(error_label, LV_ALIGN_TOP_LEFT, 0, 180);
+                lv_obj_align(error_label, LV_ALIGN_TOP_LEFT, 0, UI_SCALE_Y(180));
             }
             
             // Change cancel button to close button

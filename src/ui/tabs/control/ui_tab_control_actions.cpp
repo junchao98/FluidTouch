@@ -29,7 +29,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_label_set_text(control_label, "CONTROL");
     lv_obj_set_style_text_font(control_label, ui_font_18, 0);
     lv_obj_set_style_text_color(control_label, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(control_label, left_col_x, 10);
+    lv_obj_set_pos(control_label, left_col_x, UI_SCALE_Y(10));
     
     int y_pos = 40;
     
@@ -85,7 +85,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_label_set_text(home_label, "HOME AXIS");
     lv_obj_set_style_text_font(home_label, ui_font_18, 0);
     lv_obj_set_style_text_color(home_label, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(home_label, middle_col_x, 10);
+    lv_obj_set_pos(home_label, middle_col_x, UI_SCALE_Y(10));
     
     y_pos = 40;
     
@@ -144,7 +144,7 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_label_set_text(zero_label, "ZERO AXIS");
     lv_obj_set_style_text_font(zero_label, ui_font_18, 0);
     lv_obj_set_style_text_color(zero_label, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(zero_label, right_col_x, 10);
+    lv_obj_set_pos(zero_label, right_col_x, UI_SCALE_Y(10));
     
     y_pos = 40;
     

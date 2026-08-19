@@ -20,10 +20,10 @@ void UITabSettingsAbout::create(lv_obj_t *tab) {
     lv_obj_set_size(container, lv_pct(100), lv_pct(100));
     lv_obj_set_style_bg_color(container, UITheme::BG_MEDIUM, 0);
     lv_obj_set_style_border_width(container, 0, 0);
-    lv_obj_set_style_pad_all(container, 20, 0);
+    lv_obj_set_style_pad_all(container, UI_SCALE_Y(20), 0);
     lv_obj_set_flex_flow(container, LV_FLEX_FLOW_COLUMN);
     lv_obj_set_flex_align(container, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-    lv_obj_set_style_pad_row(container, 5, 0);
+    lv_obj_set_style_pad_row(container, UI_SCALE_Y(5), 0);
     lv_obj_clear_flag(container, LV_OBJ_FLAG_SCROLLABLE);
     
     // Project name (large, colored)
@@ -52,8 +52,8 @@ void UITabSettingsAbout::create(lv_obj_t *tab) {
     lv_obj_set_style_pad_all(columns_container, 0, 0);
     lv_obj_set_flex_flow(columns_container, LV_FLEX_FLOW_ROW);
     lv_obj_set_flex_align(columns_container, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER);
-    lv_obj_set_style_pad_column(columns_container, 60, 0);
-    lv_obj_set_style_pad_top(columns_container, 10, 0);
+    lv_obj_set_style_pad_column(columns_container, UI_SCALE_X(60), 0);
+    lv_obj_set_style_pad_top(columns_container, UI_SCALE_Y(10), 0);
     
     // Left column: GitHub
     lv_obj_t *github_column = lv_obj_create(columns_container);
@@ -63,7 +63,7 @@ void UITabSettingsAbout::create(lv_obj_t *tab) {
     lv_obj_set_style_pad_all(github_column, 0, 0);
     lv_obj_set_flex_flow(github_column, LV_FLEX_FLOW_COLUMN);
     lv_obj_set_flex_align(github_column, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-    lv_obj_set_style_pad_row(github_column, 10, 0);
+    lv_obj_set_style_pad_row(github_column, UI_SCALE_Y(10), 0);
     
     // GitHub title
     lv_obj_t *github_title = lv_label_create(github_column);
@@ -93,7 +93,7 @@ void UITabSettingsAbout::create(lv_obj_t *tab) {
     lv_obj_set_style_pad_all(screenshot_column, 0, 0);
     lv_obj_set_flex_flow(screenshot_column, LV_FLEX_FLOW_COLUMN);
     lv_obj_set_flex_align(screenshot_column, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-    lv_obj_set_style_pad_row(screenshot_column, 10, 0);
+    lv_obj_set_style_pad_row(screenshot_column, UI_SCALE_Y(10), 0);
     
     // Screenshot title
     lv_obj_t *screenshot_title = lv_label_create(screenshot_column);

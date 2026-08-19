@@ -23,12 +23,12 @@ void UITabSettingsBackup::create(lv_obj_t *tab) {
     lv_label_set_text(section_title, "BACKUP & RESTORE");
     lv_obj_set_style_text_font(section_title, ui_font_18, 0);
     lv_obj_set_style_text_color(section_title, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(section_title, 20, 20);
+    lv_obj_set_pos(section_title, UI_SCALE_X(20), UI_SCALE_Y(20));
     
     // Export settings button
     lv_obj_t *btn_export = lv_button_create(tab);
-    lv_obj_set_size(btn_export, 180, 50);
-    lv_obj_set_pos(btn_export, 20, 60);
+    lv_obj_set_size(btn_export, UI_SCALE_X(180), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_export, UI_SCALE_X(20), UI_SCALE_Y(60));
     lv_obj_set_style_bg_color(btn_export, UITheme::ACCENT_SECONDARY, LV_PART_MAIN);
     lv_obj_t *lbl_export = lv_label_create(btn_export);
     lv_label_set_text(lbl_export, LV_SYMBOL_DOWNLOAD " Export");
@@ -38,8 +38,8 @@ void UITabSettingsBackup::create(lv_obj_t *tab) {
     
     // Clear settings button
     lv_obj_t *btn_clear = lv_button_create(tab);
-    lv_obj_set_size(btn_clear, 180, 50);
-    lv_obj_set_pos(btn_clear, 220, 60);
+    lv_obj_set_size(btn_clear, UI_SCALE_X(180), UI_SCALE_Y(50));
+    lv_obj_set_pos(btn_clear, UI_SCALE_X(220), UI_SCALE_Y(60));
     lv_obj_set_style_bg_color(btn_clear, UITheme::STATE_ALARM, LV_PART_MAIN);
     lv_obj_t *lbl_clear = lv_label_create(btn_clear);
     lv_label_set_text(lbl_clear, LV_SYMBOL_TRASH " Clear All");
@@ -52,14 +52,14 @@ void UITabSettingsBackup::create(lv_obj_t *tab) {
     lv_label_set_text(backup_desc_label, "Export saves a backup file to the Display SD card.\nClear All erases all settings and restarts the device.");
     lv_obj_set_style_text_font(backup_desc_label, ui_font_14, 0);
     lv_obj_set_style_text_color(backup_desc_label, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(backup_desc_label, 20, 125);
+    lv_obj_set_pos(backup_desc_label, UI_SCALE_X(20), UI_SCALE_Y(125));
     
     // Info section
     lv_obj_t *info_title = lv_label_create(tab);
     lv_label_set_text(info_title, "EXPORTED SETTINGS");
     lv_obj_set_style_text_font(info_title, ui_font_18, 0);
     lv_obj_set_style_text_color(info_title, UITheme::TEXT_DISABLED, 0);
-    lv_obj_set_pos(info_title, 20, 180);
+    lv_obj_set_pos(info_title, UI_SCALE_X(20), UI_SCALE_Y(180));
     
     // What gets exported
     lv_obj_t *export_list = lv_label_create(tab);
@@ -74,15 +74,15 @@ void UITabSettingsBackup::create(lv_obj_t *tab) {
         "• UI preferences");
     lv_obj_set_style_text_font(export_list, ui_font_14, 0);
     lv_obj_set_style_text_color(export_list, UITheme::TEXT_LIGHT, 0);
-    lv_obj_set_pos(export_list, 20, 215);
-    lv_obj_set_width(export_list, 760);
+    lv_obj_set_pos(export_list, UI_SCALE_X(20), UI_SCALE_Y(215));
+    lv_obj_set_width(export_list, UI_SCALE_X(760));
     
     // Status label
     status_label = lv_label_create(tab);
     lv_label_set_text(status_label, "");
     lv_obj_set_style_text_font(status_label, ui_font_14, 0);
     lv_obj_set_style_text_color(status_label, UITheme::UI_INFO, 0);
-    lv_obj_set_pos(status_label, 20, 335);
+    lv_obj_set_pos(status_label, UI_SCALE_X(20), UI_SCALE_Y(335));
 }
 
 // Export settings button event handler
@@ -114,12 +114,12 @@ static void btn_export_event_handler(lv_event_t *e) {
             
             // Show success dialog with important information
             lv_obj_t *dialog = lv_obj_create(backdrop);
-            lv_obj_set_size(dialog, 650, 300);
+            lv_obj_set_size(dialog, UI_SCALE_X(650), UI_SCALE_Y(300));
             lv_obj_center(dialog);
             lv_obj_set_style_bg_color(dialog, UITheme::BG_MEDIUM, 0);
             lv_obj_set_style_border_width(dialog, 3, 0);
             lv_obj_set_style_border_color(dialog, UITheme::UI_SUCCESS, 0);
-            lv_obj_set_style_pad_all(dialog, 20, 0);
+            lv_obj_set_style_pad_all(dialog, UI_SCALE_Y(20), 0);
             lv_obj_clear_flag(dialog, LV_OBJ_FLAG_SCROLLABLE);
             
             // Title
@@ -135,8 +135,8 @@ static void btn_export_event_handler(lv_event_t *e) {
             lv_obj_set_style_text_font(success_msg, ui_font_16, 0);
             lv_obj_set_style_text_color(success_msg, UITheme::TEXT_LIGHT, 0);
             lv_obj_set_style_text_align(success_msg, LV_TEXT_ALIGN_CENTER, 0);
-            lv_obj_set_pos(success_msg, 0, 40);
-            lv_obj_set_width(success_msg, 610);
+            lv_obj_set_pos(success_msg, 0, UI_SCALE_Y(40));
+            lv_obj_set_width(success_msg, UI_SCALE_X(610));
             
             // Warning about WiFi passwords
             lv_obj_t *warning = lv_label_create(dialog);
@@ -144,13 +144,13 @@ static void btn_export_event_handler(lv_event_t *e) {
             lv_obj_set_style_text_font(warning, ui_font_14, 0);
             lv_obj_set_style_text_color(warning, UITheme::UI_WARNING, 0);
             lv_obj_set_style_text_align(warning, LV_TEXT_ALIGN_CENTER, 0);
-            lv_obj_set_pos(warning, 0, 145);
-            lv_obj_set_width(warning, 610);
+            lv_obj_set_pos(warning, 0, UI_SCALE_Y(145));
+            lv_obj_set_width(warning, UI_SCALE_X(610));
             
             // OK button
             lv_obj_t *btn_ok = lv_button_create(dialog);
-            lv_obj_set_size(btn_ok, 200, 50);
-            lv_obj_set_pos(btn_ok, 225, 210);
+            lv_obj_set_size(btn_ok, UI_SCALE_X(200), UI_SCALE_Y(50));
+            lv_obj_set_pos(btn_ok, UI_SCALE_X(225), UI_SCALE_Y(210));
             lv_obj_set_style_bg_color(btn_ok, UITheme::BTN_PLAY, 0);
             lv_obj_t *lbl_ok = lv_label_create(btn_ok);
             lv_label_set_text(lbl_ok, "OK");
@@ -192,12 +192,12 @@ static void btn_clear_event_handler(lv_event_t *e) {
         
         // Show confirmation dialog
         lv_obj_t *dialog = lv_obj_create(backdrop);
-        lv_obj_set_size(dialog, 600, 350);
+        lv_obj_set_size(dialog, UI_SCALE_X(600), UI_SCALE_Y(350));
         lv_obj_center(dialog);
         lv_obj_set_style_bg_color(dialog, UITheme::BG_MEDIUM, 0);
         lv_obj_set_style_border_width(dialog, 3, 0);
         lv_obj_set_style_border_color(dialog, UITheme::STATE_ALARM, 0);
-        lv_obj_set_style_pad_all(dialog, 20, 0);
+        lv_obj_set_style_pad_all(dialog, UI_SCALE_Y(20), 0);
         lv_obj_clear_flag(dialog, LV_OBJ_FLAG_SCROLLABLE);
         
         // Title
@@ -212,7 +212,7 @@ static void btn_clear_event_handler(lv_event_t *e) {
         lv_label_set_text(warning_msg, "This will permanently delete:");
         lv_obj_set_style_text_font(warning_msg, ui_font_16, 0);
         lv_obj_set_style_text_color(warning_msg, UITheme::TEXT_LIGHT, 0);
-        lv_obj_set_pos(warning_msg, 0, 40);
+        lv_obj_set_pos(warning_msg, 0, UI_SCALE_Y(40));
         
         // List of items to be deleted
         lv_obj_t *delete_list = lv_label_create(dialog);
@@ -225,19 +225,19 @@ static void btn_clear_event_handler(lv_event_t *e) {
             "• UI preferences");
         lv_obj_set_style_text_font(delete_list, ui_font_14, 0);
         lv_obj_set_style_text_color(delete_list, UITheme::TEXT_LIGHT, 0);
-        lv_obj_set_pos(delete_list, 20, 75);
+        lv_obj_set_pos(delete_list, UI_SCALE_X(20), UI_SCALE_Y(75));
         
         // Continue message
         lv_obj_t *continue_msg = lv_label_create(dialog);
         lv_label_set_text(continue_msg, "The device will restart after clearing.");
         lv_obj_set_style_text_font(continue_msg, ui_font_14, 0);
         lv_obj_set_style_text_color(continue_msg, UITheme::UI_WARNING, 0);
-        lv_obj_set_pos(continue_msg, 0, 210);
+        lv_obj_set_pos(continue_msg, 0, UI_SCALE_Y(210));
         
         // Button container for horizontal layout
         lv_obj_t *btn_container = lv_obj_create(dialog);
-        lv_obj_set_size(btn_container, 560, 60);
-        lv_obj_set_pos(btn_container, 0, 250);
+        lv_obj_set_size(btn_container, UI_SCALE_X(560), UI_SCALE_Y(60));
+        lv_obj_set_pos(btn_container, 0, UI_SCALE_Y(250));
         lv_obj_set_style_bg_opa(btn_container, LV_OPA_TRANSP, 0);
         lv_obj_set_style_border_width(btn_container, 0, 0);
         lv_obj_set_style_pad_all(btn_container, 0, 0);
@@ -247,7 +247,7 @@ static void btn_clear_event_handler(lv_event_t *e) {
         
         // Clear & Restart button (left)
         lv_obj_t *btn_clear_confirm = lv_button_create(btn_container);
-        lv_obj_set_size(btn_clear_confirm, 240, 50);
+        lv_obj_set_size(btn_clear_confirm, UI_SCALE_X(240), UI_SCALE_Y(50));
         lv_obj_set_style_bg_color(btn_clear_confirm, UITheme::STATE_ALARM, 0);
         lv_obj_t *lbl_clear_confirm = lv_label_create(btn_clear_confirm);
         lv_label_set_text(lbl_clear_confirm, LV_SYMBOL_TRASH " Clear & Restart");
@@ -288,7 +288,7 @@ static void btn_clear_event_handler(lv_event_t *e) {
         
         // Cancel button (right)
         lv_obj_t *btn_cancel = lv_button_create(btn_container);
-        lv_obj_set_size(btn_cancel, 240, 50);
+        lv_obj_set_size(btn_cancel, UI_SCALE_X(240), UI_SCALE_Y(50));
         lv_obj_set_style_bg_color(btn_cancel, UITheme::BG_BUTTON, 0);
         lv_obj_t *lbl_cancel = lv_label_create(btn_cancel);
         lv_label_set_text(lbl_cancel, "Cancel");
