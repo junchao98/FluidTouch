@@ -51,34 +51,17 @@ void setup()
         Serial.println("M5Unified initialized (PMU support)");
     }
 
-    // esp_hosted (ESP32-C6 WiFi co-processor) warm-up & diagnostics.
-    // The C6 hangs off SDIO (CLK=18, CMD=19, D0-D3=14-17) with reset on
-    // GPIO54 (active high). Reset it early so it is fully booted by the time
-    // WiFi is first used, and log bus idle levels for bring-up debugging.
-    Serial.println("C6: resetting co-processor (GPIO54)");
-    pinMode(GPIO_NUM_54, OUTPUT);
-    digitalWrite(GPIO_NUM_54, HIGH);  // hold in reset
-    delay(50);
-    digitalWrite(GPIO_NUM_54, LOW);   // release
-    delay(500);  // boot head start
-    Serial.printf("C6: SDIO idle levels: CMD(19)=%d CLK(18)=%d D0(14)=%d D1(15)=%d D2(16)=%d D3(17)=%d\n",
-                  digitalRead(19), digitalRead(18), digitalRead(14),
-                  digitalRead(15), digitalRead(16), digitalRead(17));
-
-    // Second probe: enable P4-internal pull-ups on the SDIO lines and re-read.
-    // - reads 1  -> lines float high (no slave driving/pulling them) => C6 not running
-    // - still 0  -> something actively drives them low => short or stuck slave
-    {
-        static const int sdio_pins[] = {19, 18, 14, 15, 16, 17};
-        Serial.print("C6: pull-up probe:");
-        for (int p : sdio_pins) {
-            pinMode(p, INPUT_PULLUP);
-            delay(5);
-            Serial.printf("  GPIO%d=%d", p, digitalRead(p));
-            pinMode(p, INPUT);  // release before esp_hosted claims the bus
-        }
-        Serial.println();
-    }
+    // Tab5: The pioarduino "esp32-p4-evboard" board definition carries the
+    // ESP32-P4-Function-EV-Board esp_hosted SDIO pinout (CLK=18, CMD=19,
+    // D0-D3=14-17, reset=54), which does NOT match the Tab5 wiring. Per the
+    // M5Stack Tab5 documentation (pin mapping, ESP32-C6 section):
+    //   SDIO2 D0=11 D1=10 D2=9 D3=8 CMD=13 CLK=12, C6 RESET=GPIO15
+    // (GPIO14 is the C6 IO2 strap pin). setPins() must run before the first
+    // WiFi call - esp_hosted initializes lazily on first use. C6 power
+    // (WLAN_PWR_EN on PI4IO-2 0x44 P0) is already enabled by M5GFX's Tab5
+    // board init during M5.begin() above.
+    Serial.println("C6: applying Tab5 SDIO pinout (CLK=12 CMD=13 D0=11 D1=10 D2=9 D3=8 RST=15)");
+    WiFi.setPins(/*clk*/ 12, /*cmd*/ 13, /*d0*/ 11, /*d1*/ 10, /*d2*/ 9, /*d3*/ 8, /*rst*/ 15);
 #endif
 
     // Initialize Display Driver

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Tab5 WiFi Crash on Connect** - Selecting a machine crashed and rebooted the display on M5Stack Tab5: the pioarduino `esp32-p4-evboard` board definition ships the ESP32-P4-Function-EV-Board esp_hosted SDIO pinout (CLK=18, CMD=19, D0-D3=14-17, reset=54), which does not match the Tab5 wiring, so the ESP32-C6 co-processor never answered and esp_hosted aborted. The firmware now applies the Tab5 pinout from the official M5Stack documentation (`WiFi.setPins`: D0=11, D1=10, D2=9, D3=8, CMD=13, CLK=12, C6 reset=15) before the first WiFi call. Verified end-to-end: WiFi connect, mDNS resolve and FluidNC WebSocket session all work.
+
 ### Added
 
 - **Build-Time Factory Defaults** - New optional `hardware_defaults.ini` lets you compile WiFi credentials and the FluidNC address into the firmware as first-boot defaults: on a fresh install machine slot 0 is created automatically from these values, and the "Add Machine" dialog is pre-filled with them. Requires both `ssid` and `url` in the `[machine]` section; leave them empty to keep the previous behavior. Applied only once per install (re-applied after Clear All Settings), and SD-card settings auto-import still takes priority.
