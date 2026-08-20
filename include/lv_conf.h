@@ -114,7 +114,7 @@
  * - LV_OS_MQX
  * - LV_OS_SDL2
  * - LV_OS_CUSTOM */
-#define LV_USE_OS   LV_OS_NONE
+#define LV_USE_OS   LV_OS_FREERTOS
 
 #if LV_USE_OS == LV_OS_CUSTOM
     #define LV_OS_CUSTOM_INCLUDE <stdint.h>
@@ -136,7 +136,7 @@
 #define LV_DRAW_BUF_STRIDE_ALIGN                1
 
 /** Align start address of draw_buf addresses to this bytes*/
-#define LV_DRAW_BUF_ALIGN                       4
+#define LV_DRAW_BUF_ALIGN                       64  /* ESP32-P4 L2 cache line; required by PPA driver */
 
 /** Using matrix for transformations.
  * Requirements:
@@ -199,7 +199,7 @@
     /** Set number of draw units.
      *  - > 1 requires operating system to be enabled in `LV_USE_OS`.
      *  - > 1 means multiple threads will render the screen in parallel. */
-    #define LV_DRAW_SW_DRAW_UNIT_CNT    1
+    #define LV_DRAW_SW_DRAW_UNIT_CNT    2  /* ESP32-P4 dual core: one SW unit per core */
 
     /** Use Arm-2D to accelerate software (sw) rendering. */
     #define LV_USE_DRAW_ARM2D_SYNC      0
@@ -352,6 +352,18 @@
 /** Accelerate blends, fills, etc. with STM32 DMA2D */
 #define LV_USE_DRAW_DMA2D 0
 
+/** Draw using the ESP32-P4 PPA 2D accelerator (fill / image / blend).
+ *  Only the ESP32-P4 has a PPA unit; leave off for other targets. */
+#if defined(CONFIG_IDF_TARGET_ESP32P4)
+#define LV_USE_PPA  1
+#else
+#define LV_USE_PPA  0
+#endif
+#if LV_USE_PPA
+    #define LV_USE_PPA_IMG      1
+    #define LV_PPA_BURST_LENGTH 128
+#endif
+
 #if LV_USE_DRAW_DMA2D
     #define LV_DRAW_DMA2D_HAL_INCLUDE "stm32h7xx_hal.h"
 
@@ -382,7 +394,7 @@
      *  - LV_LOG_LEVEL_ERROR    Log only critical issues, when system may fail.
      *  - LV_LOG_LEVEL_USER     Log only custom log messages added by the user.
      *  - LV_LOG_LEVEL_NONE     Do not log anything. */
-    #define LV_LOG_LEVEL LV_LOG_LEVEL_WARN
+    #define LV_LOG_LEVEL LV_LOG_LEVEL_USER
 
     /** - 1: Print log with 'printf';
      *  - 0: User needs to register a callback with `lv_log_register_print_cb()`. */
@@ -1018,19 +1030,19 @@
 #define LV_USE_SNAPSHOT 1
 
 /** 1: Enable system monitor component */
-#define LV_USE_SYSMON   0
+#define LV_USE_SYSMON   1
 #if LV_USE_SYSMON
     /** Get the idle percentage. E.g. uint32_t my_get_idle(void); */
     #define LV_SYSMON_GET_IDLE lv_os_get_idle_percent
 
     /** 1: Show CPU usage and FPS count.
      *  - Requires `LV_USE_SYSMON = 1` */
-    #define LV_USE_PERF_MONITOR 0
+    #define LV_USE_PERF_MONITOR 1
     #if LV_USE_PERF_MONITOR
         #define LV_USE_PERF_MONITOR_POS LV_ALIGN_BOTTOM_RIGHT
 
         /** 0: Displays performance data on the screen; 1: Prints performance data using log. */
-        #define LV_USE_PERF_MONITOR_LOG_MODE 0
+        #define LV_USE_PERF_MONITOR_LOG_MODE 1
     #endif
 
     /** 1: Show used memory and memory fragmentation.

@@ -403,12 +403,12 @@ void loop()
     
     lv_timer_handler();
     delay(5);
-    
+
     // Status update every 5 seconds
     static unsigned long lastUpdate = 0;
     if (millis() - lastUpdate > 5000) {
         lastUpdate = millis();
-        Serial.printf("[%lu] LVGL running, Free heap: %d, FluidNC: %s\n", 
+        Serial.printf("[%lu] LVGL running, Free heap: %d, FluidNC: %s\n",
                       millis()/1000, ESP.getFreeHeap(),
                       FluidNCClient::isConnected() ? "Connected" : "Disconnected");
     }

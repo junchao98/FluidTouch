@@ -4,6 +4,10 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <lvgl.h>
+#ifdef HARDWARE_TAB5
+#include "lgfx/v1/platforms/esp32p4/Panel_DSI.hpp"
+#include "esp_cache.h"
+#endif
 #include <esp_heap_caps.h>
 
 #if ENABLE_SCREENSHOT_SERVER
@@ -15,14 +19,15 @@ static uint16_t* screenshot_buffer = nullptr;
 
 // Convert RGB565 to RGB888 for BMP format
 static void rgb565_to_rgb888(uint16_t rgb565, uint8_t* r, uint8_t* g, uint8_t* b) {
-    // LovyanGFX returns byte-swapped RGB565 data - swap bytes first
-    uint16_t swapped = (rgb565 >> 8) | (rgb565 << 8);
-    
+    // readRect on the DSI panel (rotation 3 path) already returns host-order
+    // RGB565, so no byte swap here - extract channels directly.
+    uint16_t v = rgb565;
+
     // Extract RGB components from RGB565 (5-6-5 bits)
-    *r = ((swapped >> 11) & 0x1F) << 3;  // 5 bits red -> 8 bits
-    *g = ((swapped >> 5) & 0x3F) << 2;   // 6 bits green -> 8 bits
-    *b = (swapped & 0x1F) << 3;          // 5 bits blue -> 8 bits
-    
+    *r = ((v >> 11) & 0x1F) << 3;  // 5 bits red -> 8 bits
+    *g = ((v >> 5) & 0x3F) << 2;   // 6 bits green -> 8 bits
+    *b = (v & 0x1F) << 3;          // 5 bits blue -> 8 bits
+
     // Expand to full range by copying top bits to bottom bits
     *r |= (*r >> 5);
     *g |= (*g >> 6);
@@ -61,9 +66,23 @@ static void handleScreenshot() {
     
     Serial.println("Reading screen buffer...");
     
-    // Read the entire screen directly from LovyanGFX frame buffer
+    // Read the entire screen directly from LovyanGFX frame buffer.
+    // The fb is written by the PPA DMA (not the CPU), so CPU cache lines can
+    // hold stale data from a previous readRect - invalidate before reading.
+    // readRect with swap off returns the raw panel-order (byte-swapped)
+    // pixels that rgb565_to_rgb888 below expects.
     LGFX* lcd = display_driver_instance->getLCD();
+#ifdef HARDWARE_TAB5
+    {
+        lgfx::v1::Panel_DSI *panel = static_cast<lgfx::v1::Panel_DSI *>(lcd->getPanel());
+        void *fb = panel->config_detail().buffer;
+        if (fb) esp_cache_msync(fb, (size_t)SCREEN_HEIGHT * SCREEN_WIDTH * 2,
+                                ESP_CACHE_MSYNC_FLAG_INVALIDATE | ESP_CACHE_MSYNC_FLAG_UNALIGNED);
+    }
+#endif
+    lcd->setSwapBytes(false);
     lcd->readRect(0, 0, width, height, screenshot_buffer);
+    lcd->setSwapBytes(true);
     
     Serial.println("Converting to BMP...");
     

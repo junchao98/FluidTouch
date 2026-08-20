@@ -3,6 +3,11 @@
 #include <Wire.h>
 #ifdef HARDWARE_TAB5
 #include <M5Unified.h>  // M5.Display shared instance
+#include "driver/ppa.h"
+#include "esp_cache.h"
+#include "lgfx/v1/platforms/esp32p4/Panel_DSI.hpp"
+
+static ppa_client_handle_t ppa_client = nullptr;
 #endif
 
 #ifndef HARDWARE_TAB5
@@ -206,6 +211,10 @@ bool DisplayDriver::init() {
     lcd.init();
 #endif
     lcd.setColorDepth(16);
+    // LVGL renders RGB565 in host byte order; framebuffer panels want it
+    // swapped. Let LovyanGFX fold the swap into its push-image copy loop
+    // instead of a separate CPU pass over the whole buffer (see my_disp_flush).
+    lcd.setSwapBytes(true);
     lcd.setBrightness(255);
     lcd.fillScreen(0x0000);  // Clear screen to black
     
@@ -335,17 +344,51 @@ bool DisplayDriver::init() {
     // Initialize LVGL
     lv_init();
     
-    // Allocate display buffers in PSRAM (dual buffering for smooth rendering)
+#ifdef HARDWARE_TAB5
+    // === Direct-to-DSI PPA flush pipeline ===
+    // LVGL renders each frame into one of two full-screen PSRAM buffers
+    // (PARTIAL mode = renders off-screen then calls flush). The flush uses
+    // the ESP32-P4 PPA 2D-DMA engine to copy the finished buffer into the
+    // MIPI-DSI framebuffer with hardware 180-degree rotation (panel is
+    // mounted upside down) + RGB565 byte swap, leaving both CPU cores free
+    // for rendering. Without this the same copy costs ~350ms of CPU per
+    // full screen at ~2.6 Mpx/s.
+    {
+        ppa_client_config_t cfg = {
+            .oper_type = PPA_OPERATION_SRM,
+            .max_pending_trans_num = 2,
+        };
+        esp_err_t err = ppa_register_client(&cfg, &ppa_client);
+        if (err != ESP_OK) {
+            Serial.printf("PPA client registration failed: %s - falling back to CPU copy\n", esp_err_to_name(err));
+            ppa_client = nullptr;
+        }
+    }
+#endif
+    
+    // Allocate display buffers in PSRAM (dual buffering for smooth rendering).
+    // Over-allocate by one cache line and align the pointers: LV_DRAW_BUF_ALIGN
+    // is 64 (L2 cache line, required by the PPA 2D accelerator) but
+    // heap_caps_malloc only guarantees 4/16-byte alignment in PSRAM.
     uint32_t buf_size = SCREEN_WIDTH * BUFFER_LINES;
-    disp_draw_buf = (lv_color_t *)heap_caps_malloc(buf_size * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
-    disp_draw_buf2 = (lv_color_t *)heap_caps_malloc(buf_size * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
+    uint32_t buf_bytes = buf_size * sizeof(lv_color_t);
+    uint8_t *raw1 = (uint8_t *)heap_caps_malloc(buf_bytes + LV_DRAW_BUF_ALIGN, MALLOC_CAP_SPIRAM);
+    uint8_t *raw2 = (uint8_t *)heap_caps_malloc(buf_bytes + LV_DRAW_BUF_ALIGN, MALLOC_CAP_SPIRAM);
+    if (raw1 && raw2) {
+        disp_draw_buf  = (lv_color_t *)(((uintptr_t)raw1 + LV_DRAW_BUF_ALIGN - 1) & ~(uintptr_t)(LV_DRAW_BUF_ALIGN - 1));
+        disp_draw_buf2 = (lv_color_t *)(((uintptr_t)raw2 + LV_DRAW_BUF_ALIGN - 1) & ~(uintptr_t)(LV_DRAW_BUF_ALIGN - 1));
+    } else {
+        if (raw1) heap_caps_free(raw1);
+        if (raw2) heap_caps_free(raw2);
+    }
     
     if (!disp_draw_buf || !disp_draw_buf2) {
         Serial.println("ERROR: Failed to allocate display buffers in PSRAM!");
         return false;
     }
     
-    Serial.printf("Display buffers allocated in PSRAM: 2 x %lu bytes\n", buf_size * sizeof(lv_color_t));
+    Serial.printf("Display buffers allocated in PSRAM: 2 x %lu bytes (aligned to %d)\n",
+                  (unsigned long)buf_bytes, (int)LV_DRAW_BUF_ALIGN);
     
     // Create LVGL display
     disp = lv_display_create(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -358,14 +401,90 @@ bool DisplayDriver::init() {
     return true;
 }
 
+#ifdef HARDWARE_TAB5
+// Hardware flush path: PPA SRM copies the finished LVGL buffer into the DSI
+// framebuffer with the panel's 90-degree rotation (portrait panel, landscape
+// UI) + RGB565 byte swap, entirely in DMA. The CPU copy this replaces costs
+// ~350ms per full screen at ~2.6 Mpx/s; PPA runs at PSRAM bandwidth.
+static void ppa_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
+{
+    LGFX *lcd = (LGFX *)lv_display_get_user_data(disp);
+    lgfx::v1::Panel_DSI *panel = static_cast<lgfx::v1::Panel_DSI *>(lcd->getPanel());
+    void *fb = panel->config_detail().buffer;
+
+    uint32_t w = lv_area_get_width(area);
+    uint32_t h = lv_area_get_height(area);
+
+    ppa_srm_oper_config_t cfg = {};
+    cfg.in.buffer         = px_map;
+    cfg.in.pic_w          = SCREEN_WIDTH;   // source: landscape LVGL buffer
+    cfg.in.pic_h          = SCREEN_HEIGHT;
+    cfg.in.block_w        = w;
+    cfg.in.block_h        = h;
+    cfg.in.block_offset_x = area->x1;
+    cfg.in.block_offset_y = area->y1;
+    cfg.in.srm_cm         = PPA_SRM_COLOR_MODE_RGB565;
+    cfg.out.buffer        = fb;
+    cfg.out.buffer_size   = (size_t)SCREEN_HEIGHT * SCREEN_WIDTH * 2;
+    cfg.out.pic_w         = SCREEN_HEIGHT;  // dest: portrait panel framebuffer
+    cfg.out.pic_h         = SCREEN_WIDTH;
+    cfg.out.srm_cm        = PPA_SRM_COLOR_MODE_RGB565;
+    cfg.scale_x           = 1.0f;
+    cfg.scale_y           = 1.0f;
+    cfg.byte_swap         = true;   // LVGL native RGB565 -> panel byte order
+    cfg.mode              = PPA_TRANS_MODE_BLOCKING;
+
+    // Block mapping depends on which 90-degree direction the panel runs in:
+    //   lcd rotation 3: (x,y) -> (y, W-1-x)  = 90 deg CCW
+    //   lcd rotation 1: (x,y) -> (H-1-y, x)  = 90 deg CW (settings "180 flip")
+    if (lcd->getRotation() & 2) {  // rotation 3
+        cfg.rotation_angle = PPA_SRM_ROTATION_ANGLE_90;
+        cfg.out.block_offset_x = area->y1;
+        cfg.out.block_offset_y = SCREEN_WIDTH - area->x1 - w;
+    } else {                       // rotation 1
+        cfg.rotation_angle = PPA_SRM_ROTATION_ANGLE_270;
+        cfg.out.block_offset_x = SCREEN_HEIGHT - area->y1 - h;
+        cfg.out.block_offset_y = area->x1;
+    }
+
+    // Push dirty cache lines of the source rows to PSRAM so the DMA reads
+    // fresh pixels. Write back whole rows (block may not span full width).
+    uint8_t *rows = px_map + (size_t)area->y1 * SCREEN_WIDTH * 2;
+    size_t row_bytes = (size_t)h * SCREEN_WIDTH * 2;
+    esp_cache_msync(rows, row_bytes, ESP_CACHE_MSYNC_FLAG_DIR_C2M | ESP_CACHE_MSYNC_FLAG_UNALIGNED);
+
+    // Drop any stale CPU cache lines for the framebuffer: boot-time CPU
+    // drawing (splash / machine select) left dirty lines whose eviction
+    // would clobber the PPA result in PSRAM. Invalidate without writeback.
+    static bool fb_flushed_once = false;
+    if (!fb_flushed_once) {
+        fb_flushed_once = true;
+        esp_cache_msync(fb, (size_t)SCREEN_HEIGHT * SCREEN_WIDTH * 2,
+                        ESP_CACHE_MSYNC_FLAG_INVALIDATE | ESP_CACHE_MSYNC_FLAG_UNALIGNED);
+    }
+
+    ppa_do_scale_rotate_mirror(ppa_client, &cfg);
+
+    // Drop stale lines so the next render pass into this buffer refetches.
+    esp_cache_msync(rows, row_bytes, ESP_CACHE_MSYNC_FLAG_INVALIDATE | ESP_CACHE_MSYNC_FLAG_UNALIGNED);
+}
+#endif
+
 // LVGL flush callback
 void DisplayDriver::my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map) {
+#ifdef HARDWARE_TAB5
+    if (ppa_client) {
+        ppa_flush(disp, area, px_map);
+        lv_display_flush_ready(disp);
+        return;
+    }
+#endif
     LGFX *lcd = (LGFX *)lv_display_get_user_data(disp);
     
     uint32_t w = lv_area_get_width(area);
     uint32_t h = lv_area_get_height(area);
     
-    lv_draw_sw_rgb565_swap(px_map, w * h);
+    // CPU fallback: swap folded into LovyanGFX's copy loop (setSwapBytes in init)
     lcd->pushImageDMA(area->x1, area->y1, w, h, (uint16_t *)px_map);
     
     lv_display_flush_ready(disp);
