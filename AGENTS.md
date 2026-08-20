@@ -22,6 +22,14 @@ pio device monitor -b 115200                   # 串口监视
 - 条件编译宏：`HARDWARE_TAB5` / `HARDWARE_BASIC` / `HARDWARE_ADVANCE`（+`HARDWARE_ADVANCE_V12/V13`）；P4 专属 LVGL 项另用 `CONFIG_IDF_TARGET_ESP32P4` 门控。
 - Tab5 环境用 pioarduino 平台包，依赖 pre 脚本 `scripts/fix_riscv_asm_flags.py`（勿删）。
 - `scripts/generate_defaults.py` 构建时把 `hardware_defaults.ini` 烘焙为 `include/generated/hardware_defaults.h`（首启动出厂默认）。
+- Tab5 音频警报：`UIAudioAlerts`（ui_audio_alerts.h/cpp，非 Tab5 目标为空操作）。状态钩子挂在 `UITabStatus::updateState`，序列由主循环 `update()` 步进。注意 M5Unified Speaker 虚拟通道是**混音**的，音序必须顺序触发（isPlaying 轮询），不能并发塞给同一通道。
+
+## Tab5 WiFi（esp_hosted / C6）
+
+- `WiFi.setPins`（Tab5 SDIO pinout）必须在首次 WiFi 调用前执行（main.cpp 已有）：pioarduino 板卡定义带的是 EV-Board 引脚，与 Tab5 实际接线不符，不改会崩溃。
+- esp_hosted 无线电启动 ~3s：main.cpp 在 setup 早期 `WiFi.mode(WIFI_STA)` 预热，藏在启动画面背后；勿删。
+- 快连机制（ui_common.cpp `wifiBegin`/`wifiFinishConnect`）：NVS `ft_system` 存 `wifi_ssid`/`wifi_chan`/`wifi_bssid`，按信道+BSSID 直连跳过全扫描；hint 失效自动回退全扫描。剩余 ~4s（关联+DHCP）在 C6 固件内部，是硬件下限。
+- 调试模式：临时加 `-DFLUIDTOUCH_DEBUG_AUTOTAB` 之类宏 + serial 计时插桩即可全自动跑通启动/选机/连 WiFi 流程，无需人工触屏；测完移除。
 
 ## Tab5 显示管线（勿回退）
 
@@ -41,7 +49,7 @@ pio device monitor -b 115200                   # 串口监视
 
 ## 用户约定
 
-- 提交信息：一句话即可（英文）。
+- 提交信息：一句话英文。
 - 启动必须显示手动机床选择界面 — 勿重新引入 `FLUIDTOUCH_AUTO_CONNECT` 自动连接调试标志。
 
 ## 深入参考
