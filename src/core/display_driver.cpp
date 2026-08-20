@@ -393,7 +393,13 @@ bool DisplayDriver::init() {
     // Create LVGL display
     disp = lv_display_create(SCREEN_WIDTH, SCREEN_HEIGHT);
     lv_display_set_flush_cb(disp, my_disp_flush);
-    lv_display_set_buffers(disp, disp_draw_buf, disp_draw_buf2, buf_size * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_PARTIAL);
+    // DIRECT mode with two full-screen buffers: LVGL renders dirty areas in
+    // place (absolute screen coords) and, critically, syncs flushed areas to
+    // the other buffer (refr_sync_areas). In PARTIAL mode that sync is
+    // skipped, so the two buffers accumulate DIFFERENT stale history and
+    // alternating flushes mix old/new frames - visible as overlapping tab
+    // bar graphics after switching tabs.
+    lv_display_set_buffers(disp, disp_draw_buf, disp_draw_buf2, buf_size * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_DIRECT);
     
     // Store lcd instance in display user data for flush callback
     lv_display_set_user_data(disp, &lcd);
@@ -431,7 +437,9 @@ static void ppa_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map
     cfg.out.srm_cm        = PPA_SRM_COLOR_MODE_RGB565;
     cfg.scale_x           = 1.0f;
     cfg.scale_y           = 1.0f;
-    cfg.byte_swap         = true;   // LVGL native RGB565 -> panel byte order
+    cfg.byte_swap         = false;  // DSI fb is native-order RGB565 (Panel_DSI
+                                    // _write_depth = rgb565_nonswapped); the
+                                    // LVGL buffer is native too -> no swap.
     cfg.mode              = PPA_TRANS_MODE_BLOCKING;
 
     // Block mapping depends on which 90-degree direction the panel runs in:

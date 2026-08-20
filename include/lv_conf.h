@@ -353,9 +353,14 @@
 #define LV_USE_DRAW_DMA2D 0
 
 /** Draw using the ESP32-P4 PPA 2D accelerator (fill / image / blend).
- *  Only the ESP32-P4 has a PPA unit; leave off for other targets. */
+ *  Only the ESP32-P4 has a PPA unit; leave off for other targets.
+ *  DISABLED: the 9.5.0 driver installs a global invalidate_cache handler
+ *  (lv_draw_ppa_buf.c) that only does C2M writeback and never invalidates
+ *  after PPA DMA writes, so SW draw units blend against stale cache lines
+ *  -> pervasive color corruption. Our own PPA flush in display_driver.cpp
+ *  registers a separate client and is unaffected. */
 #if defined(CONFIG_IDF_TARGET_ESP32P4)
-#define LV_USE_PPA  1
+#define LV_USE_PPA  0
 #else
 #define LV_USE_PPA  0
 #endif

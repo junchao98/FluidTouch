@@ -34,6 +34,11 @@ void UITabs::createTabs() {
     // Disable scrolling on tab buttons and content
     lv_obj_clear_flag(tab_bar, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_clear_flag(lv_tabview_get_content(tabview), LV_OBJ_FLAG_SCROLLABLE);
+
+    // Instant tab switching: the slide animation issues rapid partial
+    // redraws which tear against the continuously-scanning DSI panel
+    // (single framebuffer, no vsync flip) - visible as garbled stripes.
+    lv_obj_set_style_anim_duration(lv_tabview_get_content(tabview), 0, 0);
     
     // Style tab buttons with larger font
     lv_obj_set_style_text_font(tab_bar, ui_font_20, 0);  // Direct to tab bar

@@ -48,7 +48,10 @@ void UITabSettings::create(lv_obj_t *tab) {
 
     // Also ensure the content area has no padding
     lv_obj_set_style_pad_all(lv_tabview_get_content(sub_tabview), 0, 0);
-    
+
+    // Instant sub-tab switching (slide animation tears on the DSI panel)
+    lv_obj_set_style_anim_duration(lv_tabview_get_content(sub_tabview), 0, 0);
+
     // Style tab buttons (inactive) - different colors than main tabs
     lv_obj_set_style_bg_color(sub_tabview, UITheme::BG_MEDIUM, LV_PART_ITEMS);
     lv_obj_set_style_text_color(sub_tabview, UITheme::TEXT_MEDIUM, LV_PART_ITEMS);

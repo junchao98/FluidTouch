@@ -2,6 +2,7 @@
 #include "ui/tabs/settings/ui_tab_settings_jog.h"
 #include "ui/ui_theme.h"
 #include "ui/ui_common.h"
+#include "ui/ui_audio_alerts.h"
 #include "ui/machine_config.h"
 #include "ui/wcs_config.h"
 #include "ui/fonts/fontawesome_icons_20.h"
@@ -669,6 +670,14 @@ void UITabStatus::create(lv_obj_t *tab) {
 
 void UITabStatus::updateMessage(const char *message) {
     if (lbl_message) {
+        // Delta check: this is called every status cycle (~250ms). Setting
+        // the same text still invalidates the label and redraws it, which
+        // shows as a flickering message box.
+        static char last_msg[128] = "";
+        if (strncmp(last_msg, message, sizeof(last_msg) - 1) == 0) return;
+        strncpy(last_msg, message, sizeof(last_msg) - 1);
+        last_msg[sizeof(last_msg) - 1] = '\0';
+
         lv_label_set_text(lbl_message, message);
         
         // Color code based on message prefix or keywords
@@ -706,6 +715,9 @@ void UITabStatus::updateState(const char *state) {
     } else {
         lv_obj_set_style_text_color(lbl_state, UITheme::UI_WARNING, 0);
     }
+
+    // Audio alert hooks (Tab5 speaker): repeating ALARM siren, one-shot HOLD cue
+    UIAudioAlerts::onMachineState(state);
 }
 
 void UITabStatus::updateWorkPosition(float x, float y, float z, float a) {

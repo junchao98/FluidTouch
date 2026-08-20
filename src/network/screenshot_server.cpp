@@ -69,8 +69,11 @@ static void handleScreenshot() {
     // Read the entire screen directly from LovyanGFX frame buffer.
     // The fb is written by the PPA DMA (not the CPU), so CPU cache lines can
     // hold stale data from a previous readRect - invalidate before reading.
-    // readRect with swap off returns the raw panel-order (byte-swapped)
-    // pixels that rgb565_to_rgb888 below expects.
+    // NOTE: keep _swapBytes=true (set in DisplayDriver::init) during readRect:
+    // with swap ON the panel's native-order RGB565 is copied through
+    // no_convert, returning host-order pixels that rgb565_to_rgb888 expects.
+    // Setting swap OFF here makes readRect do a native->swapped conversion,
+    // which would render every screenshot byte-swapped (red/blue flipped).
     LGFX* lcd = display_driver_instance->getLCD();
 #ifdef HARDWARE_TAB5
     {
@@ -80,9 +83,7 @@ static void handleScreenshot() {
                                 ESP_CACHE_MSYNC_FLAG_INVALIDATE | ESP_CACHE_MSYNC_FLAG_UNALIGNED);
     }
 #endif
-    lcd->setSwapBytes(false);
     lcd->readRect(0, 0, width, height, screenshot_buffer);
-    lcd->setSwapBytes(true);
     
     Serial.println("Converting to BMP...");
     
