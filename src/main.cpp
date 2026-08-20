@@ -63,6 +63,13 @@ void setup()
     // board init during M5.begin() above.
     Serial.println("C6: applying Tab5 SDIO pinout (CLK=12 CMD=13 D0=11 D1=10 D2=9 D3=8 RST=15)");
     WiFi.setPins(/*clk*/ 12, /*cmd*/ 13, /*d0*/ 11, /*d1*/ 10, /*d2*/ 9, /*d3*/ 8, /*rst*/ 15);
+
+    // Warm up the WiFi radio now: on Tab5 bringing up esp_hosted + STA mode
+    // takes ~3s of SDIO round-trips to the C6. Starting it here hides that
+    // cost behind the splash screen / machine selection UI, so the later
+    // WiFi.begin() (machine selected) only pays association + DHCP.
+    WiFi.mode(WIFI_STA);
+    Serial.println("C6: STA mode warm-up started");
 #endif
 
     // Initialize Display Driver

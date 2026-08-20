@@ -16,6 +16,88 @@
 #include <M5Unified.h>
 #endif
 
+// Fast WiFi connect: a plain WiFi.begin(ssid, pass) triggers a full-channel
+// scan (2-4s). If we remember the channel + BSSID of the last successful
+// connection to this SSID, the radio can lock on directly. Falls back to a
+// normal scan-based connect if the hint is stale (AP moved).
+// Split into wifiBegin() + wifiFinishConnect() so callers can start the
+// radio BEFORE building UI: on Tab5 WiFi.mode() alone takes ~2.8s (esp_hosted
+// SDIO round-trips to the C6), which then overlaps UI construction instead
+// of adding to it.
+static bool g_wifi_hinted_begin = false;
+
+static void wifiBegin(const char *ssid, const char *password)
+{
+    WiFi.persistent(false);   // don't rewrite NVS wifi config on every begin
+    WiFi.mode(WIFI_STA);
+    WiFi.setAutoReconnect(false);  // Disable auto-reconnect - user must manually reconnect
+    WiFi.setSleep(false);     // responsive WebSocket; this is a mains/battery pendant
+
+    Preferences prefs;
+    prefs.begin(PREFS_SYSTEM_NAMESPACE, true);
+    char last_ssid[33] = "";
+    prefs.getString("wifi_ssid", last_ssid, sizeof(last_ssid));
+    int32_t channel = prefs.getInt("wifi_chan", 0);
+    uint8_t bssid[6];
+    size_t got = prefs.getBytes("wifi_bssid", bssid, sizeof(bssid));
+    prefs.end();
+
+    g_wifi_hinted_begin = (strcmp(last_ssid, ssid) == 0) && channel > 0 && got == sizeof(bssid);
+    if (g_wifi_hinted_begin) {
+        Serial.printf("WiFi: fast connect (ch %d, stored BSSID)\n", (int)channel);
+        WiFi.begin(ssid, password, channel, bssid);
+    } else {
+        WiFi.begin(ssid, password);
+    }
+}
+
+static void wifiSaveHint(const char *ssid)
+{
+    Preferences wprefs;
+    wprefs.begin(PREFS_SYSTEM_NAMESPACE, false);
+    wprefs.putString("wifi_ssid", ssid);
+    wprefs.putInt("wifi_chan", WiFi.channel());
+    wprefs.putBytes("wifi_bssid", WiFi.BSSID(), 6);
+    wprefs.end();
+}
+
+static bool wifiWaitConnected(uint32_t timeout_ms)
+{
+    for (uint32_t i = 0; i < timeout_ms / 100; i++) {
+        if (WiFi.status() == WL_CONNECTED) return true;
+        delay(100);
+        lv_timer_handler();  // Keep UI responsive
+    }
+    return WiFi.status() == WL_CONNECTED;
+}
+
+// Wait for the async connection started by wifiBegin(); if a hinted attempt
+// fails, retry once with a full scan. Saves the hint on success.
+static bool wifiFinishConnect(const char *ssid, const char *password)
+{
+    if (wifiWaitConnected(g_wifi_hinted_begin ? 6000 : 10000)) {
+        wifiSaveHint(ssid);
+        return true;
+    }
+    if (g_wifi_hinted_begin) {
+        Serial.println("WiFi: fast connect failed, falling back to full scan");
+        WiFi.disconnect();
+        g_wifi_hinted_begin = false;
+        WiFi.begin(ssid, password);
+        if (wifiWaitConnected(10000)) {
+            wifiSaveHint(ssid);
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool wifiConnectBlocking(const char *ssid, const char *password)
+{
+    wifiBegin(ssid, password);
+    return wifiFinishConnect(ssid, password);
+}
+
 // Static member initialization
 lv_display_t *UICommon::display = nullptr;
 DisplayDriver *UICommon::display_driver = nullptr;
@@ -275,40 +357,32 @@ void UICommon::createMainUI() {
         lv_refr_now(nullptr);  // Force immediate display update
     }
     
+    // Kick off the WiFi radio NOW: on Tab5 WiFi startup takes ~3s (esp_hosted
+    // round-trips to the C6). Beginning it before UI construction lets the
+    // radio associate in the background while the status bar and tabs build.
+    if (config.connection_type == CONN_WIRELESS && strlen(config.ssid) > 0) {
+        Serial.println("\n=== WiFi Connection ===");
+        Serial.printf("Connecting to WiFi: %s\n", config.ssid);
+        wifiBegin(config.ssid, config.password);
+    }
+
     // Create status bar
     createStatusBar();
-    
+
     // Create all tabs
     UITabs::createTabs();
-    
-    // Initialize WiFi connection using machine-specific credentials
+
+    // Wait for the WiFi connection started above
     if (config.connection_type == CONN_WIRELESS) {
         if (strlen(config.ssid) > 0) {
-            Serial.println("\n=== WiFi Connection ===");
-            Serial.printf("Connecting to WiFi: %s\n", config.ssid);
-            
-            WiFi.mode(WIFI_STA);
-            WiFi.setAutoReconnect(false);  // Disable auto-reconnect - user must manually reconnect
-            WiFi.begin(config.ssid, config.password);
-            
-            // Wait for connection with timeout (10 seconds)
-            int timeout = 20;
-            while (WiFi.status() != WL_CONNECTED && timeout > 0) {
-                delay(500);
-                Serial.print(".");
-                timeout--;
-                lv_timer_handler();  // Keep UI responsive
-            }
-            
-            if (WiFi.status() == WL_CONNECTED) {
+            if (wifiFinishConnect(config.ssid, config.password)) {
                 Serial.println("\nWiFi connected!");
                 Serial.printf("IP Address: %s\n", WiFi.localIP().toString().c_str());
-                
+
                 // Initialize mDNS client stack to enable resolving .local hostnames (like fluidnc.local)
                 // Note: MDNS.begin() is required on ESP32 to enable mDNS client queries, not just advertising
                 if (MDNS.begin("fluidtouch")) {
                     Serial.println("mDNS client initialized - can now resolve .local hostnames");
-                    delay(1000);  // Give mDNS time to fully initialize before attempting queries
                 } else {
                     Serial.println("Warning: mDNS client failed to start (.local hostname resolution will not work)");
                 }
@@ -1030,20 +1104,8 @@ static void on_connection_error_connect(lv_event_t *e) {
     // Reconnect WiFi
     if (config.connection_type == CONN_WIRELESS && strlen(config.ssid) > 0) {
         Serial.printf("UICommon: Reconnecting to WiFi: %s\n", config.ssid);
-        WiFi.mode(WIFI_STA);
-        WiFi.setAutoReconnect(false);
-        WiFi.begin(config.ssid, config.password);
-        
-        // Wait for WiFi connection with timeout (10 seconds)
-        int timeout = 20;
-        while (WiFi.status() != WL_CONNECTED && timeout > 0) {
-            delay(500);
-            Serial.print(".");
-            timeout--;
-            lv_timer_handler();
-        }
-        
-        if (WiFi.status() == WL_CONNECTED) {
+
+        if (wifiConnectBlocking(config.ssid, config.password)) {
             Serial.println("\nWiFi reconnected!");
             Serial.printf("IP Address: %s\n", WiFi.localIP().toString().c_str());
             
