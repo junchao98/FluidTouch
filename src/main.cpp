@@ -14,6 +14,7 @@
 #include "ui/ui_splash.h"       // Splash screen module
 #include "ui/ui_machine_select.h" // Machine selection screen
 #include "ui/ui_common.h"       // UI common components (status bar)
+#include "ui/ui_audio_alerts.h" // Machine-state audio alerts (Tab5 speaker)
 #include "ui/ui_tabs.h"         // UI tabs module
 #include "ui/settings_manager.h" // Settings import/export/clear
 #include "ui/tabs/ui_tab_status.h" // Status tab for updates
@@ -44,7 +45,7 @@ void setup()
         m5cfg.internal_imu = true;   // BMI270 for shake-to-wake
         m5cfg.internal_rtc = false;
         m5cfg.internal_mic = false;
-        m5cfg.internal_spk = false;
+        m5cfg.internal_spk = true;   // Speaker for state audio alerts
         m5cfg.clear_display = false;
         m5cfg.output_power = false;  // no 5V needed on external bus
         M5.begin(m5cfg);
@@ -96,6 +97,9 @@ void setup()
     // Initialize Power Manager
     Serial.println("Initializing power manager...");
     PowerManager::init(&displayDriver);
+
+    // Audio alerts (Tab5 speaker) - after M5.begin enabled internal_spk
+    UIAudioAlerts::init();
     Serial.println("Power manager initialized successfully");
 
     // Store display driver reference for later use (screenshot server after WiFi connects)
@@ -392,6 +396,9 @@ void loop()
     
     // Shake-to-wake polling (Tab5 BMI270; internally throttled to ~100Hz)
     PowerManager::pollShakeWake();
+
+    // Drive audio alert sequences (ALARM siren loop / HOLD cue)
+    UIAudioAlerts::update();
     
     // Update Terminal tab (batched UI updates every 100ms)
     UITabTerminal::update();
