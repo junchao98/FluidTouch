@@ -25,7 +25,9 @@ pio device monitor -b 115200                   # 串口监视
 
 ## Tab5 显示管线（勿回退）
 
-- `src/core/display_driver.cpp`：LVGL 双 64 字节对齐 PSRAM 全屏缓冲 → `ppa_flush()` 用 PPA SRM DMA（旋转 90/270 + byte_swap）直写 DSI framebuffer，含 cache 同步。已验证全屏重绘 884ms→103ms；改动后必须在真机验证颜色与性能，PPA 失败时回退 `pushImageDMA` 路径。
+- `src/core/display_driver.cpp`：LVGL 双 64 字节对齐 PSRAM 全屏缓冲（**DIRECT 模式**，勿改回 PARTIAL——PARTIAL 下双缓冲不同步脏区，交替 flush 会新旧帧混合）→ `ppa_flush()` 用 PPA SRM DMA（旋转 90/270，**byte_swap=false**：DSI fb 为本机序 RGB565）直写 DSI framebuffer，含 cache 同步。已验证全屏重绘 884ms→103ms；改动后必须在真机验证颜色与性能，PPA 失败时回退 `pushImageDMA` 路径。
+- `lv_conf.h` 中 `LV_USE_PPA` 必须保持 0：LVGL 9.5.0 自带的 PPA draw unit 的 cache 回调只回写不失效，DMA 写后 SW 混合读到陈旧像素 → 全屏颜色错乱。
+- 标签页切换必须瞬时（主/子 tabview 均设 `anim_duration=0`）：滑动动画的高频局部重绘会与 DSI 单 framebuffer 扫描输出相撞产生撕裂。
 - 截图字节序陷阱：Tab5 `readRect` 返回原生序，`screenshot_server.cpp` 的 `rgb565_to_rgb888` **不做**字节交换；CrowPanel（LovyanGFX）路径才需要交换。勿"修复"成双重交换。
 - LVGL 性能配置集中在 `include/lv_conf.h`（`LV_USE_OS=FREERTOS`、`LV_DRAW_SW_DRAW_UNIT_CNT=2`、`LV_USE_PPA`）。
 
