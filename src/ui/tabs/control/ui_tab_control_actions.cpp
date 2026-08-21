@@ -16,22 +16,27 @@ uint32_t UITabControlActions::last_trigger_y_ms = 0;
 uint32_t UITabControlActions::last_trigger_z_ms = 0;
 
 void UITabControlActions::create(lv_obj_t *tab) {
-    const int col_width = 180;
-    const int col_spacing = 40;  // Increased from 20 to 40 (20px more per gap = 40px total)
-    const int left_col_x = 10;
+    // All geometry in 800x480 design units, scaled per target (raw px values
+    // left the layout tiny and wedged top-left on the 1280x720 Tab5).
+    // NOTE: the Control sub-tabview reserves a 150px vertical tab bar on the
+    // left, so usable width is 800-150=650 - keep columns inside that.
+    const int col_width = UI_SCALE_X(190);
+    const int col_spacing = UI_SCALE_X(35);
+    const int left_col_x = UI_SCALE_X(10);
     const int middle_col_x = left_col_x + col_width + col_spacing;
     const int right_col_x = middle_col_x + col_width + col_spacing;
-    const int btn_height = 55;  // Uniform button height
-    const int spacing = 8;     // Vertical spacing between buttons
-    
+    const int btn_height = UI_SCALE_Y(60);  // Uniform button height
+    const int spacing = UI_SCALE_Y(12);     // Vertical spacing between buttons
+    const int first_row_y = UI_SCALE_Y(40);
+
     // ========== LEFT COLUMN: Control Buttons ==========
     lv_obj_t *control_label = lv_label_create(tab);
     lv_label_set_text(control_label, "CONTROL");
     lv_obj_set_style_text_font(control_label, ui_font_18, 0);
     lv_obj_set_style_text_color(control_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(control_label, left_col_x, UI_SCALE_Y(10));
-    
-    int y_pos = 40;
+
+    int y_pos = first_row_y;
     
     btn_pause = lv_button_create(tab);
     lv_obj_set_size(btn_pause, col_width, btn_height);
@@ -86,8 +91,8 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_text_font(home_label, ui_font_18, 0);
     lv_obj_set_style_text_color(home_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(home_label, middle_col_x, UI_SCALE_Y(10));
-    
-    y_pos = 40;
+
+    y_pos = first_row_y;
     
     // Home X
     btn_home_x = lv_button_create(tab);
@@ -145,8 +150,8 @@ void UITabControlActions::create(lv_obj_t *tab) {
     lv_obj_set_style_text_font(zero_label, ui_font_18, 0);
     lv_obj_set_style_text_color(zero_label, UITheme::TEXT_DISABLED, 0);
     lv_obj_set_pos(zero_label, right_col_x, UI_SCALE_Y(10));
-    
-    y_pos = 40;
+
+    y_pos = first_row_y;
     
     // Zero X
     lv_obj_t *btn_zero_x = lv_button_create(tab);
